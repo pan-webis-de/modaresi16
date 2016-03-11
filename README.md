@@ -5,7 +5,7 @@ Author Profiler for PAN 2016
 How to setup the project:
 * Clone the [corpora](https://github.com/pasmod/corpora) repository that contains the data sets
 * Define an environment variable that points to the cloned repository. Add the following line to your .bashrc file
-  * ```  export DATASETS=[path to the cloned corpora repository] ```
+  * ```  export DATASETS=[path to the cloned corpora repository] ```<br />
     e.g. use "vim ~/.bashrc", add the following line to the end "export DATASETS=/home/XXX/corpora" and save
 
 
