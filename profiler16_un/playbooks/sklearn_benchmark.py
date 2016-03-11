@@ -21,7 +21,7 @@ class SklearnBenchmark():
         dataset_list = list(dataset_iterator)
         X = [xy[0] for xy in dataset_list]
         Y = [xy[1] for xy in dataset_list]
-        skf = [fold for fold in StratifiedKFold(Y, n_folds=2, shuffle=True)]
+        skf = [fold for fold in StratifiedKFold(Y, n_folds=2, shuffle=True, random_state=123)]
         train_index, test_index = skf[0]
         X_train, Y_train = [X[i] for i in train_index], [Y[i] for i in train_index]
         X_test, Y_test = [X[i] for i in test_index], [Y[i] for i in test_index]
