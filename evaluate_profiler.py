@@ -5,6 +5,7 @@ import profiler16_un.datasets.pan2014
 from profiler16_un.profilers.random_profiler import RandomProfiler
 from profiler16_un.profilers.logistic_regression_profiler import LogisticRegressionProfiler
 from profiler16_un.profilers.random_forest_profiler import RandomForestProfiler
+from profiler16_un.profilers.aleksey_profiler import AlekseyProfiler
 from profiler16_un.playbooks.accumulate_benchmark import AccumulateBenchmark
 from profiler16_un.playbooks.sklearn_benchmark import SklearnBenchmark
 from profiler16_un.configuration import Configuration
@@ -24,6 +25,12 @@ def configure(conf):
     @conf.profiler('random_forest')
     def build_random_forest_profiler(**args):
         return RandomForestProfiler(**args)
+
+    @conf.profiler('aleksey_profiler')
+    def build_aleksey_proilfer(**args):
+        return AlekseyProfiler(**args)
+
+
 
     @conf.dataset('pan2014/gender/english/blog', label='gender', types=['blog'], language='english')
     def build_dataset_prns(label=None, types=None, language=None):
