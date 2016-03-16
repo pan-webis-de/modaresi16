@@ -39,8 +39,11 @@ def configure(conf):
 
 
     @conf.dataset('pan2014/gender/english/blog', label='gender', types=['blog'], language='english')
+    @conf.dataset('pan2014/age/english/blog', label='age_group', types=['blog'], language='english')
     @conf.dataset('pan2014/gender/english/socialmedia', label='gender', types=['socialmedia'], language='english')
+    @conf.dataset('pan2014/age/english/socialmedia', label='age_group', types=['socialmedia'], language='english')
     @conf.dataset('pan2014/gender/english/review', label='gender', types=['review'], language='english')
+    @conf.dataset('pan2014/age/english/review', label='age_group', types=['review'], language='english')
     def build_dataset_prns(label=None, types=None, language=None):
         dataset_iterator = profiler16_un.datasets.pan2014.load(label=label, types=types, language=language)
         pred_profile = lambda profiler, X: profiler.predict(X)
