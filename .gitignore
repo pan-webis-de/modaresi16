@@ -61,3 +61,8 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+#PyCharm
+.idea/
+profiler16_un/.idea/
+
