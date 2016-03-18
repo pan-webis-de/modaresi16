@@ -1,29 +1,8 @@
 from __future__ import unicode_literals
-from sklearn import preprocessing
-from sklearn.base import BaseEstimator
-from sklearn.svm import SVC
 from sklearn.pipeline import Pipeline
 import numpy as np
-import datetime
-import array
-from collections import Mapping, defaultdict
 import numbers
-from operator import itemgetter
-import re
-import unicodedata
 
-import numpy as np
-import scipy.sparse as sp
-
-from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.externals import six
-from sklearn.externals.six.moves import xrange
-from sklearn.preprocessing import normalize
-from sklearn.feature_extraction.hashing import FeatureHasher
-from sklearn.feature_extraction.stop_words import ENGLISH_STOP_WORDS
-from sklearn.utils import deprecated
-from sklearn.utils.fixes import frombuffer_empty, bincount
-from sklearn.utils.validation import check_is_fitted
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
 from sklearn.ensemble import RandomForestClassifier
@@ -102,8 +81,6 @@ class VectorizerMixinLastChar(VectorizerMixin):
                              self.analyzer)
 
 class CountVectorizerLastCharacter(CountVectorizer, VectorizerMixinLastChar):
-
-
     def __init__(self, input='content', encoding='utf-8',
                  decode_error='strict', strip_accents=None,
                  lowercase=True, preprocessor=None, tokenizer=None,
