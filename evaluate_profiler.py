@@ -38,7 +38,11 @@ def configure(conf):
     def build_aleksey_proilfer(**args):
         return AlekseyProfiler(**args)
 
-    @conf.profiler('last_character_profiler', slice_length=3)
+    @conf.profiler('last_character_profiler', slice_length=3, slizer='last_chars')
+    def build_last_character_profiler(**args):
+        return WordSliceProfiler(**args)
+
+    @conf.profiler('first_character_profiler', slice_length=3, slizer='first_chars')
     def build_last_character_profiler(**args):
         return WordSliceProfiler(**args)
 

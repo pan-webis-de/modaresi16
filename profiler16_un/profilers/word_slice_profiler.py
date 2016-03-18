@@ -12,10 +12,10 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 class WordSliceProfiler():
 
-    def __init__(self, slice_length = 1):
+    def __init__(self, slice_length = 1, slizer='last_chars'):
         print("{} {}".format("slice length:", slice_length))
         self.pipeline = Pipeline([('vect', CountVectorizerLastCharacter(min_df=1,
-                                                           analyzer='last_chars',
+                                                           analyzer=slizer,
                                                            lowercase=True,
                                                            slice_length = slice_length,
                                                            max_features=2000,
@@ -49,6 +49,15 @@ class VectorizerMixinSlices(VectorizerMixin):
                 ngrams.append(w[(wLength-length):wLength+length])
         return ngrams
 
+    def _first_chars(self, text_document, length):
+        text_document = self._white_spaces.sub(" ", text_document)
+        ngrams = []
+        for w in text_document.split():
+            wLength = len(w)
+            if wLength >= length:
+                ngrams.append(w[0:length])
+        return ngrams
+
 
 
     def build_analyzer(self):
@@ -67,6 +76,10 @@ class VectorizerMixinSlices(VectorizerMixin):
 
         elif self.analyzer == 'last_chars':
             return lambda doc: self._last_chars(
+                preprocess(self.decode(doc)), self.slice_length)
+
+        elif self.analyzer == 'first_chars':
+            return lambda doc: self._first_chars(
                 preprocess(self.decode(doc)), self.slice_length)
 
         elif self.analyzer == 'word':
