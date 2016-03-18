@@ -8,7 +8,7 @@ from profiler16_un.profilers.character_ngram_profiler import CharacterNGramProfi
 from profiler16_un.profilers.logistic_regression_profiler import LogisticRegressionProfiler
 from profiler16_un.profilers.random_forest_profiler import RandomForestProfiler
 from profiler16_un.profilers.aleksey_profiler import AlekseyProfiler
-from profiler16_un.profilers.last_character_profiler import LastCharacterProfiler
+from profiler16_un.profilers.last_character_profiler import WordSliceProfiler
 from profiler16_un.playbooks.accumulate_benchmark import AccumulateBenchmark
 from profiler16_un.playbooks.sklearn_benchmark import SklearnBenchmark
 from profiler16_un.configuration import Configuration
@@ -38,9 +38,9 @@ def configure(conf):
     def build_aleksey_proilfer(**args):
         return AlekseyProfiler(**args)
 
-    @conf.profiler('last_character_profiler', lastCharLength=3)
+    @conf.profiler('last_character_profiler', slice_length=3)
     def build_last_character_profiler(**args):
-        return LastCharacterProfiler(**args)
+        return WordSliceProfiler(**args)
 
     @conf.dataset('pan2014/gender/english/blog', label='gender', types=['blog'], language='english')
     @conf.dataset('pan2014/age/english/blog', label='age_group', types=['blog'], language='english')

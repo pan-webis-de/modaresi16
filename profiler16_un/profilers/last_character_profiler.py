@@ -10,14 +10,14 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_extraction.text import VectorizerMixin
 from sklearn.feature_extraction.text import CountVectorizer
 
-class LastCharacterProfiler():
+class WordSliceProfiler():
 
-    def __init__(self, lastCharLength = 1):
-        print("{} {}".format("lastCharLength", lastCharLength))
+    def __init__(self, slice_length = 1):
+        print("{} {}".format("slice length:", slice_length))
         self.pipeline = Pipeline([('vect', CountVectorizerLastCharacter(min_df=1,
                                                            analyzer='last_chars',
                                                            lowercase=True,
-                                                           lastCharLength = lastCharLength,
+                                                           slice_length = slice_length,
                                                            max_features=2000,
                                                            )),
                                   ('tfidf', TfidfTransformer(sublinear_tf=False,
@@ -39,7 +39,7 @@ class LastCharacterProfiler():
 
 
 
-class VectorizerMixinLastChar(VectorizerMixin):
+class VectorizerMixinSlices(VectorizerMixin):
     def _last_chars(self, text_document, length):
         text_document = self._white_spaces.sub(" ", text_document)
         ngrams = []
@@ -67,7 +67,7 @@ class VectorizerMixinLastChar(VectorizerMixin):
 
         elif self.analyzer == 'last_chars':
             return lambda doc: self._last_chars(
-                preprocess(self.decode(doc)), self.lastCharLength)
+                preprocess(self.decode(doc)), self.slice_length)
 
         elif self.analyzer == 'word':
             stop_words = self.get_stop_words()
@@ -80,14 +80,14 @@ class VectorizerMixinLastChar(VectorizerMixin):
             raise ValueError('%s is not a valid tokenization scheme/analyzer' %
                              self.analyzer)
 
-class CountVectorizerLastCharacter(CountVectorizer, VectorizerMixinLastChar):
+class CountVectorizerLastCharacter(CountVectorizer, VectorizerMixinSlices):
     def __init__(self, input='content', encoding='utf-8',
                  decode_error='strict', strip_accents=None,
                  lowercase=True, preprocessor=None, tokenizer=None,
                  stop_words=None, token_pattern=r"(?u)\b\w\w+\b",
                  ngram_range=(1, 1), analyzer='word',
                  max_df=1.0, min_df=1, max_features=None,
-                 lastCharLength = 1,
+                 slice_length = 1,
                  vocabulary=None, binary=False, dtype=np.int64):
 
         self.input = input
@@ -102,7 +102,7 @@ class CountVectorizerLastCharacter(CountVectorizer, VectorizerMixinLastChar):
         self.stop_words = stop_words
         self.max_df = max_df
         self.min_df = min_df
-        self.lastCharLength = lastCharLength
+        self.slice_length = slice_length
         if max_df < 0 or min_df < 0:
             raise ValueError("negative value for max_df of min_df")
         self.max_features = max_features
