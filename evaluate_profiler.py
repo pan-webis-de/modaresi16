@@ -2,6 +2,7 @@
 import logging
 import argparse
 import profiler16_un.datasets.pan2014
+import profiler16_un.datasets.pan2016
 from profiler16_un.profilers.random_profiler import RandomProfiler
 from profiler16_un.profilers.character_ngram_profiler import CharacterNGramProfiler
 from profiler16_un.profilers.logistic_regression_profiler import LogisticRegressionProfiler
@@ -41,15 +42,21 @@ def configure(conf):
     def build_last_character_profiler(**args):
         return LastCharacterProfiler(**args)
 
-
     @conf.dataset('pan2014/gender/english/blog', label='gender', types=['blog'], language='english')
     @conf.dataset('pan2014/age/english/blog', label='age_group', types=['blog'], language='english')
     @conf.dataset('pan2014/gender/english/socialmedia', label='gender', types=['socialmedia'], language='english')
     @conf.dataset('pan2014/age/english/socialmedia', label='age_group', types=['socialmedia'], language='english')
     @conf.dataset('pan2014/gender/english/review', label='gender', types=['review'], language='english')
     @conf.dataset('pan2014/age/english/review', label='age_group', types=['review'], language='english')
-    def build_dataset_prns(label=None, types=None, language=None):
+    def build_dataset_pan14(label=None, types=None, language=None):
         dataset_iterator = profiler16_un.datasets.pan2014.load(label=label, types=types, language=language)
+        pred_profile = lambda profiler, X: profiler.predict(X)
+        true_profile = lambda Y: Y
+        return dataset_iterator, pred_profile, true_profile
+
+    @conf.dataset('pan2016/gender/english/twitter', label='gender', types=['twitter'], language='english')
+    def build_dataset_pan16(label=None, types=None, language=None):
+        dataset_iterator = profiler16_un.datasets.pan2016.load(label=label, types=types, language=language)
         pred_profile = lambda profiler, X: profiler.predict(X)
         true_profile = lambda Y: Y
         return dataset_iterator, pred_profile, true_profile

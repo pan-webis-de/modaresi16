@@ -6,6 +6,7 @@ from sklearn.feature_selection import chi2
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 
+
 # ToDo: Extract this method to a new module. This can be used by other profilers too!
 # ToDo: Add other classifiers
 def get_classifier(method='logistic_regression'):
@@ -22,6 +23,7 @@ def get_classifier(method='logistic_regression'):
                                       n_jobs=-1,
                                       random_state=123)
 
+
 class CharacterNGramProfiler():
     def __init__(self, min_n=1, max_n=1, method='logistic_regression'):
         self.pipeline = Pipeline([('vect', CountVectorizer(min_df=1,
@@ -35,7 +37,6 @@ class CharacterNGramProfiler():
                                                              )),
                                   ('chi', SelectKBest(chi2, k='all')),
                                   ('method', get_classifier(method))])
-
 
     def train(self, X_train, Y_train):
         self.model = self.pipeline.fit(X_train, Y_train)
