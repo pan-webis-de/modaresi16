@@ -17,6 +17,7 @@ setup(
     install_requires=[
         'beautifulsoup4',
         'simplejson',
-        'pandas_confusion'
+        'pandas_confusion',
+        'polyglot'
     ]
 )
