@@ -8,7 +8,7 @@ from profiler16_un.profilers.character_ngram_profiler import CharacterNGramProfi
 from profiler16_un.profilers.logistic_regression_profiler import LogisticRegressionProfiler
 from profiler16_un.profilers.random_forest_profiler import RandomForestProfiler
 from profiler16_un.profilers.aleksey_profiler import AlekseyProfiler
-from profiler16_un.profilers.last_character_profiler import WordSliceProfiler
+from profiler16_un.profilers.word_slice_profiler import WordSliceProfiler
 from profiler16_un.playbooks.accumulate_benchmark import AccumulateBenchmark
 from profiler16_un.playbooks.sklearn_benchmark import SklearnBenchmark
 from profiler16_un.configuration import Configuration
