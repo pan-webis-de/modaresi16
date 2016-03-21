@@ -38,6 +38,7 @@ def configure(conf):
     def build_aleksey_proilfer(**args):
         return AlekseyProfiler(**args)
 
+<<<<<<< Updated upstream
     @conf.profiler('last_character_profiler', slice_length=3, slizer='last_chars')
     def build_last_character_profiler(**args):
         return WordSliceProfiler(**args)
@@ -46,6 +47,8 @@ def configure(conf):
     def build_last_character_profiler(**args):
         return WordSliceProfiler(**args)
 
+=======
+>>>>>>> Stashed changes
     @conf.dataset('pan2014/gender/english/blog', label='gender', types=['blog'], language='english')
     @conf.dataset('pan2014/age/english/blog', label='age_group', types=['blog'], language='english')
     @conf.dataset('pan2014/gender/english/socialmedia', label='gender', types=['socialmedia'], language='english')
