@@ -9,6 +9,7 @@ from profiler16_un.profilers.logistic_regression_profiler import LogisticRegress
 from profiler16_un.profilers.random_forest_profiler import RandomForestProfiler
 from profiler16_un.profilers.aleksey_profiler import AlekseyProfiler
 from profiler16_un.profilers.word_slice_profiler import WordSliceProfiler
+from profiler16_un.profilers.pos_tag_profiler import POSTagProfiler
 from profiler16_un.playbooks.accumulate_benchmark import AccumulateBenchmark
 from profiler16_un.playbooks.sklearn_benchmark import SklearnBenchmark
 from profiler16_un.configuration import Configuration
@@ -45,6 +46,10 @@ def configure(conf):
     @conf.profiler('first_character_profiler', slice_length=3, slizer='first_chars')
     def build_last_character_profiler(**args):
         return WordSliceProfiler(**args)
+
+    @conf.profiler('pos_tag_profiler', absolute_frequency=True, normalize=False)
+    def build_pos_tag_profiler(**args):
+        return POSTagProfiler(**args)
 
     @conf.dataset('pan2014/gender/english/blog', label='gender', types=['blog'], language='english')
     @conf.dataset('pan2014/age/english/blog', label='age_group', types=['blog'], language='english')
