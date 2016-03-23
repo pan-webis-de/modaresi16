@@ -47,7 +47,7 @@ def configure(conf):
     def build_last_character_profiler(**args):
         return WordSliceProfiler(**args)
 
-    @conf.profiler('pos_tag_profiler', absolute_frequency=True, normalize=False)
+    @conf.profiler('pos_tag_profiler_en', absolute_frequency=True, normalize=False, language='en')
     def build_pos_tag_profiler(**args):
         return POSTagProfiler(**args)
 
