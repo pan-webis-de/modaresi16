@@ -10,24 +10,24 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_extraction.text import VectorizerMixin
 from sklearn.feature_extraction.text import CountVectorizer
 
-class WordSliceProfiler():
 
-    def __init__(self, slice_length = 1, slizer='last_chars'):
+class WordSliceProfiler():
+    def __init__(self, slice_length=1, slizer='last_chars'):
         print("{} {}".format("slice length:", slice_length))
         self.pipeline = Pipeline([('vect', CountVectorizerLastCharacter(min_df=1,
-                                                           analyzer=slizer,
-                                                           lowercase=True,
-                                                           slice_length = slice_length,
-                                                           max_features=2000,
-                                                           )),
+                                                                        analyzer=slizer,
+                                                                        lowercase=True,
+                                                                        slice_length=slice_length,
+                                                                        max_features=2000,
+                                                                        )),
                                   ('tfidf', TfidfTransformer(sublinear_tf=False,
                                                              use_idf=False
                                                              )),
                                   ('chi', SelectKBest(chi2, k='all')),
                                   ('method', RandomForestClassifier(n_estimators=250,
-                                                bootstrap=False,
-                                                n_jobs=-1,
-                                                random_state=123))
+                                                                    bootstrap=False,
+                                                                    n_jobs=-1,
+                                                                    random_state=123))
                                   ])
 
     def train(self, X_train, Y_train):
@@ -37,8 +37,6 @@ class WordSliceProfiler():
         return self.model.predict(X)
 
 
-
-
 class VectorizerMixinSlices(VectorizerMixin):
     def _last_chars(self, text_document, length):
         text_document = self._white_spaces.sub(" ", text_document)
@@ -46,7 +44,7 @@ class VectorizerMixinSlices(VectorizerMixin):
         for w in text_document.split():
             wLength = len(w)
             if wLength >= length:
-                ngrams.append(w[(wLength-length):wLength+length])
+                ngrams.append(w[(wLength - length):wLength + length])
         return ngrams
 
     def _first_chars(self, text_document, length):
@@ -57,8 +55,6 @@ class VectorizerMixinSlices(VectorizerMixin):
             if wLength >= length:
                 ngrams.append(w[0:length])
         return ngrams
-
-
 
     def build_analyzer(self):
         """Return a callable that handles preprocessing and tokenization"""
@@ -93,6 +89,7 @@ class VectorizerMixinSlices(VectorizerMixin):
             raise ValueError('%s is not a valid tokenization scheme/analyzer' %
                              self.analyzer)
 
+
 class CountVectorizerLastCharacter(CountVectorizer, VectorizerMixinSlices):
     def __init__(self, input='content', encoding='utf-8',
                  decode_error='strict', strip_accents=None,
@@ -100,7 +97,7 @@ class CountVectorizerLastCharacter(CountVectorizer, VectorizerMixinSlices):
                  stop_words=None, token_pattern=r"(?u)\b\w\w+\b",
                  ngram_range=(1, 1), analyzer='word',
                  max_df=1.0, min_df=1, max_features=None,
-                 slice_length = 1,
+                 slice_length=1,
                  vocabulary=None, binary=False, dtype=np.int64):
 
         self.input = input
@@ -121,7 +118,7 @@ class CountVectorizerLastCharacter(CountVectorizer, VectorizerMixinSlices):
         self.max_features = max_features
         if max_features is not None:
             if (not isinstance(max_features, numbers.Integral) or
-                    max_features <= 0):
+                        max_features <= 0):
                 raise ValueError(
                     "max_features=%r, neither a positive integer nor None"
                     % max_features)
