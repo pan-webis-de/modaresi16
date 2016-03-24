@@ -11,6 +11,7 @@ import polyglot
 from polyglot.text import Text, Word
 from polyglot.tag import POSTagger
 import logging
+from polyglot.tag import get_pos_tagger
 
 
 def tokenize(x):
@@ -33,6 +34,17 @@ def num_tokens(tokens):
     return len(tokens)
 
 
+def get_pos_tag_distribution(x, language):
+    #print(language)
+    polyglot_result = Text(x)  # setting the language still does not work. also not with TextWithFixedLanguage(x, language)
+    polyglot_result.__lang = language
+    pos_tag_count_dictionary = dict.fromkeys(get_pos_tags_array(), 0)
+    for word, tag in polyglot_result.pos_tags:
+        pos_tag_count_dictionary[tag] += 1
+    return pos_tag_count_dictionary
+    # print(pos_tag_count_dictionary)
+
+
 class POSFeatures(BaseEstimator):
     def __init__(self, language='en', absolute_frequency=True, normalize=False):
         self.language = language
@@ -49,20 +61,16 @@ class POSFeatures(BaseEstimator):
         tokens_list = [tokenize(doc) for doc in documents]
         # print(len(tokens_list[0]))
 
-
-        for doc in documents:
-            polyglot_result = Text(doc)
-            polyglot_result.__lang = self.language
-            pos_tag_count_dictionary = dict.fromkeys(get_pos_tags_array(), 0)
-
-            for word, tag in polyglot_result.pos_tags:
-                pos_tag_count_dictionary[tag] += 1
-            print(pos_tag_count_dictionary)
+        test = [get_pos_tag_distribution(doc, self.language) for doc in documents]
+        print(len(test))
+        print(len(test[0]))
+        print(test[0])
 
         # todo: replace both values with POS tag distribution
         average_token_lengths = [average_token_length(tokens) for tokens in tokens_list]
         num_tokenss = [num_tokens(tokens) for tokens in tokens_list]
-        X = np.array([average_token_lengths, num_tokenss]).T
+        # X = np.array([average_token_lengths, num_tokenss]).T
+        X = np.array(test).T
         # print(X)
         if not hasattr(self, 'scalar'):
             self.scalar = preprocessing.StandardScaler().fit(X)
@@ -93,3 +101,14 @@ class POSTagProfiler():
 
     def predict(self, X):
         return self.model.predict(X)
+
+
+class TextWithFixedLanguage(Text):
+    def __init__(self, text, language='en'):
+        self.overwrite_language = language
+        super(TextWithFixedLanguage, self).__init__(text)
+        # self.language.code = language
+        # self.language(language)
+
+        # def pos_tagger(self):
+        # return super.get_pos_tagger(lang=self.overwrite_language)
