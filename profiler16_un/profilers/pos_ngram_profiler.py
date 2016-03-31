@@ -1,5 +1,5 @@
 from profiler16_un.taggers.polyglot_pos_tagger import PolyglotPOSTagger
-import profiler16_un.tagger
+import profiler16_un.taggers
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.ensemble import RandomForestClassifier
