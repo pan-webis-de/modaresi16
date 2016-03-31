@@ -1,5 +1,5 @@
 from profiler16_un.taggers.polyglot_pos_tagger import PolyglotPOSTagger
-import profiler16_un.taggers
+from profiler16_un.taggers import pos_tags
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.ensemble import RandomForestClassifier
@@ -33,11 +33,9 @@ class POSTokenizer(object):
 
 
 class POSNGramProfiler():
-    def __init__(self, lang='en'):
+    def __init__(self, lang='en', min_n=1, max_n=1, method='logistic_regression'):
         self.lang = lang
-        self.tokenizer = Tokenizer(lang=lang)
-
-    def __init__(self, min_n=1, max_n=1, method='logistic_regression'):
+        self.tokenizer = POSTokenizer(lang=lang)
         self.pipeline = Pipeline([('vect', CountVectorizer(min_df=1,
                                                            analyzer='word',
                                                            lowercase=True,

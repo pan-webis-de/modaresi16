@@ -52,10 +52,10 @@ def configure(conf):
     def build_pos_tag_profiler(**args):
         return POSTagProfiler(**args)
 
-    @conf.profiler('pos_ngram_profiler_en', lang='en')
-    @conf.profiler('pos_ngram_profiler_es', lang='es')
-    @conf.profiler('pos_ngram_profiler_nl', lang='nl')
-    def build_pos_tag_profiler(**args):
+    @conf.profiler('pos_ngram_profiler_en', lang='en', min_n=3, max_n=3, method='logistic_regression')
+    @conf.profiler('pos_ngram_profiler_es', lang='es', min_n=3, max_n=3, method='logistic_regression')
+    @conf.profiler('pos_ngram_profiler_nl', lang='nl', min_n=3, max_n=3, method='logistic_regression')
+    def build_pos_ngram_profiler(**args):
         return POSNGramProfiler(**args)
 
     @conf.dataset('pan2014/gender/english/blog', label='gender', types=['blog'], language='english')
