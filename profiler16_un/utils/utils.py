@@ -15,4 +15,3 @@ def get_classifier(method='logistic_regression'):
                                       bootstrap=False,
                                       n_jobs=-1,
                                       random_state=123)
-

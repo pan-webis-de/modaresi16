@@ -2,26 +2,10 @@ from profiler16_un.taggers.polyglot_pos_tagger import PolyglotPOSTagger
 from profiler16_un.taggers import pos_tags
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
-from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
-
-
-def get_classifier(method='logistic_regression'):
-    if 'logistic_regression' == method:
-        return LogisticRegression(C=1e3,
-                                  tol=0.01,
-                                  multi_class='ovr',
-                                  solver='liblinear',
-                                  n_jobs=-1,
-                                  random_state=123)
-    if 'random_forest' == method:
-        return RandomForestClassifier(n_estimators=250,
-                                      bootstrap=False,
-                                      n_jobs=-1,
-                                      random_state=123)
+from ..utils.utils import get_classifier
 
 
 class POSTokenizer(object):
