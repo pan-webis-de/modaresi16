@@ -12,7 +12,20 @@ from polyglot.text import Text, Word
 from polyglot.tag import POSTagger
 import logging
 from polyglot.tag import get_pos_tagger
+from profiler16_un.taggers.polyglot_pos_tagger import PolyglotPOSTagger
 
+# eager instantiation
+pos_tagger_en = PolyglotPOSTagger(lang='en')
+pos_tagger_nl = PolyglotPOSTagger(lang='nl')
+pos_tagger_es = PolyglotPOSTagger(lang='es')
+
+def pos_tags(text='', lang='en'):
+    if 'en' == lang:
+        return pos_tagger_en.pos_tags(text)
+    if 'es' == lang:
+        return pos_tagger_es.pos_tags(text)
+    if 'nl' == lang:
+        return pos_tagger_nl.pos_tags(text)
 
 def tokenize(x):
     return x.split()
@@ -39,7 +52,7 @@ def get_pos_tag_distribution(x, language):
     polyglot_result = Text(x)  # setting the language still does not work. also not with TextWithFixedLanguage(x, language)
     polyglot_result.__lang = language
     pos_tag_count_dictionary = dict.fromkeys(get_pos_tags_array(), 0)
-    for word, tag in polyglot_result.pos_tags:
+    for word, tag in pos_tags(text=x, lang=language):
         pos_tag_count_dictionary[tag] += 1
     return pos_tag_count_dictionary
     # print(pos_tag_count_dictionary)
