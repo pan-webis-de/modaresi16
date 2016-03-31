@@ -35,7 +35,7 @@ def num_tokens(tokens):
 
 
 def get_pos_tag_distribution(x, language):
-    #print(language)
+    # print(language)
     polyglot_result = Text(x)  # setting the language still does not work. also not with TextWithFixedLanguage(x, language)
     polyglot_result.__lang = language
     pos_tag_count_dictionary = dict.fromkeys(get_pos_tags_array(), 0)
