@@ -20,7 +20,6 @@ WORKDIR /var/www
 ADD . .
 RUN pip install -r requirements.txt
 RUN pip install -e .
-RUN py.test --pep8
 
 RUN polyglot download --dir /root/polyglot_data pos2.nl
 RUN polyglot download --dir /root/polyglot_data embeddings2.nl
@@ -28,3 +27,5 @@ RUN polyglot download --dir /root/polyglot_data pos2.en
 RUN polyglot download --dir /root/polyglot_data embeddings2.en
 RUN polyglot download --dir /root/polyglot_data pos2.es
 RUN polyglot download --dir /root/polyglot_data embeddings2.es
+
+RUN py.test --pep8
