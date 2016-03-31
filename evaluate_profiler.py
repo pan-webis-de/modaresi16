@@ -5,6 +5,7 @@ import profiler16_un.datasets.pan2014
 import profiler16_un.datasets.pan2016
 from profiler16_un.profilers.random_profiler import RandomProfiler
 from profiler16_un.profilers.character_ngram_profiler import CharacterNGramProfiler
+from profiler16_un.profilers.pos_ngram_profiler import POSNGramProfiler
 from profiler16_un.profilers.logistic_regression_profiler import LogisticRegressionProfiler
 from profiler16_un.profilers.random_forest_profiler import RandomForestProfiler
 from profiler16_un.profilers.aleksey_profiler import AlekseyProfiler
@@ -50,6 +51,12 @@ def configure(conf):
     @conf.profiler('pos_tag_profiler_en', absolute_frequency=True, normalize=False, language='en')
     def build_pos_tag_profiler(**args):
         return POSTagProfiler(**args)
+
+    @conf.profiler('pos_ngram_profiler_en', lang='en')
+    @conf.profiler('pos_ngram_profiler_es', lang='es')
+    @conf.profiler('pos_ngram_profiler_nl', lang='nl')
+    def build_pos_tag_profiler(**args):
+        return POSNGramProfiler(**args)
 
     @conf.dataset('pan2014/gender/english/blog', label='gender', types=['blog'], language='english')
     @conf.dataset('pan2014/age/english/blog', label='age_group', types=['blog'], language='english')
