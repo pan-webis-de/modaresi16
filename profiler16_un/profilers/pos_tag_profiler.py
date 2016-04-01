@@ -13,6 +13,7 @@ from polyglot.tag import POSTagger
 import logging
 from polyglot.tag import get_pos_tagger
 from profiler16_un.taggers.polyglot_pos_tagger import PolyglotPOSTagger
+from sklearn.preprocessing import normalize
 
 # eager instantiation
 pos_tagger_en = PolyglotPOSTagger(lang='en')
@@ -51,8 +52,6 @@ def num_tokens(tokens):
 
 def get_pos_tag_distribution(x, language):
     # print(language)
-    polyglot_result = Text(x)  # setting the language still does not work. also not with TextWithFixedLanguage(x, language)
-    polyglot_result.__lang = language
     pos_tag_count_dictionary = dict.fromkeys(get_pos_tags_array(), 0)
     for word, tag in pos_tags(text=x, lang=language):
         pos_tag_count_dictionary[tag] += 1
@@ -72,21 +71,10 @@ class POSFeatures(BaseEstimator):
         return self
 
     def transform(self, documents):
-        # print(len(documents))
         tokens_list = [tokenize(doc) for doc in documents]
-        # print(len(tokens_list[0]))
-
-        test = [get_pos_tag_distribution(doc, self.language) for doc in documents]
-        print(len(test))
-        print(len(test[0]))
-        print(test[0])
-
-        # todo: replace both values with POS tag distribution
-        average_token_lengths = [average_token_length(tokens) for tokens in tokens_list]
-        num_tokenss = [num_tokens(tokens) for tokens in tokens_list]
-        # X = np.array([average_token_lengths, num_tokenss]).T
-        X = np.array(test).T
-        # print(X)
+        # distributions = [normalize(get_pos_tag_distribution(doc, self.language).values()) for doc in documents]
+        distributions = [get_pos_tag_distribution(doc, self.language).values() for doc in documents]
+        X = np.array(distributions)
         if not hasattr(self, 'scalar'):
             self.scalar = preprocessing.StandardScaler().fit(X)
         return self.scalar.transform(X)
