@@ -23,16 +23,6 @@ regex_str = [
 class TweetTokenizer(object):
     def __init__(self):
         self.tokens_re = re.compile(r'(' + '|'.join(regex_str) + ')', re.VERBOSE | re.IGNORECASE)
-        self.emoticon_re = re.compile(r'^' + emoticons_str + '$', re.VERBOSE | re.IGNORECASE)
-
-    def tokenize(self, doc):
-        return self.tokens_re.findall(doc)
-
-    def preprocess(self, doc, lowercase=False):
-        tokens = self.tokenize(doc)
-        if lowercase:
-            tokens = [token if self.emoticon_re.search(token) else token.lower() for token in tokens]
-        return tokens
 
     def __call__(self, doc):
-        return self.preprocess(doc)
+        return self.tokens_re.findall(doc)
