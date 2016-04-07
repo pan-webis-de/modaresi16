@@ -34,6 +34,10 @@ class TestTextCleaner(unittest.TestCase):
         cleaner = TextCleaner(filter_hashtags=True, filter_urls=True, filter_mentions=True, filter_non_latin=True)
         self.assertEqual(cleaner(u'Hello @pasmod #httpe یین http://www.google.de'), u'Hello')
 
+    def test_lowercase(self):
+        cleaner = TextCleaner(lowercase=True)
+        self.assertEqual(cleaner(u'HellO'), u'hello')
+
 
 if __name__ == '__main__':
     unittest.main()
