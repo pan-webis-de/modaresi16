@@ -25,5 +25,5 @@ class TextCleaner(object):
         if self.lowercase:
             doc = doc.lower()
         if self.alphabetic:
-            doc = regex.sub("[^a-zA-Z]+", "", doc)
+            doc = regex.sub("[^a-zA-Z]+", " ", doc)
         return doc.strip()
