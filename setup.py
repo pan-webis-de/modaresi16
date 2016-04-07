@@ -19,6 +19,7 @@ setup(
         'simplejson',
         'pandas_confusion',
         'polyglot',
-        'regex'
+        'regex',
+        'xgboost'
     ]
 )

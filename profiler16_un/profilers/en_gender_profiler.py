@@ -17,16 +17,13 @@ class EnglishGenderProfiler():
                                                              lowercase=True,
                                                              ngram_range=(1, 2),
                                                              tokenizer=TweetTokenizer(filter_urls=True)
-                                                             )
-                             )
+                                                             ))
         ngram_chars = ('char_ngrams', Pipeline([
-                                                 ('vect2', CountVectorizer(min_df=1,
-                                                                           analyzer='char',
-                                                                           lowercase=True,
-                                                                           ngram_range=(3, 3), max_features=20000)),
-                                               ]
-                                              )
-                      )
+                                               ('vect2', CountVectorizer(min_df=1,
+                                                                         analyzer='char',
+                                                                         lowercase=True,
+                                                                         ngram_range=(3, 3), max_features=20000)),
+                                               ]))
 
         self.pipeline = Pipeline([('features', FeatureUnion([self.ngram_tokens])),
                                   ('tfidf', TfidfTransformer(sublinear_tf=True)),
@@ -36,9 +33,7 @@ class EnglishGenderProfiler():
                                                             multi_class='ovr',
                                                             solver='liblinear',
                                                             random_state=123
-                                                            ))
-                                 ])
-
+                                                            ))])
 
     def most_informative_feature_for_class(self, vectorizer, classifier, classlabel, n=50):
         labelid = list(classifier.classes_).index(classlabel)
@@ -53,7 +48,6 @@ class EnglishGenderProfiler():
         top = zip(coefs_with_fns[:n], coefs_with_fns[:-(n + 1):-1])
         for (coef_1, fn_1), (coef_2, fn_2) in top:
             print "\t%.4f\t%-15s\t\t%.4f\t%-15s" % (coef_1, fn_1.encode('utf-8'), coef_2, fn_2.encode('utf-8'))
-
 
     def train(self, X_train, Y_train):
         self.model = self.pipeline.fit(X_train, Y_train)
