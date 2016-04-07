@@ -23,7 +23,6 @@ class SklearnBenchmark():
         X = [xy[0] for xy in dataset_list]
         Y = [xy[1] for xy in dataset_list]
         skf = StratifiedKFold(Y, n_folds=3, shuffle=True, random_state=123)
-        
         fold = 1
         for train_index, test_index in skf:
             X_train, Y_train = [X[i] for i in train_index], [Y[i] for i in train_index]
