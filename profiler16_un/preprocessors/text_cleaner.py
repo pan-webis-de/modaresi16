@@ -2,13 +2,15 @@ import regex
 
 
 class TextCleaner(object):
-    def __init__(self, filter_mentions=False, filter_hashtags=False, filter_urls=False, filter_non_latin=False, lowercase=False, filter_digits=False):
+    def __init__(self, filter_mentions=False, filter_hashtags=False,
+                 filter_urls=False, filter_non_latin=False,
+                 lowercase=False, alphabetic=False):
         self.filter_mentions = filter_mentions
         self.filter_hashtags = filter_hashtags
         self.filter_urls = filter_urls
         self.filter_non_latin = filter_non_latin
         self.lowercase = lowercase
-        self.filter_digits = filter_digits
+        self.alphabetic = alphabetic
 
     def __call__(self, doc):
         if self.filter_non_latin:
@@ -22,6 +24,6 @@ class TextCleaner(object):
             doc = regex.sub(r'http[s]?://(?:[a-z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-f][0-9a-f]))+', u'', doc)
         if self.lowercase:
             doc = doc.lower()
-        if self.filter_digits:
-            doc = regex.sub("^\d+\s|\s\d+\s|\s\d+$", "", doc)
+        if self.alphabetic:
+            doc = regex.sub("[^a-zA-Z]+", "", doc)
         return doc.strip()
