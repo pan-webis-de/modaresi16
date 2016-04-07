@@ -1,4 +1,5 @@
 import re
+import regex
 
 
 emoticons_str = r"""
@@ -24,6 +25,7 @@ other_words_str = r'(?:[\w_]+)'
 
 anything_else_str = r'(?:\S)'
 
+
 regex_str = [emoticons_str, html_tags_str]
 regex_str.append(mentions_str)
 regex_str.append(hash_tags_str)
@@ -45,11 +47,12 @@ class TweetTokenizer(object):
         self.filter_urls = filter_urls
 
     def __call__(self, doc):
+        doc = regex.sub('[\u0627-\u064a]', u'', doc)
         tokens = self.tokens_re.findall(doc)
         if self.filter_mentions:
-            [tokens.remove(token) for token in self.mentions_re.findall(doc)]
+            [tokens.remove(token) for token in self.mentions_re.findall(doc) if token in tokens]
         if self.filter_urls:
-            [tokens.remove(token) for token in self.urls_re.findall(doc)]
+            [tokens.remove(token) for token in self.urls_re.findall(doc) if token in tokens]
         if self.filter_hashtags:
-            [tokens.remove(token) for token in self.hashtags_re.findall(doc)]
+            [tokens.remove(token) for token in self.hashtags_re.findall(doc) if token in tokens]
         return tokens
