@@ -14,3 +14,6 @@ class HunspellWrapper(object):
 
     def is_correct(self, text):
         return self.hobj.spell(text)
+
+    def get_suggestion(self, text):
+        return self.hobj.suggest(text)[0]
