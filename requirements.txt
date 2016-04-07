@@ -1,2 +1,3 @@
+hunspell
 pytest==2.9.0
 pytest-pep8
