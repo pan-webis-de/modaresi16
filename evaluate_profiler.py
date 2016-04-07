@@ -11,6 +11,7 @@ from profiler16_un.profilers.random_forest_profiler import RandomForestProfiler
 from profiler16_un.profilers.aleksey_profiler import AlekseyProfiler
 from profiler16_un.profilers.word_slice_profiler import WordSliceProfiler
 from profiler16_un.profilers.pos_tag_profiler import POSTagProfiler
+from profiler16_un.profilers.spelling_error_profiler import SpellingErrorProfiler
 from profiler16_un.profilers.en_gender_profiler import EnglishGenderProfiler
 from profiler16_un.playbooks.accumulate_benchmark import AccumulateBenchmark
 from profiler16_un.playbooks.sklearn_benchmark import SklearnBenchmark
@@ -19,7 +20,6 @@ from profiler16_un.metrics.zero_one import ZeroOne
 
 
 def configure(conf):
-
     @conf.profiler('character_ngram_3_3_logistic_regression', min_n=3, max_n=3, method='logistic_regression')
     @conf.profiler('character_ngram_3_3_random_forest', min_n=3, max_n=3, method='random_forest')
     def build_character_ngram_profiler(**args):
@@ -52,6 +52,10 @@ def configure(conf):
     @conf.profiler('pos_tag_profiler_en', absolute_frequency=True, normalize=False, language='en')
     def build_pos_tag_profiler(**args):
         return POSTagProfiler(**args)
+
+    @conf.profiler('spelling_error_profiler_en', language='en')
+    def build_spelling_error_profiler(**args):
+        return SpellingErrorProfiler(**args)
 
     @conf.profiler('pos_ngram_profiler_en', lang='en', min_n=3, max_n=3, method='logistic_regression')
     @conf.profiler('pos_ngram_profiler_es', lang='es', min_n=3, max_n=3, method='logistic_regression')
@@ -111,7 +115,8 @@ if __name__ == '__main__':
     argparser.add_argument('-f', '--log-freq', dest='log_freq', type=int, default=1000,
                            help='Set log progress frequency')
     argparser.add_argument('-c', '--corpus', dest='corpus_name', type=str, required=True,
-                           help='Set name of the corpus used for the evaluation: ' + pretty_list(conf.get_dataset_names()))
+                           help='Set name of the corpus used for the evaluation: ' + pretty_list(
+                               conf.get_dataset_names()))
     argparser.add_argument('-s', '--profiler', dest='profiler_name', type=str, required=True,
                            help='Name of the invoked profiler: ' + pretty_list(conf.get_profiler_names()))
     argparser.add_argument('-m', '--metric', dest='metric_name', type=str, required=True,
