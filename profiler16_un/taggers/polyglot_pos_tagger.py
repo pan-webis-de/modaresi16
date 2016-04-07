@@ -17,8 +17,13 @@ class PolyglotPOSTagger:
         """
         if not text:
             return []
-        blob = Text(text)
         tagged_words = []
+        blob = Text(text)
+        try:
+            result = self.pos_tagger.annotate(blob.words)
+        except:
+            print 'Error'
+            return []
         for word, t in self.pos_tagger.annotate(blob.words):
             word.pos_tag = t
             tagged_words.append((word, t))
