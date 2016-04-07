@@ -25,34 +25,13 @@ other_words_str = r'(?:[\w_]+)'
 
 anything_else_str = r'(?:\S)'
 
-
-regex_str = [emoticons_str, html_tags_str]
-regex_str.append(mentions_str)
-regex_str.append(hash_tags_str)
-regex_str.append(urls_str)
-regex_str.append(numbers_str)
-regex_str.append(words_str)
-regex_str.append(other_words_str)
-regex_str.append(anything_else_str)
+regex_str = [emoticons_str, html_tags_str, mentions_str, hash_tags_str,
+             urls_str, numbers_str, words_str, other_words_str, anything_else_str]
 
 
 class TweetTokenizer(object):
-    def __init__(self, filter_mentions=False, filter_hashtags=False, filter_urls=False):
+    def __init__(self):
         self.tokens_re = re.compile(r'(' + '|'.join(regex_str) + ')', re.VERBOSE | re.IGNORECASE)
-        self.mentions_re = re.compile(r'(' + mentions_str + ')', re.VERBOSE | re.IGNORECASE)
-        self.hashtags_re = re.compile(r'(' + hash_tags_str + ')', re.VERBOSE | re.IGNORECASE)
-        self.urls_re = re.compile(r'(' + urls_str + ')', re.VERBOSE | re.IGNORECASE)
-        self.filter_mentions = filter_mentions
-        self.filter_hashtags = filter_hashtags
-        self.filter_urls = filter_urls
 
     def __call__(self, doc):
-        doc = regex.sub('[\u0627-\u064a]', u'', doc)
-        tokens = self.tokens_re.findall(doc)
-        if self.filter_mentions:
-            [tokens.remove(token) for token in self.mentions_re.findall(doc) if token in tokens]
-        if self.filter_urls:
-            [tokens.remove(token) for token in self.urls_re.findall(doc) if token in tokens]
-        if self.filter_hashtags:
-            [tokens.remove(token) for token in self.hashtags_re.findall(doc) if token in tokens]
-        return tokens
+        return self.tokens_re.findall(doc)

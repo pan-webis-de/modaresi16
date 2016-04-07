@@ -16,30 +16,6 @@ class TestTweetTokenizer(unittest.TestCase):
         tokens = self.tokenizer(tweet)
         self.assertEqual(tokens, ['RT', '@marcobonzanini', ':', 'just', 'an', 'example', '!', ':D', 'http://example.com', '#NLP'])
 
-    def test_filter_mentions(self):
-        tokenizer = TweetTokenizer(filter_mentions=True)
-        tweet = "RT @marcobonzanini: just an example! :D http://example.com #NLP"
-        tokens = tokenizer(tweet)
-        self.assertEqual(tokens, ['RT', ':', 'just', 'an', 'example', '!', ':D', 'http://example.com', '#NLP'])
-
-    def test_filter_urls(self):
-        tokenizer = TweetTokenizer(filter_urls=True)
-        tweet = "RT @marcobonzanini: just an example! :D http://example.com #NLP"
-        tokens = tokenizer(tweet)
-        self.assertEqual(tokens, ['RT', '@marcobonzanini', ':', 'just', 'an', 'example', '!', ':D', '#NLP'])
-
-    def test_filter_hashtags(self):
-        tokenizer = TweetTokenizer(filter_hashtags=True)
-        tweet = "RT @marcobonzanini: just an example! :D http://example.com #NLP"
-        tokens = tokenizer(tweet)
-        self.assertEqual(tokens, ['RT', '@marcobonzanini', ':', 'just', 'an', 'example', '!', ':D', 'http://example.com'])
-
-    def test_filter_hashtags_urls_mentions(self):
-        tokenizer = TweetTokenizer(filter_hashtags=True, filter_mentions=True, filter_urls=True)
-        tweet = "RT @marcobonzanini: just an example! :D http://example.com #NLP"
-        tokens = tokenizer(tweet)
-        self.assertEqual(tokens, ['RT', ':', 'just', 'an', 'example', '!', ':D'])
-
 
 if __name__ == '__main__':
     unittest.main()
