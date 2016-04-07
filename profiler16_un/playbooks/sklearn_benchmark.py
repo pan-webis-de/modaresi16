@@ -3,6 +3,7 @@ from sklearn.cross_validation import StratifiedKFold
 from pandas_confusion import ConfusionMatrix
 from sklearn.metrics import accuracy_score
 import pandas as pd
+from sklearn.cross_validation import StratifiedKFold
 
 
 pd.set_option('display.max_rows', 2000)
@@ -21,16 +22,19 @@ class SklearnBenchmark():
         dataset_list = list(dataset_iterator)
         X = [xy[0] for xy in dataset_list]
         Y = [xy[1] for xy in dataset_list]
-        skf = [fold for fold in StratifiedKFold(Y, n_folds=2, shuffle=True, random_state=123)]
-        train_index, test_index = skf[0]
-        X_train, Y_train = [X[i] for i in train_index], [Y[i] for i in train_index]
-        X_test, Y_test = [X[i] for i in test_index], [Y[i] for i in test_index]
-        profiler.train(X_train, Y_train)
-        Y_pred = profiler.predict(X_test)
-        print '*' * 50
-        print 'Confusion Matrix'
-        print '*' * 50
-        print(ConfusionMatrix(Y_test, Y_pred))
-        print '*' * 50
-        print 'Accuracy: {}'.format(accuracy_score(Y_test, Y_pred))
-        print '*' * 50
+        skf = StratifiedKFold(Y, n_folds=3, shuffle=True, random_state=123)
+        
+        fold = 1
+        for train_index, test_index in skf:
+            X_train, Y_train = [X[i] for i in train_index], [Y[i] for i in train_index]
+            X_test, Y_test = [X[i] for i in test_index], [Y[i] for i in test_index]
+            profiler.train(X_train, Y_train)
+            Y_pred = profiler.predict(X_test)
+            print '*' * 50
+            print 'Confusion Matrix -> Fold {}'.format(fold)
+            print '*' * 50
+            print(ConfusionMatrix(Y_test, Y_pred))
+            print '+' * 50
+            print 'Accuracy: {}'.format(accuracy_score(Y_test, Y_pred))
+            print '*' * 50
+            fold = fold + 1
