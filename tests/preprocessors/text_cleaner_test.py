@@ -38,6 +38,10 @@ class TestTextCleaner(unittest.TestCase):
         cleaner = TextCleaner(lowercase=True)
         self.assertEqual(cleaner(u'HellO'), u'hello')
 
+    def test_filter_digits(self):
+        cleaner = TextCleaner(filter_digits=True)
+        self.assertEqual(cleaner(u'Hell02 1984'), u'Hell02')
+
 
 if __name__ == '__main__':
     unittest.main()
