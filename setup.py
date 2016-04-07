@@ -18,6 +18,7 @@ setup(
         'beautifulsoup4',
         'simplejson',
         'pandas_confusion',
-        'polyglot'
+        'polyglot',
+        'regex'
     ]
 )
