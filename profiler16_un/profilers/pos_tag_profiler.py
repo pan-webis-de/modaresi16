@@ -14,6 +14,7 @@ import logging
 from polyglot.tag import get_pos_tagger
 from profiler16_un.taggers.polyglot_pos_tagger import PolyglotPOSTagger
 from sklearn.preprocessing import normalize
+import math
 
 # eager instantiation
 pos_tagger_en = PolyglotPOSTagger(lang='en')
@@ -32,6 +33,18 @@ def pos_tags(text='', lang='en'):
 
 def tokenize(x):
     return x.split()
+
+
+def normalize_vector(x):
+    x = np.array(x, dtype=np.float64)
+    sumvalue = 0
+    for i in xrange(0, 16):
+        sumvalue += (x[i] * x[i])
+    sumvalue = math.sqrt(sumvalue)
+    if sumvalue > 0:
+        for i in xrange(0, 16):
+            x[i] = x[i] / sumvalue
+    return x
 
 
 def get_pos_tags_array():
@@ -73,7 +86,7 @@ class POSFeatures(BaseEstimator):
     def transform(self, documents):
         tokens_list = [tokenize(doc) for doc in documents]
         # distributions = [normalize(get_pos_tag_distribution(doc, self.language).values()) for doc in documents]
-        distributions = [get_pos_tag_distribution(doc, self.language).values() for doc in documents]
+        distributions = [normalize_vector(get_pos_tag_distribution(doc, self.language).values()) for doc in documents]
         X = np.array(distributions)
         if not hasattr(self, 'scalar'):
             self.scalar = preprocessing.StandardScaler().fit(X)
