@@ -9,6 +9,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from ..tokenizers.tweet_tokenizer import TweetTokenizer
 from sklearn.pipeline import FeatureUnion
+from ..utils.utils import get_classifier
 
 
 class EnglishGenderProfiler():
@@ -16,7 +17,7 @@ class EnglishGenderProfiler():
         self.ngram_tokens = ('ngram_tokens', CountVectorizer(min_df=1,
                                                              lowercase=True,
                                                              ngram_range=(1, 2),
-                                                             tokenizer=TweetTokenizer(filter_urls=True)
+                                                             tokenizer=TweetTokenizer()
                                                              ))
         ngram_chars = ('char_ngrams', Pipeline([
                                                ('vect2', CountVectorizer(min_df=1,
@@ -28,12 +29,7 @@ class EnglishGenderProfiler():
         self.pipeline = Pipeline([('features', FeatureUnion([self.ngram_tokens])),
                                   ('tfidf', TfidfTransformer(sublinear_tf=True)),
                                   ('chi', SelectPercentile(chi2, percentile=95)),
-                                  ('lr', LogisticRegression(C=1e3,
-                                                            tol=0.01,
-                                                            multi_class='ovr',
-                                                            solver='liblinear',
-                                                            random_state=123
-                                                            ))])
+                                  ('lr', get_classifier(method=method))])
 
     def most_informative_feature_for_class(self, vectorizer, classifier, classlabel, n=50):
         labelid = list(classifier.classes_).index(classlabel)
