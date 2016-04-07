@@ -30,10 +30,9 @@ class TestTextCleaner(unittest.TestCase):
         cleaner = TextCleaner(filter_hashtags=True)
         self.assertEqual(cleaner(u'Hello @pasmod #httpe'), u'Hello @pasmod')
 
-    def test_filtering_hashtags(self):
-        cleaner = TextCleaner(filter_hashtags=True)
-        self.assertEqual(cleaner(u'Hello @pasmod #httpe'), u'Hello @pasmod')
-    
+    def test_filtering_everything(self):
+        cleaner = TextCleaner(filter_hashtags=True, filter_urls=True, filter_mentions=True, filter_non_latin=True)
+        self.assertEqual(cleaner(u'Hello @pasmod #httpe یین http://www.google.de'), u'Hello')
 
 
 if __name__ == '__main__':
