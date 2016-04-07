@@ -5,15 +5,10 @@ from sklearn.svm import SVC
 from sklearn.pipeline import Pipeline
 import numpy as np
 from polyglot.text import Text
-from polyglot.downloader import downloader
-
-import polyglot
 from polyglot.text import Text, Word
-from polyglot.tag import POSTagger
 import logging
-from polyglot.tag import get_pos_tagger
 from profiler16_un.taggers.polyglot_pos_tagger import PolyglotPOSTagger
-from sklearn.preprocessing import normalize
+
 import math
 
 # eager instantiation
@@ -53,29 +48,17 @@ def get_pos_tags_array():
          'SCONJ', 'SYM', 'VERB', 'X'])
 
 
-def average_token_length(tokens):
-    if len(tokens) == 0:
-        return 0
-    return sum(map(len, tokens)) / float(len(tokens))
-
-
-def num_tokens(tokens):
-    return len(tokens)
-
-
 def get_pos_tag_distribution(x, language):
-    # print(language)
     pos_tag_count_dictionary = dict.fromkeys(get_pos_tags_array(), 0)
     for word, tag in pos_tags(text=x, lang=language):
         pos_tag_count_dictionary[tag] += 1
     return pos_tag_count_dictionary
-    # print(pos_tag_count_dictionary)
 
 
 class POSFeatures(BaseEstimator):
     def __init__(self, language='en', absolute_frequency=True, normalize=False):
         self.language = language
-        print("{} {}".format("language:", self.language))
+        # print("{} {}".format("language:", self.language))
 
     def get_feature_names(self):
         return get_pos_tags_array
@@ -85,7 +68,6 @@ class POSFeatures(BaseEstimator):
 
     def transform(self, documents):
         tokens_list = [tokenize(doc) for doc in documents]
-        # distributions = [normalize(get_pos_tag_distribution(doc, self.language).values()) for doc in documents]
         distributions = [normalize_vector(get_pos_tag_distribution(doc, self.language).values()) for doc in documents]
         X = np.array(distributions)
         if not hasattr(self, 'scalar'):
@@ -95,20 +77,9 @@ class POSFeatures(BaseEstimator):
 
 # force language to skip language detection step that might cause the POS tagger to load the wrong model
 class POSTagProfiler():
-    def __init__(self, absolute_frequency=True, normalize=False, language='en'):
+    def __init__(self, language='en'):
         logger = logging.getLogger("polyglot.mapping.expansion")
         logger.setLevel(logging.WARNING)
-
-        # text = Text("Ik ben apetrots op je")
-        # text.__lang = 'de'
-        # for word, tag in text.pos_tags:
-        # print(u"{:<16}{:>2}".format(word, tag).encode('utf-8'))
-        # print(text.pos_tags)
-        # print("{:<16}{}".format("Word", "POS Tag")+"\n"+"-"*30)
-        # for word, tag in text.pos_tags:
-        # print(u"{:<16}{:>2}".format(word, tag)
-
-        # print(downloader.supported_languages_table("pos2"))
         self.pipeline = Pipeline([('vect', POSFeatures(language=language)),
                                   ('svm', SVC())])
 
@@ -123,8 +94,3 @@ class TextWithFixedLanguage(Text):
     def __init__(self, text, language='en'):
         self.overwrite_language = language
         super(TextWithFixedLanguage, self).__init__(text)
-        # self.language.code = language
-        # self.language(language)
-
-        # def pos_tagger(self):
-        # return super.get_pos_tagger(lang=self.overwrite_language)
