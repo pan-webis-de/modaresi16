@@ -26,10 +26,11 @@ class SklearnBenchmark():
         X_train, Y_train = [X[i] for i in train_index], [Y[i] for i in train_index]
         X_test, Y_test = [X[i] for i in test_index], [Y[i] for i in test_index]
         profiler.train(X_train, Y_train)
+        Y_pred = profiler.predict(X_test)
         print '*' * 50
         print 'Confusion Matrix'
         print '*' * 50
-        print(ConfusionMatrix(Y_test, profiler.predict(X_test)))
+        print(ConfusionMatrix(Y_test, Y_pred))
         print '*' * 50
-        print 'Accuracy: {}'.format(accuracy_score(Y_test, profiler.predict(X_test)))
+        print 'Accuracy: {}'.format(accuracy_score(Y_test, Y_pred))
         print '*' * 50
