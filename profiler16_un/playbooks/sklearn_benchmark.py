@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 class SklearnBenchmark():
 
-    def run(self, dataset_iterator, profiler, metric, pred_profile, true_profile):
+    def run(self, dataset_iterator, profiler, pred_profile, true_profile):
         dataset_list = list(dataset_iterator)
         X = [xy[0] for xy in dataset_list]
         Y = [xy[1] for xy in dataset_list]

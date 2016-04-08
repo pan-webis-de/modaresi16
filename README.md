@@ -18,7 +18,6 @@ Then you can start to run different experiments:
 ``` bash
 python evaluate_profiler.py 
 --corpus=pan2014/gender/english/blog
---metric=zero_one
 --benchmark=sklearn
 --profiler=logistic_regression
 ```
