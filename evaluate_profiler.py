@@ -78,10 +78,6 @@ def configure(conf):
         true_profile = lambda Y: Y
         return dataset_iterator, pred_profile, true_profile
 
-    @conf.benchmark('sklearn')
-    def build_sklearn_benchmark(**args):
-        return SklearnBenchmark(**args)
-
 
 def pretty_list(items):
     return ', '.join([x for x in items])
