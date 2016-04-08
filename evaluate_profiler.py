@@ -37,10 +37,6 @@ def configure(conf):
     def build_random_forest_profiler(**args):
         return RandomForestProfiler(**args)
 
-    @conf.profiler('aleksey_profiler')
-    def build_aleksey_proilfer(**args):
-        return AlekseyProfiler(**args)
-
     @conf.profiler('last_character_profiler', slice_length=3, slizer='last_chars')
     def build_last_character_profiler(**args):
         return WordSliceProfiler(**args)
@@ -63,7 +59,7 @@ def configure(conf):
     def build_pos_ngram_profiler(**args):
         return POSNGramProfiler(**args)
 
-    @conf.profiler('en_gender_profiler', lang='en', min_n=1, max_n=1, method='logistic_regression')
+    @conf.profiler('en_gender_profiler', lang='en', min_n=1, max_n=1, method='gradient_boosting')
     def build_en_gender_profiler(**args):
         return EnglishGenderProfiler(**args)
 
