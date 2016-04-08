@@ -3,12 +3,10 @@ import logging
 import argparse
 import profiler16_un.datasets.pan2014
 import profiler16_un.datasets.pan2016
-from profiler16_un.profilers.random_profiler import RandomProfiler
 from profiler16_un.profilers.character_ngram_profiler import CharacterNGramProfiler
 from profiler16_un.profilers.pos_ngram_profiler import POSNGramProfiler
 from profiler16_un.profilers.logistic_regression_profiler import LogisticRegressionProfiler
 from profiler16_un.profilers.random_forest_profiler import RandomForestProfiler
-from profiler16_un.profilers.aleksey_profiler import AlekseyProfiler
 from profiler16_un.profilers.word_slice_profiler import WordSliceProfiler
 from profiler16_un.profilers.pos_tag_profiler import POSTagProfiler
 from profiler16_un.profilers.spelling_error_profiler import SpellingErrorProfiler
@@ -24,10 +22,6 @@ def configure(conf):
     @conf.profiler('character_ngram_3_3_random_forest', min_n=3, max_n=3, method='random_forest')
     def build_character_ngram_profiler(**args):
         return CharacterNGramProfiler(**args)
-
-    @conf.profiler('random')
-    def build_random_profiler(**args):
-        return RandomProfiler(**args)
 
     @conf.profiler('logistic_regression')
     def build_logistic_regression_profiler(**args):
