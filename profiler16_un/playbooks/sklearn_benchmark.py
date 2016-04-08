@@ -6,13 +6,6 @@ import pandas as pd
 from sklearn.cross_validation import StratifiedKFold
 
 
-pd.set_option('display.max_rows', 2000)
-pd.set_option('display.max_columns', 500)
-pd.set_option('display.width', 1000)
-pd.set_option('display.precision', 4)
-pd.set_option('display.float_format', '{:16.4f}'.format)
-
-
 logger = logging.getLogger(__name__)
 
 
@@ -37,3 +30,18 @@ class SklearnBenchmark():
             print 'Accuracy: {}'.format(accuracy_score(Y_test, Y_pred))
             print '*' * 50
             fold = fold + 1
+        if test_dataset_iterator:
+            test_dataset_list = list(test_dataset_iterator)
+            X_test = [xy[0] for xy in test_dataset_list]
+            Y_test = [xy[1] for xy in test_dataset_list]
+            profiler.train(X, Y)
+            Y_pred = profiler.predict(X_test)
+            print '*' * 50
+            print 'Confusion Matrix (Test Data)'.format(fold)
+            print '*' * 50
+            print(ConfusionMatrix(Y_test, Y_pred))
+            print '+' * 50
+            print 'Accuracy: {}'.format(accuracy_score(Y_test, Y_pred))
+            print '*' * 50
+
+
