@@ -28,28 +28,28 @@ tc = TextCleaner(lowercase=True,
 class EnglishGenderProfiler():
     def __init__(self, lang='en', min_n=1, max_n=1, method=None):
         unigrams = ('unigrams', CountVectorizer(min_df=1,
-                                                     tokenizer=TweetTokenizer(),
-                                                     stop_words='english',
-                                                     preprocessor=tc,
-                                                     ngram_range=(1, 1)
-                                                     ))
+                                                tokenizer=TweetTokenizer(),
+                                                stop_words='english',
+                                                preprocessor=tc,
+                                                ngram_range=(1, 1)
+                                                ))
         bigrams = ('bigrams', CountVectorizer(min_df=1,
-                                                   tokenizer=TweetTokenizer(),
-                                                   stop_words='english',
-                                                   preprocessor=tc,
-                                                   ngram_range=(2, 2)
-                                                   ))
+                                              tokenizer=TweetTokenizer(),
+                                              stop_words='english',
+                                              preprocessor=tc,
+                                              ngram_range=(2, 2)
+                                              ))
         trigrams = ('trigrams', CountVectorizer(min_df=1,
-                                                     tokenizer=TweetTokenizer(),
-                                                     stop_words='english',
-                                                     preprocessor=TextCleaner(lowercase=True,
-                                                                              filter_urls=True,
-                                                                              filter_mentions=True,
-                                                                              filter_hashtags=True,
-                                                                              alphabetic=True,
-                                                                              strip_accents=True),
-                                                     ngram_range=(3, 3)
-                                                     ))
+                                                tokenizer=TweetTokenizer(),
+                                                stop_words='english',
+                                                preprocessor=TextCleaner(lowercase=True,
+                                                                         filter_urls=True,
+                                                                         filter_mentions=True,
+                                                                         filter_hashtags=True,
+                                                                         alphabetic=True,
+                                                                         strip_accents=True),
+                                                ngram_range=(3, 3)
+                                                ))
         ngram_chars = ('char_ngrams', Pipeline([
                                                ('vect2', CountVectorizer(min_df=1,
                                                                          analyzer='char',
