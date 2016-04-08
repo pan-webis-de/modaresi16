@@ -104,8 +104,6 @@ if __name__ == '__main__':
     argparser.add_argument('-p', '--profiler', dest='profiler_name', type=str, required=True,
                            help='Name of the invoked profiler: ' + pretty_list(conf.get_profiler_names()))
 
-    argparser.add_argument('-b', '--benchmark', dest='benchmark_name', type=str, required=True,
-                           help='Name of the applied benchmark: ' + pretty_list(conf.get_benchmark_names()))
     args = argparser.parse_args()
     LOGFMT = '%(asctime)s %(name)s %(levelname)s %(message)s'
     logging.basicConfig(level=getattr(logging, args.log_level), format=LOGFMT)
@@ -117,7 +115,7 @@ if __name__ == '__main__':
     else:
         test_dataset_iterator = None
     profiler_instance = conf.get_profiler(args.profiler_name)
-    benchmark = conf.get_benchmark(args.benchmark_name)
+    benchmark = SklearnBenchmark()
     benchmark.run(training_dataset_iterator=training_dataset_iterator,
                   test_dataset_iterator=test_dataset_iterator,
                   profiler=profiler_instance)
