@@ -16,10 +16,7 @@ How to run the experiments:
 Then you can start to run different experiments:
 
 ``` bash
-python evaluate_profiler.py 
---corpus=pan2014/gender/english/blog
---benchmark=sklearn
---profiler=logistic_regression
+python evaluate_profiler.py --train_corpus=pan2016/gender/english/twitter --test_corpus=pan2016/gender/english/twitter  --profiler=en_gender_profiler
 ```
 The result should be something like this:
 ```
