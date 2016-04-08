@@ -18,8 +18,8 @@ logger = logging.getLogger(__name__)
 
 class SklearnBenchmark():
 
-    def run(self, dataset_iterator, profiler, pred_profile, true_profile):
-        dataset_list = list(dataset_iterator)
+    def run(self, training_dataset_iterator, test_dataset_iterator, profiler):
+        dataset_list = list(training_dataset_iterator)
         X = [xy[0] for xy in dataset_list]
         Y = [xy[1] for xy in dataset_list]
         skf = StratifiedKFold(Y, n_folds=3, shuffle=True, random_state=123)
