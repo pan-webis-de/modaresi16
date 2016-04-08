@@ -13,7 +13,6 @@ from profiler16_un.profilers.spelling_error_profiler import SpellingErrorProfile
 from profiler16_un.profilers.en_gender_profiler import EnglishGenderProfiler
 from profiler16_un.playbooks.sklearn_benchmark import SklearnBenchmark
 from profiler16_un.configuration import Configuration
-from profiler16_un.metrics.zero_one import ZeroOne
 
 
 def configure(conf):
@@ -79,17 +78,9 @@ def configure(conf):
         true_profile = lambda Y: Y
         return dataset_iterator, pred_profile, true_profile
 
-    @conf.benchmark('accumulate')
-    def build_accumulate_benchmark(**args):
-        return AccumulateBenchmark(**args)
-
     @conf.benchmark('sklearn')
     def build_sklearn_benchmark(**args):
         return SklearnBenchmark(**args)
-
-    @conf.metric('zero_one')
-    def build_zero_one_metric(**args):
-        return ZeroOne(**args)
 
 
 def pretty_list(items):
