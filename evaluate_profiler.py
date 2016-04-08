@@ -11,7 +11,6 @@ from profiler16_un.profilers.word_slice_profiler import WordSliceProfiler
 from profiler16_un.profilers.pos_tag_profiler import POSTagProfiler
 from profiler16_un.profilers.spelling_error_profiler import SpellingErrorProfiler
 from profiler16_un.profilers.en_gender_profiler import EnglishGenderProfiler
-from profiler16_un.playbooks.accumulate_benchmark import AccumulateBenchmark
 from profiler16_un.playbooks.sklearn_benchmark import SklearnBenchmark
 from profiler16_un.configuration import Configuration
 from profiler16_un.metrics.zero_one import ZeroOne
