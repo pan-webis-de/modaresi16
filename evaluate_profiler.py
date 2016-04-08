@@ -93,8 +93,12 @@ if __name__ == '__main__':
     argparser.add_argument('-l', '--log-level', dest='log_level', type=str, default='INFO',
                            help='Set log level (DEBUG, INFO, ERROR)')
 
-    argparser.add_argument('-c', '--corpus', dest='corpus_name', type=str, required=True,
-                           help='Set name of the corpus used for the evaluation: ' + pretty_list(
+    argparser.add_argument('-c', '--train_corpus', dest='training_corpus', type=str, required=True,
+                           help='Set name of the training corpus used for the evaluation: ' + pretty_list(
+                               conf.get_dataset_names()))
+
+    argparser.add_argument('-t', '--test_corpus', dest='test_corpus', type=str, required=False,
+                           help='Set name of the test corpus used for the evaluation: ' + pretty_list(
                                conf.get_dataset_names()))
 
     argparser.add_argument('-p', '--profiler', dest='profiler_name', type=str, required=True,
@@ -107,10 +111,13 @@ if __name__ == '__main__':
     logging.basicConfig(level=getattr(logging, args.log_level), format=LOGFMT)
 
     configure(conf)
-    dataset_iterator, pred_profile, true_profile = conf.get_dataset(args.corpus_name)
+    training_dataset_iterator, train_pred_profile, train_true_profile = conf.get_dataset(args.training_corpus)
+    if args.test_corpus:
+        test_dataset_iterator, test_pred_profile, test_true_profile = conf.get_dataset(args.test_corpus)
+    else:
+        test_dataset_iterator = None
     profiler_instance = conf.get_profiler(args.profiler_name)
     benchmark = conf.get_benchmark(args.benchmark_name)
-    benchmark.run(dataset_iterator=dataset_iterator,
-                  profiler=profiler_instance,
-                  pred_profile=pred_profile,
-                  true_profile=true_profile)
+    benchmark.run(training_dataset_iterator=training_dataset_iterator,
+                  test_dataset_iterator=test_dataset_iterator,
+                  profiler=profiler_instance)
