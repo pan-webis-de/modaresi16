@@ -109,10 +109,8 @@ if __name__ == '__main__':
     configure(conf)
     dataset_iterator, pred_profile, true_profile = conf.get_dataset(args.corpus_name)
     profiler_instance = conf.get_profiler(args.profiler_name)
-    metric_instance = conf.get_metric(args.metric_name)
     benchmark = conf.get_benchmark(args.benchmark_name)
     benchmark.run(dataset_iterator=dataset_iterator,
                   profiler=profiler_instance,
-                  metric=metric_instance,
                   pred_profile=pred_profile,
                   true_profile=true_profile)

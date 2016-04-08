@@ -7,7 +7,6 @@ class Configuration():
     def __init__(self):
         self.profiler_registry = {}
         self.dataset_registry = {}
-        self.metric_registry = {}
         self.benchmark_registry = {}
 
     def profiler(self, name, **args):
@@ -55,29 +54,6 @@ class Configuration():
 
     def get_dataset_names(self):
         return self.dataset_registry.keys()
-
-    def metric(self, name, **args):
-        logger.debug('Register metric {}, opt={}'.format(name, args))
-
-        def decorator(f):
-            if name in self.metric_registry.keys():
-                raise ValueError('The metric {} is already registered. Please use another name!'.format(name))
-
-            def wrapper():
-                return f(**args)
-            self.metric_registry[name] = wrapper
-            return f
-        return decorator
-
-    def get_metric(self, name):
-        builder = self.metric_registry.get(name)
-        if builder:
-            return builder()
-        else:
-            raise ValueError("Metric not found: {}".format(name))
-
-    def get_metric_names(self):
-        return self.metric_registry.keys()
 
     def benchmark(self, name, **args):
         logger.debug('Register benchmark {}, opt={}'.format(name, args))
