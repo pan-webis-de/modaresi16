@@ -7,7 +7,6 @@ class Configuration():
     def __init__(self):
         self.profiler_registry = {}
         self.dataset_registry = {}
-        self.benchmark_registry = {}
 
     def profiler(self, name, **args):
         logger.debug('Register profiler {}, opt={}'.format(name, args))
@@ -54,26 +53,3 @@ class Configuration():
 
     def get_dataset_names(self):
         return self.dataset_registry.keys()
-
-    def benchmark(self, name, **args):
-        logger.debug('Register benchmark {}, opt={}'.format(name, args))
-
-        def decorator(f):
-            if name in self.benchmark_registry.keys():
-                raise ValueError('The benchmark {} is already registered. Please use another name!'.format(name))
-
-            def wrapper():
-                return f(**args)
-            self.benchmark_registry[name] = wrapper
-            return f
-        return decorator
-
-    def get_benchmark(self, name):
-        builder = self.benchmark_registry.get(name)
-        if builder:
-            return builder()
-        else:
-            raise ValueError("Benchmark not found: {}".format(name))
-
-    def get_benchmark_names(self):
-        return self.benchmark_registry.keys()
