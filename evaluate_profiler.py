@@ -51,7 +51,7 @@ def configure(conf):
     def build_pos_ngram_profiler(**args):
         return POSNGramProfiler(**args)
 
-    @conf.profiler('en_gender_profiler', lang='en', min_n=1, max_n=1, method='gradient_boosting')
+    @conf.profiler('en_gender_profiler', lang='en', min_n=1, max_n=1, method='logistic_regression')
     def build_en_gender_profiler(**args):
         return EnglishGenderProfiler(**args)
 
@@ -92,15 +92,14 @@ if __name__ == '__main__':
     argparser = argparse.ArgumentParser(description='Author profiling evaluation')
     argparser.add_argument('-l', '--log-level', dest='log_level', type=str, default='INFO',
                            help='Set log level (DEBUG, INFO, ERROR)')
-    argparser.add_argument('-f', '--log-freq', dest='log_freq', type=int, default=1000,
-                           help='Set log progress frequency')
+
     argparser.add_argument('-c', '--corpus', dest='corpus_name', type=str, required=True,
                            help='Set name of the corpus used for the evaluation: ' + pretty_list(
                                conf.get_dataset_names()))
-    argparser.add_argument('-s', '--profiler', dest='profiler_name', type=str, required=True,
+
+    argparser.add_argument('-p', '--profiler', dest='profiler_name', type=str, required=True,
                            help='Name of the invoked profiler: ' + pretty_list(conf.get_profiler_names()))
-    argparser.add_argument('-m', '--metric', dest='metric_name', type=str, required=True,
-                           help='Name of the applied metric: ' + pretty_list(conf.get_metric_names()))
+
     argparser.add_argument('-b', '--benchmark', dest='benchmark_name', type=str, required=True,
                            help='Name of the applied benchmark: ' + pretty_list(conf.get_benchmark_names()))
     args = argparser.parse_args()
@@ -116,5 +115,4 @@ if __name__ == '__main__':
                   profiler=profiler_instance,
                   metric=metric_instance,
                   pred_profile=pred_profile,
-                  true_profile=true_profile,
-                  n_log_freq=args.log_freq)
+                  true_profile=true_profile)

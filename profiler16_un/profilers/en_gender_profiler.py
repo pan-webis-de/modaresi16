@@ -81,7 +81,7 @@ class EnglishGenderProfiler():
 
     def train(self, X_train, Y_train):
         self.model = self.pipeline.fit(X_train, Y_train)
-        # self.show_most_informative_features(self.pipeline.named_steps['features'], self.pipeline.named_steps['lr'])
+        self.show_most_informative_features(self.pipeline.named_steps['features'], self.pipeline.named_steps['lr'])
 
     def predict(self, X):
         return self.model.predict(X)
