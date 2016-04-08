@@ -43,5 +43,3 @@ class SklearnBenchmark():
             print '+' * 50
             print 'Accuracy: {}'.format(accuracy_score(Y_test, Y_pred))
             print '*' * 50
-
-
