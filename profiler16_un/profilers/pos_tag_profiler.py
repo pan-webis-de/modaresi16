@@ -8,6 +8,8 @@ from polyglot.text import Text
 from polyglot.text import Text, Word
 import logging
 from profiler16_un.taggers.polyglot_pos_tagger import PolyglotPOSTagger
+from random import randint
+from ..tokenizers.tweet_tokenizer import TweetTokenizer
 
 import math
 
@@ -15,6 +17,7 @@ import math
 pos_tagger_en = PolyglotPOSTagger(lang='en')
 pos_tagger_nl = PolyglotPOSTagger(lang='nl')
 pos_tagger_es = PolyglotPOSTagger(lang='es')
+tokenizer = TweetTokenizer()
 
 
 def pos_tags(text='', lang='en'):
@@ -27,18 +30,19 @@ def pos_tags(text='', lang='en'):
 
 
 def tokenize(x):
-    return x.split()
+    return tokenizer(x)
 
 
 def normalize_vector(x):
     x = np.array(x, dtype=np.float64)
     sumvalue = 0
-    for i in xrange(0, 16):
+    for i in xrange(0, 17):
         sumvalue += (x[i] * x[i])
     sumvalue = math.sqrt(sumvalue)
     if sumvalue > 0:
-        for i in xrange(0, 16):
+        for i in xrange(0, 17):
             x[i] = x[i] / sumvalue
+    print x
     return x
 
 
@@ -49,7 +53,7 @@ def get_pos_tags_array():
 
 
 def get_pos_tag_distribution(x, language):
-    pos_tag_count_dictionary = dict.fromkeys(get_pos_tags_array(), 0)
+    pos_tag_count_dictionary = dict.fromkeys(get_pos_tags_array(), 1)
     for word, tag in pos_tags(text=x, lang=language):
         pos_tag_count_dictionary[tag] += 1
     return pos_tag_count_dictionary
