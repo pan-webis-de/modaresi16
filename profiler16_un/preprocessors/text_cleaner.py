@@ -18,18 +18,18 @@ class TextCleaner(object):
     def __call__(self, doc):
         if self.lowercase:
             doc = doc.lower()
+        if self.filter_urls:
+            doc = regex.sub(r'http[s]?://(?:[a-z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-f][0-9a-f]))+', u'', doc)
+        if self.filter_mentions:
+            doc = regex.sub(r'(?:@[\w_]+)', u'', doc)
+        if self.filter_hashtags:
+            doc = regex.sub(r"(?:\#+[\w_]+[\w\'_\-]*[\w_]+)", u'', doc)
         if self.strip_accents:
             nkfd_form = unicodedata.normalize('NFKD', doc)
             doc = nkfd_form.encode('ASCII', 'ignore').decode('ASCII')
         if self.filter_non_latin:
             doc = regex.sub(r'[\u0627-\u064a]', u'', doc)
             doc = regex.sub(r'[\u0600-\u06FF]', u'', doc)
-        if self.filter_mentions:
-            doc = regex.sub(r'(?:@[\w_]+)', u'', doc)
-        if self.filter_hashtags:
-            doc = regex.sub(r"(?:\#+[\w_]+[\w\'_\-]*[\w_]+)", u'', doc)
-        if self.filter_urls:
-            doc = regex.sub(r'http[s]?://(?:[a-z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-f][0-9a-f]))+', u'', doc)
         if self.alphabetic:
             doc = regex.sub("[^a-zA-ZÀ-ÿ']+", " ", doc)
         return doc.strip()
