@@ -33,13 +33,13 @@ tc = TextCleaner(lowercase=True,
 
 class EnglishGenderProfiler():
     def __init__(self, lang='en', min_n=1, max_n=1, method=None):
-        unigrams = ('unigrams', CountVectorizer(min_df=1,
+        unigrams = ('unigrams', CountVectorizer(min_df=2,
                                                 stop_words=get_stopwords(),
                                                 preprocessor=tc,
                                                 ngram_range=(1, 1)
                                                 ))
 
-        bigrams = ('bigrams', CountVectorizer(min_df=1,
+        bigrams = ('bigrams', CountVectorizer(min_df=2,
                                               preprocessor=tc,
                                               ngram_range=(2, 2)
                                               ))
