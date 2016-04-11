@@ -38,7 +38,6 @@ class EnglishGenderProfiler():
                                                 ngram_range=(1, 1)
                                                 ))
         bigrams = ('bigrams', CountVectorizer(min_df=1,
-                                              tokenizer=TweetTokenizer(),
                                               preprocessor=tc,
                                               ngram_range=(2, 2)
                                               ))
@@ -52,16 +51,12 @@ class EnglishGenderProfiler():
         self.pipeline = Pipeline([('features', FeatureUnion([unigrams, bigrams])),
                                   ('tfidf', TfidfTransformer(sublinear_tf=True)),
                                   # ('chi', SelectKBest(f_classif, k=30000)),
-                                  # ('feature_selection', SelectFromModel(ExtraTreesClassifier())),
-                                  # ('pca', TruncatedSVD(n_components=3000, random_state=42)),
-                                  # ('hi', RFECV(estimator=get_classifier(method), step=1000,
-                                  #                  scoring='accuracy', verbose=1)),
-                                  ('lr', get_classifier(method=method))])
+                                  ('classifier', get_classifier(method=method))])
 
 
     def train(self, X_train, Y_train):
         self.model = self.pipeline.fit(X_train, Y_train)
-        show_most_informative_features(self.pipeline.named_steps['features'], self.pipeline.named_steps['lr'])
+        show_most_informative_features(self.pipeline.named_steps['features'], self.pipeline.named_steps['classifier'])
 
     def predict(self, X):
         return self.model.predict(X)
