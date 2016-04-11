@@ -33,26 +33,26 @@ tc = TextCleaner(lowercase=True,
 
 class EnglishGenderProfiler():
     def __init__(self, lang='en', min_n=1, max_n=1, method=None):
-        unigrams = ('unigrams', CountVectorizer(min_df=2,
-                                                stop_words=get_stopwords(),
-                                                preprocessor=tc,
-                                                ngram_range=(1, 1)
-                                                ))
+        word_unigrams = ('word_unigrams', CountVectorizer(min_df=2,
+                                                          stop_words=get_stopwords(),
+                                                          preprocessor=tc,
+                                                          ngram_range=(1, 1)
+                                                         ))
 
-        bigrams = ('bigrams', CountVectorizer(min_df=2,
-                                              preprocessor=tc,
-                                              ngram_range=(2, 2)
-                                              ))
+        word_bigrams = ('word_bigrams', CountVectorizer(preprocessor=tc, ngram_range=(2, 2)))
 
-        ngram_chars = ('char_ngrams', CountVectorizer(min_df=1,
+        char_ngrams = ('char_ngrams', CountVectorizer(min_df=1,
+                                                      preprocessor=TextCleaner(filter_urls=True,
+                                                                               filter_mentions=True,
+                                                                               filter_hashtags=True
+                                                                               ),
                                                       analyzer='char',
-                                                      lowercase=True,
-                                                      ngram_range=(3, 3)
+                                                      ngram_range=(2, 2)
                                                       ))
 
-        self.pipeline = Pipeline([('features', FeatureUnion([unigrams, bigrams])),
+        self.pipeline = Pipeline([('features', FeatureUnion([word_unigrams, word_bigrams])),
                                   ('tfidf', TfidfTransformer(sublinear_tf=True)),
-                                  # ('chi', SelectKBest(f_classif, k=30000)),
+                                  #('chi', SelectKBest(f_classif, k=3000)),
                                   ('classifier', get_classifier(method=method))])
 
     def train(self, X_train, Y_train):
