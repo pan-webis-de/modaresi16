@@ -8,33 +8,6 @@ import numpy as np
 from profiler16_un.postprocessors.hunspell_wrapper import HunspellWrapper
 
 
-def avg_error(tokens):
-    if len(tokens) == 0:
-        return 0.0
-    trueSum = 0
-    for token in tokens:
-        if is_correct(token):
-            trueSum += 1
-
-    # print(1.0 * trueSum / len(tokens))
-    return 1.0 * trueSum / len(tokens)
-
-
-# eager instantiation
-hunspell_en = HunspellWrapper(lang='en')
-hunspell_nl = HunspellWrapper(lang='nl')
-hunspell_es = HunspellWrapper(lang='es')
-
-
-def is_correct(text='', lang='en'):
-    if 'en' == lang:
-        return hunspell_en.is_correct(text)
-    if 'es' == lang:
-        return hunspell_es.is_correct(text)
-    if 'nl' == lang:
-        return hunspell_nl.is_correct(text)
-
-
 def tokenize(x):
     return x.split()
 
@@ -54,6 +27,9 @@ class SpellingErrorProfiler():
 class SpellingError(BaseEstimator):
     def __init__(self, language='en'):
         self.language = language
+        self.hunspell_en = HunspellWrapper(lang='en')
+        self.hunspell_nl = HunspellWrapper(lang='nl')
+        self.hunspell_es = HunspellWrapper(lang='es')
         print("{} {}".format("language:", self.language))
 
     def get_feature_names(self):
@@ -62,9 +38,28 @@ class SpellingError(BaseEstimator):
     def fit(self, documents, y=None):
         return self
 
+    def avg_error(self, tokens):
+        if len(tokens) == 0:
+            return 0.0
+        trueSum = 0
+        for token in tokens:
+            if self.is_correct(token):
+                trueSum += 1
+
+        # print(1.0 * trueSum / len(tokens))
+        return 1.0 * trueSum / len(tokens)
+
+    def is_correct(self, text='', lang='en'):
+        if 'en' == lang:
+            return self.hunspell_en.is_correct(text)
+        if 'es' == lang:
+            return self.hunspell_es.is_correct(text)
+        if 'nl' == lang:
+            return self.hunspell_nl.is_correct(text)
+
     def transform(self, documents):
         tokens_list = [tokenize(doc) for doc in documents]
-        avg_errors = [avg_error(tokens) for tokens in tokens_list]
+        avg_errors = [self.avg_error(tokens) for tokens in tokens_list]
         X = np.array([avg_errors]).T
         if not hasattr(self, 'scalar'):
             self.scalar = preprocessing.StandardScaler().fit(X)
