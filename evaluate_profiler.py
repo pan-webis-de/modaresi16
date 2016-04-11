@@ -3,6 +3,7 @@ import logging
 import argparse
 import profiler16_un.datasets.pan2014
 import profiler16_un.datasets.pan2016
+import profiler16_un.datasets.pan2015
 from profiler16_un.profilers.pos_ngram_profiler import POSNGramProfiler
 from profiler16_un.profilers.word_slice_profiler import WordSliceProfiler
 from profiler16_un.profilers.pos_tag_profiler import POSTagProfiler
@@ -51,13 +52,13 @@ def configure(conf):
         true_profile = lambda Y: Y
         return dataset_iterator, pred_profile, true_profile
 
-    @conf.dataset('pan2015/gender/english/twitter', label='gender', types=['twitter'], language='english')
-    @conf.dataset('pan2015/age/english/twitter', label='age_group', types=['twitter'], language='english')
-    @conf.dataset('pan2015/gender/spanish/twitter', label='gender', types=['twitter'], language='spanish')
-    @conf.dataset('pan2015/age/spanish/twitter', label='age_group', types=['twitter'], language='spanish')
-    @conf.dataset('pan2015/gender/dutch/twitter', label='gender', types=['twitter'], language='dutch')
+    @conf.dataset('pan2015/gender/english/twitter', label='gender', language='english')
+    @conf.dataset('pan2015/age/english/twitter', label='age_group', language='english')
+    @conf.dataset('pan2015/gender/spanish/twitter', label='gender', language='spanish')
+    @conf.dataset('pan2015/age/spanish/twitter', label='age_group', language='spanish')
+    @conf.dataset('pan2015/gender/dutch/twitter', label='gender', language='dutch')
     def build_dataset_pan14(label=None, types=None, language=None):
-        dataset_iterator = profiler16_un.datasets.pan2014.load(label=label, types=types, language=language)
+        dataset_iterator = profiler16_un.datasets.pan2015.load(label=label, language=language)
         pred_profile = lambda profiler, X: profiler.predict(X)
         true_profile = lambda Y: Y
         return dataset_iterator, pred_profile, true_profile

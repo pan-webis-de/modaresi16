@@ -7,9 +7,9 @@ import pandas as pd
 from bs4 import BeautifulSoup
 import gzip
 import cPickle as pickle
-from prdatasets.utils.file_utils import mkdir_p
-from prdatasets.utils.cache import PRDATASETS_LOCAL
-from prdatasets.utils.cache import download_file, get_file
+from profiler16_un.datasets.file_utils import mkdir_p
+from profiler16_un.datasets.cache import PRDATASETS_LOCAL
+from profiler16_un.datasets.cache import download_file, get_file
 
 
 VERSION = '0.0.1'
@@ -113,7 +113,7 @@ def convert():
 
 
 def save(docs, language, version=VERSION):
-    name = 'prdatasets_pan15_author_profiling-{}-{}.pgz'.format(language, version)
+    name = 'datasets_pan15_author_profiling-{}-{}.pgz'.format(language, version)
     local_fullname = os.path.join(PRDATASETS_LOCAL, GROUP, name)
     mkdir_p(os.path.dirname(local_fullname))
     print('Saving {}'.format(local_fullname))
@@ -122,7 +122,7 @@ def save(docs, language, version=VERSION):
 
 
 def load(language, version=VERSION):
-    name = 'prdatasets_pan15_author_profiling-{}-{}.pgz'.format(language, version)
+    name = 'datasets_pan15_author_profiling-{}-{}.pgz'.format(language, version)
     local_fullname = get_file(os.path.join(GROUP, name))
     with gzip.GzipFile(local_fullname, 'r') as f:
         return pickle.load(f)
