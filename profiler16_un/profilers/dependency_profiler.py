@@ -55,7 +55,7 @@ def get_pos_tag_distribution(x, language):
     return pos_tag_count_dictionary
 
 
-class POSFeatures(BaseEstimator):
+class DependencyFeatures(BaseEstimator):
     def __init__(self, language='en', absolute_frequency=True, normalize=False):
         self.language = language
         # print("{} {}".format("language:", self.language))
@@ -80,7 +80,7 @@ class POSTagProfiler():
     def __init__(self, language='en'):
         logger = logging.getLogger("polyglot.mapping.expansion")
         logger.setLevel(logging.WARNING)
-        self.pipeline = Pipeline([('vect', POSFeatures(language=language)),
+        self.pipeline = Pipeline([('vect', DependencyFeatures(language=language)),
                                   ('svm', SVC())])
 
     def train(self, X_train, Y_train):
