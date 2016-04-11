@@ -56,7 +56,7 @@ def get_pos_tag_distribution(x, language):
 
 
 class POSFeatures(BaseEstimator):
-    def __init__(self, language='en', absolute_frequency=True, normalize=False):
+    def __init__(self, language='en'):
         self.language = language
         # print("{} {}".format("language:", self.language))
 
