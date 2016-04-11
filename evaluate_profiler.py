@@ -6,6 +6,7 @@ import profiler16_un.datasets.pan2016
 import profiler16_un.datasets.pan2015
 from profiler16_un.profilers.pos_ngram_profiler import POSNGramProfiler
 from profiler16_un.profilers.word_slice_profiler import WordSliceProfiler
+from profiler16_un.profilers.embeddings_profiler import EmbeddingsProfiler
 from profiler16_un.profilers.pos_tag_profiler import POSTagProfiler
 from profiler16_un.profilers.spelling_error_profiler import SpellingErrorProfiler
 from profiler16_un.profilers.en_gender_profiler import EnglishGenderProfiler
@@ -29,6 +30,10 @@ def configure(conf):
     @conf.profiler('spelling_error_profiler_en', language='en')
     def build_spelling_error_profiler(**args):
         return SpellingErrorProfiler(**args)
+
+    @conf.profiler('embeddings_profiler_en', language='en')
+    def build_embeddings_profiler(**args):
+        return EmbeddingsProfiler(**args)
 
     @conf.profiler('pos_ngram_profiler_en', lang='en', min_n=3, max_n=3, method='logistic_regression')
     @conf.profiler('pos_ngram_profiler_es', lang='es', min_n=3, max_n=3, method='logistic_regression')
