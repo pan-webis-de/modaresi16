@@ -8,9 +8,7 @@ from polyglot.text import Text
 from polyglot.text import Text, Word
 import logging
 from profiler16_un.taggers.polyglot_pos_tagger import PolyglotPOSTagger
-from random import randint
 from ..tokenizers.tweet_tokenizer import TweetTokenizer
-
 import math
 
 # eager instantiation
@@ -42,7 +40,6 @@ def normalize_vector(x):
     if sumvalue > 0:
         for i in xrange(0, 17):
             x[i] = x[i] / sumvalue
-    print x
     return x
 
 
