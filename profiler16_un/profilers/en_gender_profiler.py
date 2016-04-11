@@ -33,7 +33,6 @@ tc = TextCleaner(lowercase=True,
 class EnglishGenderProfiler():
     def __init__(self, lang='en', min_n=1, max_n=1, method=None):
         unigrams = ('unigrams', CountVectorizer(min_df=1,
-                                                tokenizer=TweetTokenizer(),
                                                 stop_words=get_stopwords(),
                                                 preprocessor=tc,
                                                 ngram_range=(1, 1)
