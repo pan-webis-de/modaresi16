@@ -28,8 +28,8 @@ class TextCleaner(object):
         if self.filter_hashtags:
             doc = regex.sub(r"(?:\#+[\w_]+[\w\'_\-]*[\w_]+)", u'', doc)
         if self.filter_rt:
-            doc = regex.sub(r" rt ", u'', doc)
-            doc = regex.sub(r" RT ", u'', doc)
+            doc = regex.sub(r"rt ", u'', doc)
+            doc = regex.sub(r"RT ", u'', doc)
         if self.strip_accents:
             nkfd_form = unicodedata.normalize('NFKD', doc)
             doc = nkfd_form.encode('ASCII', 'ignore').decode('ASCII')

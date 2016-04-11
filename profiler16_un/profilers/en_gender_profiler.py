@@ -27,7 +27,8 @@ tc = TextCleaner(lowercase=True,
                  filter_mentions=True,
                  filter_hashtags=True,
                  alphabetic=True,
-                 strip_accents=True)
+                 strip_accents=True,
+                 filter_rt=True)
 
 
 class EnglishGenderProfiler():
