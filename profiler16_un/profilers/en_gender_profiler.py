@@ -2,6 +2,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import SelectPercentile
+from sklearn.preprocessing import Normalizer
 from sklearn.decomposition import PCA
 from sklearn.feature_selection import chi2
 from sklearn.feature_selection import f_classif
@@ -34,38 +35,54 @@ tc = TextCleaner(lowercase=True,
 
 class EnglishGenderProfiler():
     def __init__(self, lang='en', min_n=1, max_n=1, method=None):
-        word_unigrams = ('word_unigrams', CountVectorizer(min_df=2,
-                                                          stop_words=get_stopwords(),
-                                                          preprocessor=tc,
-                                                          ngram_range=(1, 1)
-                                                         ))
+        word_unigrams = ('word_uniograms', Pipeline([
+                                  ('vect', CountVectorizer(min_df=2,
+                                                                    stop_words=get_stopwords(),
+                                                                    preprocessor=tc,
+                                                                    ngram_range=(1, 1)
+                                                                    )),
+                                  ('tfidf', TfidfTransformer(sublinear_tf=True)),
+                                  ('scale', Normalizer())
+                                  ]))
 
         word_bigrams = ('word_bigrams', CountVectorizer(preprocessor=tc, ngram_range=(2, 2)))
 
         char_ngrams = ('char_ngrams', CountVectorizer(min_df=1,
                                                       preprocessor=TextCleaner(filter_urls=True,
                                                                                filter_mentions=True,
-                                                                               filter_hashtags=True
+                                                                               filter_hashtags=True,
+                                                                               lowercase=True
                                                                                ),
                                                       analyzer='char',
-                                                      ngram_range=(6, 6)
+                                                      ngram_range=(3, 3)
                                                       ))
+
+        punctuation_ngrams = ('punctuation_ngrams', CountVectorizer(min_df=1,
+                                                                    preprocessor=TextCleaner(filter_urls=True,
+                                                                                             filter_mentions=True,
+                                                                                             filter_hashtags=True,
+                                                                                             lowercase=True
+                                                                                             ),
+                                                                    analyzer='char',
+                                                                    ngram_range=(6, 6)
+                                                                    ))
         # avg_spelling_error = ('avg_spelling_error', SpellingError(language=lang))
         pos_distribution = ('pos_distribution', POSFeatures(language=lang))
 
         self.pipeline = Pipeline([('features', FeatureUnion([
-                                                             #word_unigrams,
+                                                             word_unigrams
                                                              #word_bigrams,
-                                                             #char_ngrams,
+                                                             # char_ngrams,
                                                              # avg_spelling_error,
-                                                             pos_distribution])),
+                                                             # pos_distribution
+                                                             ])),
                                   # ('tfidf', TfidfTransformer(sublinear_tf=True)),
                                   # ('chi', SelectKBest(chi2, k=700000)),
                                   ('classifier', get_classifier(method=method))])
 
     def train(self, X_train, Y_train):
         self.model = self.pipeline.fit(X_train, Y_train)
-        # show_most_informative_features(self.pipeline.named_steps['features'], self.pipeline.named_steps['classifier'])
+        #show_most_informative_features(self.pipeline.named_steps['features']['hello'], self.pipeline.named_steps['classifier'])
 
     def predict(self, X):
         return self.model.predict(X)
