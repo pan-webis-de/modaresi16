@@ -37,16 +37,17 @@ class EnglishGenderProfiler():
                                                 preprocessor=tc,
                                                 ngram_range=(1, 1)
                                                 ))
+
         bigrams = ('bigrams', CountVectorizer(min_df=1,
                                               preprocessor=tc,
                                               ngram_range=(2, 2)
                                               ))
-        ngram_chars = ('char_ngrams', Pipeline([
-                                               ('vect2', CountVectorizer(min_df=1,
-                                                                         analyzer='char',
-                                                                         lowercase=True,
-                                                                         ngram_range=(3, 3), max_features=20000)),
-                                               ]))
+
+        ngram_chars = ('char_ngrams', CountVectorizer(min_df=1,
+                                                      analyzer='char',
+                                                      lowercase=True,
+                                                      ngram_range=(3, 3)
+                                                      ))
 
         self.pipeline = Pipeline([('features', FeatureUnion([unigrams, bigrams])),
                                   ('tfidf', TfidfTransformer(sublinear_tf=True)),
