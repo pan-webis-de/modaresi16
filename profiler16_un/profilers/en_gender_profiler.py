@@ -20,7 +20,8 @@ from sklearn.decomposition import TruncatedSVD
 from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.feature_selection import RFECV
 from sklearn.cross_validation import StratifiedKFold
-
+from profiler16_un.profilers.spelling_error_profiler import SpellingError
+from profiler16_un.profilers.pos_tag_profiler import POSFeatures
 
 tc = TextCleaner(lowercase=True,
                  filter_urls=True,
@@ -47,17 +48,24 @@ class EnglishGenderProfiler():
                                                                                filter_hashtags=True
                                                                                ),
                                                       analyzer='char',
-                                                      ngram_range=(2, 2)
+                                                      ngram_range=(6, 6)
                                                       ))
+        # avg_spelling_error = ('avg_spelling_error', SpellingError(language=lang))
+        pos_distribution = ('pos_distribution', POSFeatures(language=lang))
 
-        self.pipeline = Pipeline([('features', FeatureUnion([word_unigrams, word_bigrams])),
-                                  ('tfidf', TfidfTransformer(sublinear_tf=True)),
-                                  #('chi', SelectKBest(f_classif, k=3000)),
+        self.pipeline = Pipeline([('features', FeatureUnion([
+                                                             #word_unigrams,
+                                                             #word_bigrams,
+                                                             #char_ngrams,
+                                                             # avg_spelling_error,
+                                                             pos_distribution])),
+                                  # ('tfidf', TfidfTransformer(sublinear_tf=True)),
+                                  # ('chi', SelectKBest(chi2, k=700000)),
                                   ('classifier', get_classifier(method=method))])
 
     def train(self, X_train, Y_train):
         self.model = self.pipeline.fit(X_train, Y_train)
-        show_most_informative_features(self.pipeline.named_steps['features'], self.pipeline.named_steps['classifier'])
+        # show_most_informative_features(self.pipeline.named_steps['features'], self.pipeline.named_steps['classifier'])
 
     def predict(self, X):
         return self.model.predict(X)
