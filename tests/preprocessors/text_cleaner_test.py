@@ -41,6 +41,11 @@ class TestTextCleaner(unittest.TestCase):
         cleaner = TextCleaner(alphabetic=True)
         self.assertEqual(cleaner(u'Helloo 1984 50,000'), u'Helloo')
 
+    def test_only_punctuation(self):
+        cleaner = TextCleaner(only_punctuation=True)
+        self.assertEqual(cleaner(u'Helloo ? 1984 50,000'), u"?        ,")
+
+
 
 if __name__ == '__main__':
     unittest.main()

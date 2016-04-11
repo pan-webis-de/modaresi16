@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 import regex
 import unicodedata
+import re
 
 
 class TextCleaner(object):
     def __init__(self, filter_mentions=False, filter_hashtags=False,
                  filter_urls=False, filter_non_latin=False,
-                 lowercase=False, alphabetic=False, strip_accents=False):
+                 lowercase=False, alphabetic=False, strip_accents=False, only_punctuation=False):
         self.filter_mentions = filter_mentions
         self.filter_hashtags = filter_hashtags
         self.filter_urls = filter_urls
@@ -14,6 +15,7 @@ class TextCleaner(object):
         self.lowercase = lowercase
         self.alphabetic = alphabetic
         self.strip_accents = strip_accents
+        self.only_punctuation = only_punctuation
 
     def __call__(self, doc):
         if self.lowercase:
@@ -32,4 +34,6 @@ class TextCleaner(object):
             doc = regex.sub(r'[\u0600-\u06FF]', u'', doc)
         if self.alphabetic:
             doc = regex.sub("[^a-zA-ZÀ-ÿ']+", " ", doc)
+        if self.only_punctuation:
+            doc = regex.sub("[\w]", " ", doc)
         return doc.strip()
