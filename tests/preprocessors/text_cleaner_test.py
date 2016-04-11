@@ -46,6 +46,5 @@ class TestTextCleaner(unittest.TestCase):
         self.assertEqual(cleaner(u'Helloo ? 1984 50,000'), u"?        ,")
 
 
-
 if __name__ == '__main__':
     unittest.main()

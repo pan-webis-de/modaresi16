@@ -53,7 +53,6 @@ class EnglishGenderProfiler():
                                   # ('chi', SelectKBest(f_classif, k=30000)),
                                   ('classifier', get_classifier(method=method))])
 
-
     def train(self, X_train, Y_train):
         self.model = self.pipeline.fit(X_train, Y_train)
         show_most_informative_features(self.pipeline.named_steps['features'], self.pipeline.named_steps['classifier'])
