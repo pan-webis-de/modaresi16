@@ -53,7 +53,8 @@ def get_file(name, fill_cache=True, cache_folder=PRDATASETS_LOCAL, remote_folder
         source = os.path.join(remote_folder, name)
         if fill_cache:
             # download file from remote to cache and return cache location
-            logger.info('Cache miss! Copy remote file to cache: {} -> {}', source, dest)
+            logger.info(
+                'Cache miss! Copy remote file to cache: {} -> {}', source, dest)
             mkdir_p(os.path.dirname(dest))
             copyfile(source, dest)
             return dest

@@ -12,6 +12,7 @@ def tokenize(x):
 
 
 class EmbeddingsProfiler():
+
     def __init__(self, language='en'):
         self.pipeline = Pipeline([('vect', EmbeddingsCounter(language=language)),
                                   ('svm', SVC())])
@@ -24,6 +25,7 @@ class EmbeddingsProfiler():
 
 
 class EmbeddingsCounter(BaseEstimator):
+
     def __init__(self, language='en'):
         self.language = language
         self.polyglot_embedding_en = PolyglotEmbeddingsTagger(lang='en')
@@ -57,7 +59,8 @@ class EmbeddingsCounter(BaseEstimator):
 
     def transform(self, documents):
         tokens_list = [tokenize(doc) for doc in documents]
-        avg_embeddings = [self.avg_embedding_count(tokens) for tokens in tokens_list]
+        avg_embeddings = [self.avg_embedding_count(
+            tokens) for tokens in tokens_list]
         X = np.array([avg_embeddings]).T
         if not hasattr(self, 'scalar'):
             self.scalar = preprocessing.StandardScaler().fit(X)

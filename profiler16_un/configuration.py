@@ -4,6 +4,7 @@ logger = logging.getLogger(__name__)
 
 
 class Configuration():
+
     def __init__(self):
         self.profiler_registry = {}
         self.dataset_registry = {}
@@ -13,7 +14,8 @@ class Configuration():
 
         def decorator(f):
             if name in self.profiler_registry.keys():
-                raise ValueError('The profiler {} is already registered. Please use another name!'.format(name))
+                raise ValueError(
+                    'The profiler {} is already registered. Please use another name!'.format(name))
 
             def wrapper():
                 return f(**args)
@@ -36,7 +38,8 @@ class Configuration():
 
         def decorator(f):
             if name in self.dataset_registry.keys():
-                raise ValueError('The dataset {} is already registered. Please use another name!'.format(name))
+                raise ValueError(
+                    'The dataset {} is already registered. Please use another name!'.format(name))
 
             def wrapper():
                 return f(**args)

@@ -4,6 +4,7 @@ from polyglot.text import Text
 
 class PolyglotPOSTagger:
     """Simple wrapper for polyglot pos tagger"""
+
     def __init__(self, lang='en'):
         self.pos_tagger = POSTagger(lang=lang)
 

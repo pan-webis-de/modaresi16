@@ -4,15 +4,19 @@ from sklearn.base import BaseEstimator
 from sklearn.svm import SVC
 from sklearn.pipeline import Pipeline
 import numpy as np
+from nltk.tokenize import RegexpTokenizer
 
 from profiler16_un.postprocessors.hunspell_wrapper import HunspellWrapper
 
+tokenizer = RegexpTokenizer(r'\w+')
+
 
 def tokenize(x):
-    return x.split()
+    return tokenizer.tokenize(x)
 
 
 class SpellingErrorProfiler():
+
     def __init__(self, language='en'):
         self.pipeline = Pipeline([('vect', SpellingError(language=language)),
                                   ('svm', SVC())])
@@ -25,6 +29,7 @@ class SpellingErrorProfiler():
 
 
 class SpellingError(BaseEstimator):
+
     def __init__(self, language='en'):
         self.language = language
         self.hunspell_en = HunspellWrapper(lang='en')

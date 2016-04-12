@@ -5,6 +5,7 @@ import re
 
 
 class TextCleaner(object):
+
     def __init__(self, filter_mentions=False, filter_hashtags=False,
                  filter_urls=False, filter_non_latin=False,
                  lowercase=False, alphabetic=False, strip_accents=False, only_punctuation=False, filter_rt=False):
@@ -22,7 +23,8 @@ class TextCleaner(object):
         if self.lowercase:
             doc = doc.lower()
         if self.filter_urls:
-            doc = regex.sub(r'http[s]?://(?:[a-z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-f][0-9a-f]))+', u'', doc)
+            doc = regex.sub(
+                r'http[s]?://(?:[a-z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-f][0-9a-f]))+', u'', doc)
         if self.filter_mentions:
             doc = regex.sub(r'(?:@[\w_]+)', u'', doc)
         if self.filter_hashtags:

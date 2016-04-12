@@ -24,6 +24,7 @@ def print_accuracy(Y_test, Y_pred):
 
 
 class SklearnBenchmark():
+
     def __init__(self, n_folds=3):
         self.n_folds = 3
 
@@ -31,14 +32,18 @@ class SklearnBenchmark():
         dataset_list = list(training_dataset_iterator)
         X = [xy[0] for xy in dataset_list]
         Y = [xy[1] for xy in dataset_list]
-        skf = StratifiedKFold(Y, n_folds=self.n_folds, shuffle=True, random_state=123)
+        skf = StratifiedKFold(Y, n_folds=self.n_folds,
+                              shuffle=True, random_state=123)
         fold = 1
         for train_index, test_index in skf:
-            X_train, Y_train = [X[i] for i in train_index], [Y[i] for i in train_index]
-            X_test, Y_test = [X[i] for i in test_index], [Y[i] for i in test_index]
+            X_train, Y_train = [X[i]
+                                for i in train_index], [Y[i] for i in train_index]
+            X_test, Y_test = [X[i]
+                              for i in test_index], [Y[i] for i in test_index]
             logger.info('Training on {} instances!'.format(len(train_index)))
             profiler.train(X_train, Y_train)
-            logger.info('Testing on fold {} with {} instances'.format(fold, len(test_index)))
+            logger.info('Testing on fold {} with {} instances'.format(
+                fold, len(test_index)))
             Y_pred = profiler.predict(X_test)
             print_accuracy(Y_test, Y_pred)
             fold = fold + 1

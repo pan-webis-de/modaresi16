@@ -3,6 +3,7 @@ from nltk.stem import WordNetLemmatizer
 
 
 class LemmaTokenizer(object):
+
     def __init__(self):
         self.wnl = WordNetLemmatizer()
 

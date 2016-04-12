@@ -47,7 +47,8 @@ def fetch_data(remote_path=DATASETS_REMOTE):
         z = zipfile.ZipFile(file)
         for name in z.namelist():
             z.extract(name, dst_directory)
-    extraction_folder = os.path.join(dst_directory, 'pan16-author-profiling-training-corpus-2016-02-29')
+    extraction_folder = os.path.join(
+        dst_directory, 'pan16-author-profiling-training-corpus-2016-02-29')
     for f in os.listdir(extraction_folder):
         subcorpus_zip = os.path.join(extraction_folder, f)
         with open(subcorpus_zip, 'rb') as file:
@@ -89,7 +90,8 @@ def iterdocs(language,
     authors_with_missing_text = 0
     for section in sections:
         section_counter = 0
-        directory = os.path.join(data_path, subfolder_template.format(language=language, section=section))
+        directory = os.path.join(data_path, subfolder_template.format(
+            language=language, section=section))
         print('Loading (language={})'.format(language, section))
         df = pd.read_csv(os.path.join(directory, 'truth.txt'),
                          sep=':::',
@@ -98,12 +100,15 @@ def iterdocs(language,
         print('Authors count: {}'.format(len(df)))
         for i in range(len(df)):
             row = df.iloc[i]
-            labels = dict(author_id=row['author_id'], gender=row['gender'], age_group=row['age_group'])
-            author_attrs, docs = parse_xml(os.path.join(directory, str(labels['author_id']) + '.xml'))
+            labels = dict(author_id=row['author_id'], gender=row[
+                          'gender'], age_group=row['age_group'])
+            author_attrs, docs = parse_xml(os.path.join(
+                directory, str(labels['author_id']) + '.xml'))
             text = '\n'.join([doc['text'] for doc in docs]).strip()
             if not text:
                 authors_with_missing_text += 1
-                print('The author with id={} has no text!'.format(labels['author_id']))
+                print('The author with id={} has no text!'.format(
+                    labels['author_id']))
             doc = dict(text=text)
             doc.update({'author.' + k: v for k, v in author_attrs.iteritems()})
             doc.update({'label.' + k: v for k, v in labels.iteritems()})
@@ -124,13 +129,15 @@ def convert():
     print('Start corpus conversion')
     extraction_folder = fetch_data()
     for language in AVAILABLE_SECTIONS.keys():
-        docs = read_documents(language, AVAILABLE_SECTIONS[language], extraction_folder)
+        docs = read_documents(language, AVAILABLE_SECTIONS[
+                              language], extraction_folder)
         save(docs, language)
 
 
 def save(docs, language, version=VERSION):
     mkdir_p(os.path.join(DATASETS_LOCAL, GROUP))
-    name = 'prdatasets_pan16_author_profiling-{}-{}.pgz'.format(language, version)
+    name = 'prdatasets_pan16_author_profiling-{}-{}.pgz'.format(
+        language, version)
     local_fullname = os.path.join(DATASETS_LOCAL, GROUP, name)
     print('Saving {}'.format(local_fullname))
     with gzip.GzipFile(local_fullname, 'w') as f:
@@ -138,7 +145,8 @@ def save(docs, language, version=VERSION):
 
 
 def load(language, version=VERSION):
-    name = 'datasets_pan16_author_profiling-{}-{}.pgz'.format(language, version)
+    name = 'datasets_pan16_author_profiling-{}-{}.pgz'.format(
+        language, version)
     local_fullname = os.path.join(DATASETS_LOCAL, GROUP, name)
     if not os.path.isfile(local_fullname):
         remote_fullname = os.path.join(DATASETS_REMOTE, GROUP, name)

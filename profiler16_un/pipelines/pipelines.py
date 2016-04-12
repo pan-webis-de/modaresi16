@@ -34,6 +34,7 @@ def punctuation_ngrams():
                               lowercase=False)
     vectorizer = CountVectorizer(min_df=1,
                                  preprocessor=pprcessor,
+                                 tokenizer=LemmaTokenizer(),
                                  analyzer='char',
                                  ngram_range=(10, 10))
     pipeline = Pipeline([('vect', vectorizer),
@@ -53,7 +54,7 @@ def pos_distribution():
     pipeline = Pipeline([('feature', POSFeatures(language=lang)),
                          ('tfidf', TfidfTransformer(sublinear_tf=False)),
                          ('scale', Normalizer())])
-    return ('pos_distribution', pipeline) 
+    return ('pos_distribution', pipeline)
 
 
 def word_unigrams():

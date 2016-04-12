@@ -12,6 +12,7 @@ from sklearn.pipeline import Pipeline
 
 
 class EnglishGenderProfiler():
+
     def __init__(self, lang='en', min_n=1, max_n=1, method=None):
         features = FeatureUnion([word_unigrams(),
                                  word_bigrams(),

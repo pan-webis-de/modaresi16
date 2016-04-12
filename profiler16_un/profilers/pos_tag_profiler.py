@@ -57,6 +57,7 @@ def get_pos_tag_distribution(x, language):
 
 
 class POSFeatures(BaseEstimator):
+
     def __init__(self, language='en'):
         self.language = language
         # print("{} {}".format("language:", self.language))
@@ -69,15 +70,18 @@ class POSFeatures(BaseEstimator):
 
     def transform(self, documents):
         tokens_list = [tokenize(doc) for doc in documents]
-        distributions = [normalize_vector(get_pos_tag_distribution(doc, self.language).values()) for doc in documents]
+        distributions = [normalize_vector(get_pos_tag_distribution(
+            doc, self.language).values()) for doc in documents]
         X = np.array(distributions)
         if not hasattr(self, 'scalar'):
             self.scalar = preprocessing.StandardScaler().fit(X)
         return self.scalar.transform(X)
 
 
-# force language to skip language detection step that might cause the POS tagger to load the wrong model
+# force language to skip language detection step that might cause the POS
+# tagger to load the wrong model
 class POSTagProfiler():
+
     def __init__(self, language='en'):
         logger = logging.getLogger("polyglot.mapping.expansion")
         logger.setLevel(logging.WARNING)

@@ -9,6 +9,7 @@ from ..utils.utils import get_classifier
 
 
 class POSTokenizer(object):
+
     def __init__(self, lang='en'):
         self.lang = lang
 
@@ -17,6 +18,7 @@ class POSTokenizer(object):
 
 
 class POSNGramProfiler():
+
     def __init__(self, lang='en', min_n=1, max_n=1, method='logistic_regression'):
         self.lang = lang
         self.tokenizer = POSTokenizer(lang=lang)
@@ -24,7 +26,8 @@ class POSNGramProfiler():
                                                            analyzer='word',
                                                            lowercase=True,
                                                            tokenizer=self.tokenizer,
-                                                           ngram_range=(min_n, max_n),
+                                                           ngram_range=(
+                                                               min_n, max_n),
                                                            max_features=2000
                                                            )),
                                   ('tfidf', TfidfTransformer(sublinear_tf=False,

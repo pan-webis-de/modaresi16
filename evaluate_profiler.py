@@ -52,7 +52,8 @@ def configure(conf):
     @conf.dataset('pan2014/gender/english/review', label='gender', types=['review'], language='english')
     @conf.dataset('pan2014/age/english/review', label='age_group', types=['review'], language='english')
     def build_dataset_pan14(label=None, types=None, language=None):
-        dataset_iterator = profiler16_un.datasets.pan2014.load(label=label, types=types, language=language)
+        dataset_iterator = profiler16_un.datasets.pan2014.load(
+            label=label, types=types, language=language)
         pred_profile = lambda profiler, X: profiler.predict(X)
         true_profile = lambda Y: Y
         return dataset_iterator, pred_profile, true_profile
@@ -63,7 +64,8 @@ def configure(conf):
     @conf.dataset('pan2015/age/spanish/twitter', label='age_group', language='spanish')
     @conf.dataset('pan2015/gender/dutch/twitter', label='gender', language='dutch')
     def build_dataset_pan14(label=None, types=None, language=None):
-        dataset_iterator = profiler16_un.datasets.pan2015.load(label=label, language=language)
+        dataset_iterator = profiler16_un.datasets.pan2015.load(
+            label=label, language=language)
         pred_profile = lambda profiler, X: profiler.predict(X)
         true_profile = lambda Y: Y
         return dataset_iterator, pred_profile, true_profile
@@ -74,7 +76,8 @@ def configure(conf):
     @conf.dataset('pan2016/age/english/twitter', label='age_group', types=['twitter'], language='english')
     @conf.dataset('pan2016/age/spanish/twitter', label='age_group', types=['twitter'], language='spanish')
     def build_dataset_pan16(label=None, types=None, language=None):
-        dataset_iterator = profiler16_un.datasets.pan2016.load(label=label, types=types, language=language)
+        dataset_iterator = profiler16_un.datasets.pan2016.load(
+            label=label, types=types, language=language)
         pred_profile = lambda profiler, X: profiler.predict(X)
         true_profile = lambda Y: Y
         return dataset_iterator, pred_profile, true_profile
@@ -86,7 +89,8 @@ def pretty_list(items):
 
 if __name__ == '__main__':
     conf = Configuration()
-    argparser = argparse.ArgumentParser(description='Author profiling evaluation')
+    argparser = argparse.ArgumentParser(
+        description='Author profiling evaluation')
     argparser.add_argument('-l', '--log-level', dest='log_level', type=str, default='INFO',
                            help='Set log level (DEBUG, INFO, ERROR)')
 
@@ -106,9 +110,11 @@ if __name__ == '__main__':
     logging.basicConfig(level=getattr(logging, args.log_level), format=LOGFMT)
 
     configure(conf)
-    training_dataset_iterator, train_pred_profile, train_true_profile = conf.get_dataset(args.training_corpus)
+    training_dataset_iterator, train_pred_profile, train_true_profile = conf.get_dataset(
+        args.training_corpus)
     if args.test_corpus:
-        test_dataset_iterator, test_pred_profile, test_true_profile = conf.get_dataset(args.test_corpus)
+        test_dataset_iterator, test_pred_profile, test_true_profile = conf.get_dataset(
+            args.test_corpus)
     else:
         test_dataset_iterator = None
     profiler_instance = conf.get_profiler(args.profiler_name)

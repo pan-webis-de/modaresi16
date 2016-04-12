@@ -14,7 +14,8 @@ class TestTweetTokenizer(unittest.TestCase):
     def test_tweet(self):
         tweet = "RT @marcobonzanini: just an example! :D http://example.com #NLP"
         tokens = self.tokenizer(tweet)
-        self.assertEqual(tokens, ['RT', '@marcobonzanini', ':', 'just', 'an', 'example', '!', ':D', 'http://example.com', '#NLP'])
+        self.assertEqual(tokens, ['RT', '@marcobonzanini', ':', 'just',
+                                  'an', 'example', '!', ':D', 'http://example.com', '#NLP'])
 
 
 if __name__ == '__main__':
