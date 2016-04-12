@@ -9,14 +9,18 @@ from sklearn.cross_validation import StratifiedKFold
 logger = logging.getLogger(__name__)
 
 
-def print_report(Y_test, Y_pred):
+def print_confusion_matrix(Y_test, Y_pred):
     print '*' * 50
     print 'Confusion Matrix'
     print '*' * 50
     print(ConfusionMatrix(Y_test, Y_pred))
+    print '*' * 50
+
+def print_accuracy(Y_test, Y_pred):
     print '+' * 50
     print 'Accuracy: {}'.format(accuracy_score(Y_test, Y_pred))
-    print '*' * 50
+    print '+' * 50
+
 
 
 class SklearnBenchmark():
@@ -36,7 +40,7 @@ class SklearnBenchmark():
             profiler.train(X_train, Y_train)
             logger.info('Testing on fold {} with {} instances'.format(fold, len(test_index)))
             Y_pred = profiler.predict(X_test)
-            print_report(Y_test, Y_pred)
+            print_accuracy(Y_test, Y_pred)
             fold = fold + 1
         if test_dataset_iterator:
             test_dataset_list = list(test_dataset_iterator)
@@ -46,4 +50,5 @@ class SklearnBenchmark():
             profiler.train(X, Y)
             logger.info('Testing on {} instances!'.format(len(X_test)))
             Y_pred = profiler.predict(X_test)
-            print_report(Y_test, Y_pred)
+            print_confusion_matrix(Y_test, Y_pred)
+            print_accuracy(Y_test, Y_pred)

@@ -52,7 +52,7 @@ class EnglishGenderProfiler():
                                                                                                   filter_hashtags=True,
                                                                                                   lowercase=True),
                                                                          analyzer='char',
-                                                                         ngram_range=(3, 6))),
+                                                                         ngram_range=(1, 1))),
                                                 ('tfidf', TfidfTransformer(sublinear_tf=True)),
                                                 ('scale', Normalizer())]))
 
@@ -61,9 +61,9 @@ class EnglishGenderProfiler():
                                                                                                                 filter_mentions=True,
                                                                                                                 filter_hashtags=True,
                                                                                                                 only_punctuation=True,
-                                                                                                                lowercase=True),
+                                                                                                                lowercase=False),
                                                                                        analyzer='char',
-                                                                                       ngram_range=(1, 6))),
+                                                                                       ngram_range=(10, 10))),
                                                               ('tfidf', TfidfTransformer(sublinear_tf=True)),
                                                               ('scale', Normalizer())]))
 
@@ -78,11 +78,12 @@ class EnglishGenderProfiler():
         self.pipeline = Pipeline([('features', FeatureUnion([word_unigrams,
                                                              word_bigrams,
                                                              # char_ngrams,
-                                                             # punctuation_ngrams
+                                                             punctuation_ngrams,
                                                              # pos_distribution,
                                                              avg_spelling_error
                                                              ], n_jobs=1)),
-                                  ('chi', SelectKBest(chi2, k=30000)),
+                                  ('scale', Normalizer()),
+                                  ('chi', SelectKBest(f_classif, k=30000)),
                                   ('classifier', get_classifier(method=method))])
 
     def train(self, X_train, Y_train):
