@@ -53,7 +53,7 @@ def pos_distribution():
     return ('pos_distribution', pipeline) 
 
 
-def word_unigrans():
+def word_unigrams():
     preprocessor = TextCleaner(lowercase=True,
                                filter_urls=True,
                                filter_mentions=True,
@@ -63,7 +63,6 @@ def word_unigrans():
                                filter_rt=True)
     vectorizer = CountVectorizer(min_df=2,
                                  stop_words=get_stopwords(),
-                                 tokenizer=LemmaTokenizer(),
                                  preprocessor=preprocessor,
                                  ngram_range=(1, 1))
     pipeline = Pipeline([('vect', vectorzer),

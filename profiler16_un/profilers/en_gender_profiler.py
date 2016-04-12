@@ -24,30 +24,11 @@ from sklearn.feature_selection import RFECV
 from sklearn.cross_validation import StratifiedKFold
 from profiler16_un.profilers.spelling_error_profiler import SpellingError
 from profiler16_un.profilers.pos_tag_profiler import POSFeatures
-
-tc = TextCleaner(lowercase=True,
-                 filter_urls=True,
-                 filter_mentions=True,
-                 filter_hashtags=True,
-                 alphabetic=True,
-                 strip_accents=True,
-                 filter_rt=True)
+from ..pipelines.pipelines import word_unigrams, word_bigrams, avg_spelling_error, pos_distribution
 
 
 class EnglishGenderProfiler():
     def __init__(self, lang='en', min_n=1, max_n=1, method=None):
-        word_unigrams = ('word_unigrams', Pipeline([('vect', CountVectorizer(min_df=2,
-                                                                             stop_words=get_stopwords(),
-                                                                             tokenizer=LemmaTokenizer(),
-                                                                             preprocessor=tc,
-                                                                             ngram_range=(1, 1))),
-                                                    ('tfidf', TfidfTransformer(sublinear_tf=True)),
-                                                    ('scale', Normalizer())]))
-
-        word_bigrams = ('word_bigrams', Pipeline([('vect', CountVectorizer(preprocessor=tc, ngram_range=(2, 2))),
-                                                  ('tfidf', TfidfTransformer(sublinear_tf=True)),
-                                                  ('scale', Normalizer())]))
-
         char_ngrams = ('char_ngrams', Pipeline([('vect', CountVectorizer(min_df=1,
                                                                          preprocessor=TextCleaner(filter_urls=True,
                                                                                                   filter_mentions=True,
@@ -57,12 +38,6 @@ class EnglishGenderProfiler():
                                                                          ngram_range=(4, 4))),
                                                 ('tfidf', TfidfTransformer(sublinear_tf=True)),
                                                 ('scale', Normalizer())]))
-
-        avg_spelling_error = ('avg_spelling_error', Pipeline([('feature', SpellingError(language=lang))]))
-
-        pos_distribution = ('pos_distribution', Pipeline([('feature', POSFeatures(language=lang)),
-                                                          ('tfidf', TfidfTransformer(sublinear_tf=False)),
-                                                          ('scale', Normalizer())]))
 
         features = FeatureUnion([word_unigrams, word_bigrams, avg_spelling_error], n_jobs=1)
         self.pipeline = Pipeline([('features', features),
