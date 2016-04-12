@@ -63,11 +63,14 @@ class EnglishGenderProfiler():
                                                                                                                 only_punctuation=True,
                                                                                                                 lowercase=True),
                                                                                        analyzer='char',
-                                                                                       ngram_range=(1, 3))),
+                                                                                       ngram_range=(1, 6))),
                                                               ('tfidf', TfidfTransformer(sublinear_tf=True)),
                                                               ('scale', Normalizer())]))
+
         # avg_spelling_error = ('avg_spelling_error', SpellingError(language=lang))
-        pos_distribution = ('pos_distribution', POSFeatures(language=lang))
+        pos_distribution = ('pos_distribution', Pipeline([('feature', POSFeatures(language=lang)),
+                                                          ('tfidf', TfidfTransformer(sublinear_tf=True)),
+                                                          ('scale', Normalizer())]))
 
         self.pipeline = Pipeline([('features', FeatureUnion([word_unigrams,
                                                              word_bigrams,
@@ -79,8 +82,6 @@ class EnglishGenderProfiler():
 
     def train(self, X_train, Y_train):
         self.model = self.pipeline.fit(X_train, Y_train)
-        print(self.pipeline.named_steps)
-        # show_most_informative_features(self.pipeline.named_steps['features'], self.pipeline.named_steps['classifier'])
 
     def predict(self, X):
         return self.model.predict(X)
