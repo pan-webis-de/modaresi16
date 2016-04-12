@@ -39,7 +39,7 @@ class EnglishGenderProfiler():
                                                 ('tfidf', TfidfTransformer(sublinear_tf=True)),
                                                 ('scale', Normalizer())]))
 
-        features = FeatureUnion([word_unigrams, word_bigrams, avg_spelling_error], n_jobs=1)
+        features = FeatureUnion([word_unigrams(), word_bigrams(), avg_spelling_error()], n_jobs=1)
         self.pipeline = Pipeline([('features', features),
                                   ('scale', Normalizer()),
                                   #('chi', SelectKBest(f_classif, k=30000)),
