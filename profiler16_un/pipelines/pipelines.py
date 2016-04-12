@@ -20,11 +20,34 @@ def punctuation_ngrams():
                          ('scale', Normalizer())])
     return ('punctuation_ngrams', pipeline)
 
+
 def avg_spelling_error():
     return ('avg_spelling_error', Pipeline([('feature', SpellingError(language=lang))]))
+
 
 def pos_distribution():
     pipeline = Pipeline([('feature', POSFeatures(language=lang)),
                          ('tfidf', TfidfTransformer(sublinear_tf=False)),
                          ('scale', Normalizer())])
     return ('pos_distribution', pipeline) 
+
+
+def word_unigrans():
+    vectorizer = CountVectorizer(min_df=2,
+                                 stop_words=get_stopwords(),
+                                 tokenizer=LemmaTokenizer(),
+                                 preprocessor=tc,
+                                 ngram_range=(1, 1))
+    pipeline = Pipeline([('vect', vectorzer),
+                         ('tfidf', TfidfTransformer(sublinear_tf=True)),
+                         ('scale', Normalizer())])
+    return ('word_unigrams', pipeline)
+
+
+def word_bigrams():
+    pipeline = Pipeline([('vect', CountVectorizer(preprocessor=tc, ngram_range=(2, 2))),
+                         ('tfidf', TfidfTransformer(sublinear_tf=True)),
+                         ('scale', Normalizer())])
+    return ('word_bigrams', pipeline)
+
+
