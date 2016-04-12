@@ -95,5 +95,5 @@ def char_ngrams():
                                  ngram_range=(4, 4))
     pipeline = Pipeline([('vect', vectorizer),
                          ('tfidf', TfidfTransformer(sublinear_tf=True)),
-                         ('scale', Normalizer())]))
+                         ('scale', Normalizer())])
     return ('char_ngrams', pipeline)
