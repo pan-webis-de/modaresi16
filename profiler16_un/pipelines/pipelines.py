@@ -18,8 +18,13 @@ def punctuation_ngrams():
     pipeline = Pipeline([('vect', vectorizer),
                          ('tfidf', TfidfTransformer(sublinear_tf=True)),
                          ('scale', Normalizer())])
-    punctuation_ngrams = ('punctuation_ngrams', pipeline)
-    return punctuation_ngrams
+    return ('punctuation_ngrams', pipeline)
 
 def avg_spelling_error():
     return ('avg_spelling_error', Pipeline([('feature', SpellingError(language=lang))]))
+
+def pos_distribution():
+    pipeline = Pipeline([('feature', POSFeatures(language=lang)),
+                         ('tfidf', TfidfTransformer(sublinear_tf=False)),
+                         ('scale', Normalizer())])
+    return ('pos_distribution', pipeline) 
