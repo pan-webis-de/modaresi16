@@ -52,7 +52,7 @@ class EnglishGenderProfiler():
                                                                                                   filter_hashtags=True,
                                                                                                   lowercase=False),
                                                                          analyzer='char',
-                                                                         ngram_range=(2, 2))),
+                                                                         ngram_range=(3, 3))),
                                                 ('tfidf', TfidfTransformer(sublinear_tf=True)),
                                                 ('scale', Normalizer())]))
 
@@ -64,7 +64,7 @@ class EnglishGenderProfiler():
                                                           ('tfidf', TfidfTransformer(sublinear_tf=False)),
                                                           ('scale', Normalizer())]))
 
-        features = FeatureUnion([word_unigrams, word_bigrams, char_ngrams, avg_spelling_error], n_jobs=1))
+        features = FeatureUnion([word_unigrams, word_bigrams, char_ngrams, avg_spelling_error], n_jobs=1)
         self.pipeline = Pipeline([('features', features),
                                   ('scale', Normalizer()),
                                   ('chi', SelectKBest(f_classif, k=30000)),
