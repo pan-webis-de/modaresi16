@@ -42,7 +42,7 @@ def punctuation_ngrams():
     return ('punctuation_ngrams', pipeline)
 
 
-def avg_spelling_error():
+def avg_spelling_error(lang=None):
     return ('avg_spelling_error', Pipeline([('feature', SpellingError(language=lang))]))
 
 
@@ -65,7 +65,7 @@ def word_unigrams():
                                  stop_words=get_stopwords(),
                                  preprocessor=preprocessor,
                                  ngram_range=(1, 1))
-    pipeline = Pipeline([('vect', vectorzer),
+    pipeline = Pipeline([('vect', vectorizer),
                          ('tfidf', TfidfTransformer(sublinear_tf=True)),
                          ('scale', Normalizer())])
     return ('word_unigrams', pipeline)
@@ -83,5 +83,3 @@ def word_bigrams():
                          ('tfidf', TfidfTransformer(sublinear_tf=True)),
                          ('scale', Normalizer())])
     return ('word_bigrams', pipeline)
-
-
