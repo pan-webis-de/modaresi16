@@ -43,7 +43,10 @@ def punctuation_ngrams():
 
 
 def avg_spelling_error(lang=None):
-    return ('avg_spelling_error', Pipeline([('feature', SpellingError(language=lang))]))
+    pipeline = Pipeline([('feature', SpellingError(language=lang)),
+                         ('tfidf', TfidfTransformer(sublinear_tf=False)),
+                         ('scale', Normalizer())])
+    return ('avg_spelling_error', pipeline)
 
 
 def pos_distribution():

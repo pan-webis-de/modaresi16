@@ -13,7 +13,9 @@ from sklearn.pipeline import Pipeline
 
 class EnglishGenderProfiler():
     def __init__(self, lang='en', min_n=1, max_n=1, method=None):
-        features = FeatureUnion([word_unigrams(), word_bigrams()], n_jobs=1)
+        features = FeatureUnion([word_unigrams(),
+                                 word_bigrams(),
+                                 avg_spelling_error(lang=lang)], n_jobs=1)
         self.pipeline = Pipeline([('features', features),
                                   ('scale', Normalizer()),
                                   #('chi', SelectKBest(f_classif, k=30000)),
