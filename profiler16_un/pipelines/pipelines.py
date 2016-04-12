@@ -20,3 +20,6 @@ def punctuation_ngrams():
                          ('scale', Normalizer())])
     punctuation_ngrams = ('punctuation_ngrams', pipeline)
     return punctuation_ngrams
+
+def avg_spelling_error():
+    return ('avg_spelling_error', Pipeline([('feature', SpellingError(language=lang))]))
