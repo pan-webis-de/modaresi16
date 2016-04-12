@@ -35,31 +35,26 @@ tc = TextCleaner(lowercase=True,
 
 class EnglishGenderProfiler():
     def __init__(self, lang='en', min_n=1, max_n=1, method=None):
-        word_unigrams = ('word_unigrams', Pipeline([
-                                  ('vect', CountVectorizer(min_df=2,
-                                                           stop_words=get_stopwords(),
-                                                           preprocessor=tc,
-                                                           ngram_range=(1, 1)
-                                                           )),
-                                  ('tfidf', TfidfTransformer(sublinear_tf=True)),
-                                  ('scale', Normalizer())
-                                  ]))
+        word_unigrams = ('word_unigrams', Pipeline([('vect', CountVectorizer(min_df=2,
+                                                                             stop_words=get_stopwords(),
+                                                                             preprocessor=tc,
+                                                                             ngram_range=(1, 1))),
+                                                    ('tfidf', TfidfTransformer(sublinear_tf=True)),
+                                                    ('scale', Normalizer())]))
 
-        word_bigrams = ('word_bigrams', Pipeline([
-                                  ('vect', CountVectorizer(preprocessor=tc, ngram_range=(2, 2))),
-                                  ('tfidf', TfidfTransformer(sublinear_tf=True)),
-                                  ('scale', Normalizer())
-                                  ]))
+        word_bigrams = ('word_bigrams', Pipeline([('vect', CountVectorizer(preprocessor=tc, ngram_range=(2, 2))),
+                                                  ('tfidf', TfidfTransformer(sublinear_tf=True)),
+                                                  ('scale', Normalizer())]))
 
-        char_ngrams = ('char_ngrams', CountVectorizer(min_df=1,
-                                                      preprocessor=TextCleaner(filter_urls=True,
-                                                                               filter_mentions=True,
-                                                                               filter_hashtags=True,
-                                                                               lowercase=True
-                                                                               ),
-                                                      analyzer='char',
-                                                      ngram_range=(3, 3)
-                                                      ))
+        char_ngrams = ('char_ngrams', Pipeline([('vect', CountVectorizer(min_df=1,
+                                                                         preprocessor=TextCleaner(filter_urls=True,
+                                                                                                  filter_mentions=True,
+                                                                                                  filter_hashtags=True,
+                                                                                                  lowercase=True),
+                                                                         analyzer='char',
+                                                                         ngram_range=(3, 3))),
+                                                ('tfidf', TfidfTransformer(sublinear_tf=True)),
+                                                ('scale', Normalizer())]))
 
         punctuation_ngrams = ('punctuation_ngrams', CountVectorizer(min_df=1,
                                                                     preprocessor=TextCleaner(filter_urls=True,
@@ -73,14 +68,10 @@ class EnglishGenderProfiler():
         # avg_spelling_error = ('avg_spelling_error', SpellingError(language=lang))
         pos_distribution = ('pos_distribution', POSFeatures(language=lang))
 
-        self.pipeline = Pipeline([('features', FeatureUnion([
-                                                             word_unigrams,
-                                                             word_bigrams
-                                                             # char_ngrams,
-                                                             # avg_spelling_error,
-                                                             # pos_distribution
-                                                             ])),
-                                  # ('tfidf', TfidfTransformer(sublinear_tf=True)),
+        self.pipeline = Pipeline([('features', FeatureUnion([word_unigrams,
+                                                             word_bigrams,
+                                                             char_ngrams])),
+                                  ('tfidf', TfidfTransformer(sublinear_tf=True)),
                                   # ('chi', SelectKBest(chi2, k=700000)),
                                   ('classifier', get_classifier(method=method))])
 
