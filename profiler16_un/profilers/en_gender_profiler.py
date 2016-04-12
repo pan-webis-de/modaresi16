@@ -18,7 +18,7 @@ class EnglishGenderProfiler():
                                  word_bigrams(),
                                  avg_spelling_error(lang=lang),
                                  avg_embeddings_count(lang=lang),
-                                 char_ngrams()
+                                 # char_ngrams()
                                  ], n_jobs=1)
         self.pipeline = Pipeline([('features', features),
                                   ('scale', Normalizer()),
