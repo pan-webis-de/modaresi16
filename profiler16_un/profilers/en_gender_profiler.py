@@ -50,9 +50,9 @@ class EnglishGenderProfiler():
                                                                          preprocessor=TextCleaner(filter_urls=True,
                                                                                                   filter_mentions=True,
                                                                                                   filter_hashtags=True,
-                                                                                                  lowercase=True),
+                                                                                                  lowercase=False),
                                                                          analyzer='char',
-                                                                         ngram_range=(1, 1))),
+                                                                         ngram_range=(2, 2))),
                                                 ('tfidf', TfidfTransformer(sublinear_tf=True)),
                                                 ('scale', Normalizer())]))
 
@@ -64,12 +64,8 @@ class EnglishGenderProfiler():
                                                           ('tfidf', TfidfTransformer(sublinear_tf=False)),
                                                           ('scale', Normalizer())]))
 
-        self.pipeline = Pipeline([('features', FeatureUnion([word_unigrams,
-                                                             word_bigrams,
-                                                             # char_ngrams,
-                                                             # pos_distribution,
-                                                             avg_spelling_error
-                                                             ], n_jobs=1)),
+        features = FeatureUnion([word_unigrams, word_bigrams, char_ngrams, avg_spelling_error], n_jobs=1))
+        self.pipeline = Pipeline([('features', features),
                                   ('scale', Normalizer()),
                                   ('chi', SelectKBest(f_classif, k=30000)),
                                   ('classifier', get_classifier(method=method))])
