@@ -1,39 +1,23 @@
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.feature_selection import SelectKBest
-from sklearn.feature_selection import SelectPercentile
 from sklearn.preprocessing import Normalizer
-from sklearn.decomposition import PCA
-from sklearn.feature_selection import chi2
-from sklearn.feature_selection import f_classif
-from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
-from ..tokenizers.tweet_tokenizer import TweetTokenizer
 from ..tokenizers.lemma_tokenizer import LemmaTokenizer
-from sklearn.pipeline import FeatureUnion
-from ..utils.utils import get_classifier
-from ..utils.utils import show_most_informative_features
 from ..utils.utils import get_stopwords
 from ..preprocessors.text_cleaner import TextCleaner
-from sklearn.feature_selection import SelectFromModel
-from sklearn.svm import LinearSVC
-from sklearn import linear_model, decomposition
-from sklearn.decomposition import TruncatedSVD
-from sklearn.ensemble import ExtraTreesClassifier
-from sklearn.feature_selection import RFECV
-from sklearn.cross_validation import StratifiedKFold
 from profiler16_un.profilers.spelling_error_profiler import SpellingError
+from profiler16_un.profilers.embeddings_profiler import EmbeddingsCounter
 from profiler16_un.profilers.pos_tag_profiler import POSFeatures
 
 
 def punctuation_ngrams():
-    pprorcessor = TextCleaner(filter_urls=True,
+    preprocessor = TextCleaner(filter_urls=True,
                               filter_mentions=True,
                               filter_hashtags=True,
                               only_punctuation=True,
                               lowercase=False)
     vectorizer = CountVectorizer(min_df=1,
-                                 preprocessor=pprcessor,
+                                 preprocessor=preprocessor,
                                  tokenizer=LemmaTokenizer(),
                                  analyzer='char',
                                  ngram_range=(10, 10))
@@ -50,7 +34,14 @@ def avg_spelling_error(lang=None):
     return ('avg_spelling_error', pipeline)
 
 
-def pos_distribution():
+def avg_embeddings_count(lang=None):
+    pipeline = Pipeline([('feature', EmbeddingsCounter(language=lang)),
+                         ('tfidf', TfidfTransformer(sublinear_tf=False)),
+                         ('scale', Normalizer())])
+    return ('avg_embeddings_count', pipeline)
+
+
+def pos_distribution(lang=None):
     pipeline = Pipeline([('feature', POSFeatures(language=lang)),
                          ('tfidf', TfidfTransformer(sublinear_tf=False)),
                          ('scale', Normalizer())])

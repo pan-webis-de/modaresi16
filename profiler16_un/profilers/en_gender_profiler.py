@@ -1,9 +1,9 @@
 from ..pipelines.pipelines import avg_spelling_error
-from ..pipelines.pipelines import pos_distribution
 from ..pipelines.pipelines import word_unigrams
 from sklearn.feature_selection import f_classif
 from ..pipelines.pipelines import word_bigrams
 from ..pipelines.pipelines import char_ngrams
+from ..pipelines.pipelines import avg_embeddings_count
 from sklearn.preprocessing import Normalizer
 from sklearn.feature_selection import chi2
 from sklearn.pipeline import FeatureUnion
@@ -13,10 +13,12 @@ from sklearn.pipeline import Pipeline
 
 class EnglishGenderProfiler():
 
-    def __init__(self, lang='en', min_n=1, max_n=1, method=None):
+    def __init__(self, lang='en', method=None):
         features = FeatureUnion([word_unigrams(),
                                  word_bigrams(),
-                                 avg_spelling_error(lang=lang)], n_jobs=1)
+                                 avg_spelling_error(lang=lang),
+                                 avg_embeddings_count(lang=lang)
+                                 ], n_jobs=1)
         self.pipeline = Pipeline([('features', features),
                                   ('scale', Normalizer()),
                                   #('chi', SelectKBest(f_classif, k=30000)),
