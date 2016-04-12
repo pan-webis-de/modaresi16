@@ -25,8 +25,8 @@ def print_accuracy(Y_test, Y_pred):
 
 class SklearnBenchmark():
 
-    def __init__(self, n_folds=3):
-        self.n_folds = 3
+    def __init__(self, n_folds=10):
+        self.n_folds = n_folds
 
     def run(self, training_dataset_iterator, test_dataset_iterator, profiler):
         dataset_list = list(training_dataset_iterator)
