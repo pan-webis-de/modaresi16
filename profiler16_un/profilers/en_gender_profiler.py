@@ -67,16 +67,21 @@ class EnglishGenderProfiler():
                                                               ('tfidf', TfidfTransformer(sublinear_tf=True)),
                                                               ('scale', Normalizer())]))
 
-        # avg_spelling_error = ('avg_spelling_error', SpellingError(language=lang))
+        avg_spelling_error = ('avg_spelling_error', Pipeline([('feature', SpellingError(language=lang)),
+                                                          ('tfidf', TfidfTransformer(sublinear_tf=False)),
+                                                          ('scale', Normalizer())]))
+
         pos_distribution = ('pos_distribution', Pipeline([('feature', POSFeatures(language=lang)),
-                                                          ('tfidf', TfidfTransformer(sublinear_tf=True)),
+                                                          ('tfidf', TfidfTransformer(sublinear_tf=False)),
                                                           ('scale', Normalizer())]))
 
         self.pipeline = Pipeline([('features', FeatureUnion([word_unigrams,
                                                              word_bigrams,
                                                              # char_ngrams,
-                                                             punctuation_ngrams
-                                                             ], n_jobs=-1)),
+                                                             # punctuation_ngrams
+                                                             # pos_distribution,
+                                                             avg_spelling_error
+                                                             ], n_jobs=1)),
                                   ('chi', SelectKBest(chi2, k=30000)),
                                   ('classifier', get_classifier(method=method))])
 

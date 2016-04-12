@@ -45,8 +45,6 @@ class SpellingError(BaseEstimator):
         for token in tokens:
             if self.is_correct(token):
                 trueSum += 1
-
-        # print(1.0 * trueSum / len(tokens))
         return 1.0 * trueSum / len(tokens)
 
     def is_correct(self, text='', lang='en'):
