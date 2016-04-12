@@ -38,7 +38,7 @@ class EnglishGenderProfiler():
     def __init__(self, lang='en', min_n=1, max_n=1, method=None):
         word_unigrams = ('word_unigrams', Pipeline([('vect', CountVectorizer(min_df=2,
                                                                              stop_words=get_stopwords(),
-                                                                             #tokenizer=LemmaTokenizer(),
+                                                                             tokenizer=LemmaTokenizer(),
                                                                              preprocessor=tc,
                                                                              ngram_range=(1, 1))),
                                                     ('tfidf', TfidfTransformer(sublinear_tf=True)),
@@ -66,7 +66,7 @@ class EnglishGenderProfiler():
 
         features = FeatureUnion([word_unigrams, word_bigrams, avg_spelling_error], n_jobs=1)
         self.pipeline = Pipeline([('features', features),
-                                  ('scale', Normalizer()),
+                                  # ('scale', Normalizer()),
                                   #('chi', SelectKBest(f_classif, k=30000)),
                                   ('classifier', get_classifier(method=method))])
 
