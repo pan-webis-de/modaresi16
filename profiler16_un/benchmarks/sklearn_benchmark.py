@@ -16,11 +16,11 @@ def print_confusion_matrix(Y_test, Y_pred):
     print(ConfusionMatrix(Y_test, Y_pred))
     print '*' * 50
 
+
 def print_accuracy(Y_test, Y_pred):
     print '+' * 50
     print 'Accuracy: {}'.format(accuracy_score(Y_test, Y_pred))
     print '+' * 50
-
 
 
 class SklearnBenchmark():

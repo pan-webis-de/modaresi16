@@ -9,6 +9,7 @@ from sklearn.feature_selection import f_classif
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from ..tokenizers.tweet_tokenizer import TweetTokenizer
+from ..tokenizers.lemma_tokenizer import LemmaTokenizer
 from sklearn.pipeline import FeatureUnion
 from ..utils.utils import get_classifier
 from ..utils.utils import show_most_informative_features
@@ -37,6 +38,7 @@ class EnglishGenderProfiler():
     def __init__(self, lang='en', min_n=1, max_n=1, method=None):
         word_unigrams = ('word_unigrams', Pipeline([('vect', CountVectorizer(min_df=2,
                                                                              stop_words=get_stopwords(),
+                                                                             tokenizer=LemmaTokenizer(),
                                                                              preprocessor=tc,
                                                                              ngram_range=(1, 1))),
                                                     ('tfidf', TfidfTransformer(sublinear_tf=True)),
@@ -51,14 +53,14 @@ class EnglishGenderProfiler():
                                                                                                   filter_mentions=True,
                                                                                                   filter_hashtags=True,
                                                                                                   lowercase=False),
-                                                                         analyzer='char',
+                                                                         analyzer='char_wb',
                                                                          ngram_range=(3, 3))),
                                                 ('tfidf', TfidfTransformer(sublinear_tf=True)),
                                                 ('scale', Normalizer())]))
 
         avg_spelling_error = ('avg_spelling_error', Pipeline([('feature', SpellingError(language=lang)),
-                                                          ('tfidf', TfidfTransformer(sublinear_tf=False)),
-                                                          ('scale', Normalizer())]))
+                                                              ('tfidf', TfidfTransformer(sublinear_tf=False)),
+                                                              ('scale', Normalizer())]))
 
         pos_distribution = ('pos_distribution', Pipeline([('feature', POSFeatures(language=lang)),
                                                           ('tfidf', TfidfTransformer(sublinear_tf=False)),
