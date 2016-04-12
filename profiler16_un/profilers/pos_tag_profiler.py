@@ -60,7 +60,6 @@ class POSFeatures(BaseEstimator):
 
     def __init__(self, language='en'):
         self.language = language
-        # print("{} {}".format("language:", self.language))
 
     def get_feature_names(self):
         return get_pos_tags_array

@@ -17,7 +17,8 @@ class EnglishGenderProfiler():
         features = FeatureUnion([word_unigrams(),
                                  word_bigrams(),
                                  avg_spelling_error(lang=lang),
-                                 avg_embeddings_count(lang=lang)
+                                 avg_embeddings_count(lang=lang),
+                                 char_ngrams()
                                  ], n_jobs=1)
         self.pipeline = Pipeline([('features', features),
                                   ('scale', Normalizer()),

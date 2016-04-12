@@ -20,6 +20,4 @@ class PolyglotEmbeddingsTagger:
         """
         if not text:
             return False
-        # print(text.encode('utf-8'))
-        # print(str((text in self.embeddings)))
         return text in self.embeddings

@@ -31,7 +31,6 @@ class EmbeddingsCounter(BaseEstimator):
         self.polyglot_embedding_en = PolyglotEmbeddingsTagger(lang='en')
         self.polyglot_embedding_nl = PolyglotEmbeddingsTagger(lang='nl')
         self.polyglot_embedding_es = PolyglotEmbeddingsTagger(lang='es')
-        print("{} {}".format("language:", self.language))
 
     def get_feature_names(self):
         return np.array(['avg_embedding_count'])
