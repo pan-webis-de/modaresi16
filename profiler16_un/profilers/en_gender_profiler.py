@@ -56,17 +56,6 @@ class EnglishGenderProfiler():
                                                 ('tfidf', TfidfTransformer(sublinear_tf=True)),
                                                 ('scale', Normalizer())]))
 
-        punctuation_ngrams = ('punctuation_ngrams', Pipeline([('vect', CountVectorizer(min_df=1,
-                                                                                       preprocessor=TextCleaner(filter_urls=True,
-                                                                                                                filter_mentions=True,
-                                                                                                                filter_hashtags=True,
-                                                                                                                only_punctuation=True,
-                                                                                                                lowercase=False),
-                                                                                       analyzer='char',
-                                                                                       ngram_range=(10, 10))),
-                                                              ('tfidf', TfidfTransformer(sublinear_tf=True)),
-                                                              ('scale', Normalizer())]))
-
         avg_spelling_error = ('avg_spelling_error', Pipeline([('feature', SpellingError(language=lang)),
                                                           ('tfidf', TfidfTransformer(sublinear_tf=False)),
                                                           ('scale', Normalizer())]))
@@ -78,7 +67,6 @@ class EnglishGenderProfiler():
         self.pipeline = Pipeline([('features', FeatureUnion([word_unigrams,
                                                              word_bigrams,
                                                              # char_ngrams,
-                                                             punctuation_ngrams,
                                                              # pos_distribution,
                                                              avg_spelling_error
                                                              ], n_jobs=1)),
