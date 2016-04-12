@@ -6,9 +6,11 @@ from sklearn.pipeline import Pipeline
 import numpy as np
 from nltk.tokenize import RegexpTokenizer
 from profiler16_un.postprocessors.hunspell_wrapper import HunspellWrapper
+from string import printable
 
 
 def tokenize(x):
+    x = filter(lambda x: x in printable, x)
     return x.split()
 
 
