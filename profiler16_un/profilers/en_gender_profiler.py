@@ -73,13 +73,13 @@ class EnglishGenderProfiler():
                                                              word_bigrams,
                                                              # char_ngrams,
                                                              punctuation_ngrams
-                                                             ])),
-                                  # ('chi', SelectKBest(chi2, k=700000)),
+                                                             ], n_jobs=-1)),
+                                  ('chi', SelectKBest(chi2, k=30000)),
                                   ('classifier', get_classifier(method=method))])
 
     def train(self, X_train, Y_train):
         self.model = self.pipeline.fit(X_train, Y_train)
-        # print(type(self.pipeline.named_steps['features'].get_feature_names))
+        print(self.pipeline.named_steps)
         # show_most_informative_features(self.pipeline.named_steps['features'], self.pipeline.named_steps['classifier'])
 
     def predict(self, X):
