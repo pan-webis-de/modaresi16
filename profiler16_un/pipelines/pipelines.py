@@ -83,3 +83,17 @@ def word_bigrams():
                          ('tfidf', TfidfTransformer(sublinear_tf=True)),
                          ('scale', Normalizer())])
     return ('word_bigrams', pipeline)
+
+
+def char_ngrams():
+    vectorizer = CountVectorizer(min_df=1,
+                                 preprocessor=TextCleaner(filter_urls=True,
+                                                          filter_mentions=True,
+                                                          filter_hashtags=True,
+                                                          lowercase=False),
+                                 analyzer='char_wb',
+                                 ngram_range=(4, 4))
+    pipeline = Pipeline([('vect', vectorizer,
+                         ('tfidf', TfidfTransformer(sublinear_tf=True)),
+                         ('scale', Normalizer())]))
+    return ('char_ngrams', pipeline)
