@@ -8,7 +8,6 @@ from nltk.tokenize import RegexpTokenizer
 from profiler16_un.postprocessors.hunspell_wrapper import HunspellWrapper
 
 
-
 def tokenize(x):
     return x.split()
 
