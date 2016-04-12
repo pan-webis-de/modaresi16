@@ -39,5 +39,5 @@ class TextCleaner(object):
         if self.alphabetic:
             doc = regex.sub("[^a-zA-ZÀ-ÿ']+", " ", doc)
         if self.only_punctuation:
-            doc = regex.sub("[\w]", " ", doc)
+            doc = regex.sub("[\w]", "", doc)
         return doc.strip()

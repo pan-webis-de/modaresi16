@@ -30,7 +30,6 @@ class SpellingError(BaseEstimator):
         self.hunspell_en = HunspellWrapper(lang='en')
         self.hunspell_nl = HunspellWrapper(lang='nl')
         self.hunspell_es = HunspellWrapper(lang='es')
-        print("{} {}".format("language:", self.language))
 
     def get_feature_names(self):
         return np.array(['avg_error_count'])
