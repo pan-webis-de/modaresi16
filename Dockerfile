@@ -14,7 +14,7 @@ RUN conda install -y \
   h5py \
   matplotlib
 
-RUN python -c "import nltk; nltk.download('stopwords'); nltk.download('punkt')" 
+RUN python -c "import nltk; nltk.download('stopwords'); nltk.download('punkt'); nltk.download('wordnet')" 
 
 WORKDIR /var/www
 ADD . .
