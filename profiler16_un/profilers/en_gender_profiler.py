@@ -66,7 +66,7 @@ class EnglishGenderProfiler():
 
         features = FeatureUnion([word_unigrams, word_bigrams, avg_spelling_error], n_jobs=1)
         self.pipeline = Pipeline([('features', features),
-                                  # ('scale', Normalizer()),
+                                  ('scale', Normalizer()),
                                   #('chi', SelectKBest(f_classif, k=30000)),
                                   ('classifier', get_classifier(method=method))])
 
