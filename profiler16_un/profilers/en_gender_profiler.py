@@ -52,26 +52,28 @@ class EnglishGenderProfiler():
                                                                                                   filter_hashtags=True,
                                                                                                   lowercase=True),
                                                                          analyzer='char',
-                                                                         ngram_range=(3, 3))),
+                                                                         ngram_range=(3, 6))),
                                                 ('tfidf', TfidfTransformer(sublinear_tf=True)),
                                                 ('scale', Normalizer())]))
 
-        punctuation_ngrams = ('punctuation_ngrams', CountVectorizer(min_df=1,
-                                                                    preprocessor=TextCleaner(filter_urls=True,
-                                                                                             filter_mentions=True,
-                                                                                             filter_hashtags=True,
-                                                                                             lowercase=True
-                                                                                             ),
-                                                                    analyzer='char',
-                                                                    ngram_range=(6, 6)
-                                                                    ))
+        punctuation_ngrams = ('punctuation_ngrams', Pipeline([('vect', CountVectorizer(min_df=1,
+                                                                                       preprocessor=TextCleaner(filter_urls=True,
+                                                                                                                filter_mentions=True,
+                                                                                                                filter_hashtags=True,
+                                                                                                                only_punctuation=True,
+                                                                                                                lowercase=True),
+                                                                                       analyzer='char',
+                                                                                       ngram_range=(1, 3))),
+                                                              ('tfidf', TfidfTransformer(sublinear_tf=True)),
+                                                              ('scale', Normalizer())]))
         # avg_spelling_error = ('avg_spelling_error', SpellingError(language=lang))
         pos_distribution = ('pos_distribution', POSFeatures(language=lang))
 
         self.pipeline = Pipeline([('features', FeatureUnion([word_unigrams,
                                                              word_bigrams,
-                                                             char_ngrams])),
-                                  ('tfidf', TfidfTransformer(sublinear_tf=True)),
+                                                             # char_ngrams,
+                                                             punctuation_ngrams
+                                                             ])),
                                   # ('chi', SelectKBest(chi2, k=700000)),
                                   ('classifier', get_classifier(method=method))])
 
