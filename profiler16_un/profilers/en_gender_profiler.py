@@ -22,7 +22,7 @@ class EnglishGenderProfiler():
                                  ], n_jobs=1)
         self.pipeline = Pipeline([('features', features),
                                   ('scale', Normalizer()),
-                                  #('chi', SelectKBest(f_classif, k=30000)),
+                                  # ('chi', SelectKBest(f_classif, k=30000)),
                                   ('classifier', get_classifier(method=method))])
 
     def train(self, X_train, Y_train):

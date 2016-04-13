@@ -12,10 +12,10 @@ from profiler16_un.profilers.pos_tag_profiler import POSFeatures
 
 def punctuation_ngrams():
     preprocessor = TextCleaner(filter_urls=True,
-                              filter_mentions=True,
-                              filter_hashtags=True,
-                              only_punctuation=True,
-                              lowercase=False)
+                               filter_mentions=True,
+                               filter_hashtags=True,
+                               only_punctuation=True,
+                               lowercase=False)
     vectorizer = CountVectorizer(min_df=1,
                                  preprocessor=preprocessor,
                                  tokenizer=LemmaTokenizer(),
