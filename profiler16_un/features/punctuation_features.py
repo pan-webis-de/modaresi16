@@ -3,11 +3,14 @@ from sklearn import preprocessing
 from sklearn.base import BaseEstimator
 import numpy as np
 from string import printable
+from ..tokenizers.tweet_tokenizer import TweetTokenizer
+
+tokenizer = TweetTokenizer()
 
 
 def tokenize(x):
     x = filter(lambda x: x in printable, x)
-    return x.split()
+    return tokenizer(x)
 
 
 class PunctuationFeatures(BaseEstimator):
