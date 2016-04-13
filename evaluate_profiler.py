@@ -33,7 +33,7 @@ def configure(conf):
     def build_pos_ngram_profiler(**args):
         return POSNGramProfiler(**args)
 
-    @conf.profiler('en_gender_profiler', lang='en', method='gradient_boosting')
+    @conf.profiler('en_gender_profiler', lang='en', method='logistic_regression')
     def build_en_gender_profiler(**args):
         return EnglishGenderProfiler(**args)
 
