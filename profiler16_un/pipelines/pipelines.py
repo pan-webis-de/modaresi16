@@ -8,7 +8,7 @@ from ..preprocessors.text_cleaner import TextCleaner
 from profiler16_un.profilers.spelling_error_profiler import SpellingError
 from profiler16_un.profilers.embeddings_profiler import EmbeddingsCounter
 from profiler16_un.profilers.pos_tag_profiler import POSFeatures
-
+from profiler16_un.features.punctuation_features import PunctuationFeatures
 
 def punctuation_ngrams():
     preprocessor = TextCleaner(filter_urls=True,
@@ -46,6 +46,12 @@ def pos_distribution(lang=None):
                          ('tfidf', TfidfTransformer(sublinear_tf=False)),
                          ('scale', Normalizer())])
     return ('pos_distribution', pipeline)
+
+def punctuation_features():
+    pipeline = Pipeline([('feature', PunctuationFeatures()),
+                         ('tfidf', TfidfTransformer(sublinear_tf=False)),
+                         ('scale', Normalizer())])
+    return ('punctuation_features', pipeline)
 
 
 def word_unigrams():
