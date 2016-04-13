@@ -15,14 +15,6 @@ from profiler16_un.configuration import Configuration
 
 
 def configure(conf):
-    @conf.profiler('last_character_profiler', slice_length=3, slizer='last_chars')
-    def build_last_character_profiler(**args):
-        return WordSliceProfiler(**args)
-
-    @conf.profiler('first_character_profiler', slice_length=3, slizer='first_chars')
-    def build_last_character_profiler(**args):
-        return WordSliceProfiler(**args)
-
     @conf.profiler('pos_tag_profiler_en', language='en')
     def build_pos_tag_profiler(**args):
         return POSTagProfiler(**args)
@@ -41,7 +33,7 @@ def configure(conf):
     def build_pos_ngram_profiler(**args):
         return POSNGramProfiler(**args)
 
-    @conf.profiler('en_gender_profiler', lang='en', method='logistic_regression')
+    @conf.profiler('en_gender_profiler', lang='en', method='gradient_boosting')
     def build_en_gender_profiler(**args):
         return EnglishGenderProfiler(**args)
 
