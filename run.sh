@@ -35,4 +35,5 @@ echo Input corpus    = "${CORPUS}"
 echo Input run       = "${RUN}"
 echo Output dir      = "${OUTPUT}"
 
+make build
 docker exec -it profiler16_un /bin/sh -c "python;print('hello')"
