@@ -36,4 +36,5 @@ echo Input run       = "${RUN}"
 echo Output dir      = "${OUTPUT}"
 
 make build
-docker exec -it profiler16_un /bin/sh -c "python;print('hello')"
+make run
+docker exec -it profiler16_un /bin/sh -c "python profiler.py"
