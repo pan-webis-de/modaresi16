@@ -31,10 +31,19 @@ case $key in
 esac
 shift # past argument or value
 done
-echo Input corpus    = "${CORPUS}"
-echo Input run       = "${RUN}"
-echo Output dir      = "${OUTPUT}"
-
+echo "************************"
+echo "*** Tira test runner ***"
+echo "************************"
+echo Host input    = "${INPUT}"
+echo Host output   = "${OUTPUT}"
+echo Host run      = "${RUN}"
+ 
 make build
-make run
-docker exec -it profiler16_un /bin/sh -c "python profiler.py"
+VOLUMES=" -v $INPUT:/media/input -v $OUTPUT:/media/output  "
+VARS=" -e TIRA_INPUT=/media/input -e TIRA_OUTPUT=/media/output "
+IMAGE=profiler16_un
+CMD=""
+echo "[BEGIN DOCKER COMMAND]"
+docker run -it --rm=true $VOLUMES $VARS $IMAGE python profiler --tira_input /media/input --tira_output /media/output
+docker run -it --rm=true $VOLUMES $VARS $IMAGE chown -R 1000:1000 /media/output
+echo "[END DOCKER COMMAND]"
