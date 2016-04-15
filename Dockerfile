@@ -18,6 +18,12 @@ RUN python -c "import nltk; nltk.download('stopwords'); nltk.download('punkt'); 
 RUN pip install hunspell
 RUN pip install pytest
 RUN pip install pytest-pep8
+RUN pip install beautifulsoup4
+RUN pip install simplejson
+RUN pip install pandas_confusion
+RUN pip install polyglot
+RUN pip install regex
+RUN pip install xgboost
 
 WORKDIR /var/www
 RUN mkdir -p /root/hunspell
