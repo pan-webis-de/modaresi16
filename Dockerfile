@@ -15,10 +15,13 @@ RUN conda install -y \
   matplotlib
 
 RUN python -c "import nltk; nltk.download('stopwords'); nltk.download('punkt'); nltk.download('wordnet')" 
+RUN pip install hunspell
+RUN pip install pytest
+RUN pip install pytest-pep8
 
 WORKDIR /var/www
+RUN mkdir -p /root/hunspell
 ADD . .
-RUN pip install -r requirements.txt
 RUN pip install -e .
 
 RUN polyglot download --dir /root/polyglot_data pos2.nl
@@ -28,7 +31,6 @@ RUN polyglot download --dir /root/polyglot_data embeddings2.en
 RUN polyglot download --dir /root/polyglot_data pos2.es
 RUN polyglot download --dir /root/polyglot_data embeddings2.es
 
-RUN mkdir -p /root/hunspell
 ADD https://cgit.freedesktop.org/libreoffice/dictionaries/plain/nl_NL/nl_NL.aff  /root/hunspell/nl_NL.aff
 ADD https://cgit.freedesktop.org/libreoffice/dictionaries/plain/nl_NL/nl_NL.dic /root/hunspell/nl_NL.dic
 ADD https://cgit.freedesktop.org/libreoffice/dictionaries/plain/en/en_US.aff /root/hunspell/en_US.aff
