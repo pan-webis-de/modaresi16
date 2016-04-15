@@ -31,6 +31,19 @@ case $key in
 esac
 shift # past argument or value
 done
+
+
+while getopts ":c:r:o" opt; do
+  case $opt in
+    c) INPUT="$OPTARG"
+    ;;
+    r) RUN="$OPTORG"
+    ;;
+    o) OUTPUT="$OPTARG"
+    ;;
+  esac
+done
+
 echo "************************"
 echo "*** Tira test runner ***"
 echo "************************"
