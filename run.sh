@@ -11,7 +11,7 @@ key="$1"
 
 case $key in
     -c|--corpus)
-    CORPUS="$2"
+    INPUT="$2"
     shift # past argument
     ;;
     -r|--run)
