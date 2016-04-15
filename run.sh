@@ -1,38 +1,4 @@
 #!/bin/bash
-# Use > 1 to consume two arguments per pass in the loop (e.g. each
-# argument has a corresponding value to go with it).
-# Use > 0 to consume one or more arguments per pass in the loop (e.g.
-# some arguments don't have a corresponding value to go with it such
-# as in the --default example).
-# note: if this is set to > 0 the /etc/hosts part is not recognized ( may be a bug )
-while [[ $# > 1 ]]
-do
-key="$1"
-
-case $key in
-    -c|--corpus)
-    INPUT="$2"
-    shift # past argument
-    ;;
-    -r|--run)
-    RUN="$2"
-    shift # past argument
-    ;;
-    -o|--output)
-    OUTPUT="$2"
-    shift # past argument
-    ;;
-    --default)
-    DEFAULT=YES
-    ;;
-    *)
-            # unknown option
-    ;;
-esac
-shift # past argument or value
-done
-
-
 while getopts ":c:r:o" opt; do
   case $opt in
     c) INPUT="$OPTARG"
@@ -45,11 +11,11 @@ while getopts ":c:r:o" opt; do
 done
 
 echo "************************"
-echo "*** Tira test runner ***"
+echo "*** Starting execution ***"
 echo "************************"
-echo Host input    = "${INPUT}"
-echo Host output   = "${OUTPUT}"
-echo Host run      = "${RUN}"
+echo input    = "${INPUT}"
+echo output   = "${OUTPUT}"
+echo run      = "${RUN}"
  
 make build
 VOLUMES=" -v $INPUT:/media/input -v $OUTPUT:/media/output  "
