@@ -5,11 +5,9 @@ OPTIND= # Reset in case getopts has been used previously in the shell.
 INPUT=""
 RUN=""
 OUTPUT=""
-while getopts ":c:r:o" opt; do
+while getopts ":c:o" opt; do
   case $opt in
     c) INPUT=$OPTARG
-    ;;
-    r) RUN=$OPTORG
     ;;
     o) OUTPUT=$OPTARG
     ;;
@@ -22,7 +20,6 @@ echo "*** Starting execution ***"
 echo "************************"
 echo input    = "${INPUT}"
 echo output   = "${OUTPUT}"
-echo run      = "${RUN}"
  
 make build
 VOLUMES=" -v $INPUT:/media/input -v $OUTPUT:/media/output  "
