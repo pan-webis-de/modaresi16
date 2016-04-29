@@ -1,14 +1,21 @@
 #!/bin/bash
+
+OPTIND= # Reset in case getopts has been used previously in the shell.
+# Initialize the variables
+INPUT=""
+RUN=""
+OUTPUT=""
 while getopts ":c:r:o" opt; do
   case $opt in
-    c) INPUT="$OPTARG"
+    c) INPUT=$OPTARG
     ;;
-    r) RUN="$OPTORG"
+    r) RUN=$OPTORG
     ;;
-    o) OUTPUT="$OPTARG"
+    o) OUTPUT=$OPTARG
     ;;
   esac
 done
+shift $((OPTIND-1))
 
 echo "************************"
 echo "*** Starting execution ***"
