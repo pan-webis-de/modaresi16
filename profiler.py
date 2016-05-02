@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 import argparse
 import logging
-from profiler16_un.datasets.pan_utils import load_xml_dataset
+from profiler16_un.datasets.pan_utils import load_xml_dataset, save_output_xmls
+from profiler16_un.profilers.en_gender_profiler import EnglishGenderProfiler
 
 
 if __name__ == '__main__':
@@ -16,9 +17,13 @@ if __name__ == '__main__':
     argparser.add_argument('-o', '--tira_output', dest='tira_output', type=str, required=True,
                            help='Output directory')
 
+    p = EnglishGenderProfiler(method='logistic_regression')
     args = argparser.parse_args()
     LOGFMT = '%(asctime)s %(name)s %(levelname)s %(message)s'
     logging.basicConfig(level=getattr(logging, args.log_level), format=LOGFMT)
     X, y = load_xml_dataset(args.tira_input)
-    print(X[0])
-    save_otuput_xmls(args.tira_output, X, y)
+    texts = [x['text'] for x in X]
+    y = [yy['gender'] for yy in y]
+    p.train(texts, y)
+    y_pred = p.predict(texts)
+    save_output_xmls(args.tira_output, X, y_pred)
