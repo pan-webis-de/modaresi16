@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import argparse
 import logging
-from profiler16_un.datasets.pan_utils.load_xml_dataset
+from profiler16_un.datasets.pan_utils import load_xml_dataset
 
 
 if __name__ == '__main__':

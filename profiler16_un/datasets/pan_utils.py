@@ -58,7 +58,7 @@ def parse_xml_files(xml_dir):
     docs = []
     total = len(filenames)
     if n_jobs == 1:
-        for xml_filename in enumerate(filenames):
+        for xml_filename in filenames:
             doc = parse_xml(xml_filename)
             docs.append(doc)
     else:
