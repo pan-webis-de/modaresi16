@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import argparse
 import logging
-from profiler16_un.datasets.pan_utils
+from profiler16_un.datasets.pan_utils.load_xml_dataset
 
 
 if __name__ == '__main__':
@@ -19,5 +19,6 @@ if __name__ == '__main__':
     args = argparser.parse_args()
     LOGFMT = '%(asctime)s %(name)s %(levelname)s %(message)s'
     logging.basicConfig(level=getattr(logging, args.log_level), format=LOGFMT)
-    print(args.tira_input)
-    print(args.tira_output)
+    X, y = load_xml_dataset(args.tira_input)
+    print(X[0])
+    save_otuput_xmls(args.tira_output, X, y)
