@@ -36,9 +36,11 @@ def parse_xml(filename, parser='html.parser', clean_text=True):
             post.update(d.attrs)
             post['markup'] = str(d)
             posts.append(post)
+    text = '\n'.join([post['text'] for post in posts]).strip()
     doc = dict()
     doc['id'] = idx
     doc['posts'] = posts
+    doc['text'] = text
     doc.update({'attr.' + k: v for k, v in author_attrs.iteritems()})
 
     return doc
@@ -58,7 +60,7 @@ def parse_xml_files(xml_dir):
     docs = []
     total = len(filenames)
     if n_jobs == 1:
-        for xml_filename in filenames:
+        for xml_filename in filenames[0:3]:
             doc = parse_xml(xml_filename)
             docs.append(doc)
     else:
@@ -141,6 +143,7 @@ def load_xml_dataset(xml_dir):
         # Alternatively, we can sort X with respect to y
         # y_sort_index = {labels['id']: i for i, labels in enumerate(y)}
         # X.sort(key=lambda doc: y_sort_index[doc['id']])
+    X = [x['post']['text'] for x in X]
     return X, y
 
 
