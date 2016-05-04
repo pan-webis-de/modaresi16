@@ -16,7 +16,10 @@ echo input    = "${INPUT}"
 echo output   = "${OUTPUT}"
  
 make build
-VOLUMES=" -v $INPUT:/media/input -v $OUTPUT:/media/output  "
+EN_TRAINING=/media/training-datasets/author-profiling/pan16-author-profiling-training-dataset-english-2016-04-25
+ES_TRAINING=/media/training-datasets/author-profiling/pan16-author-profiling-training-dataset-spanish-2016-04-25
+NL_TRAINING=/media/training-datasets/author-profiling/pan16-author-profiling-training-dataset-dutch-2016-04-25
+VOLUMES=" -v $INPUT:/media/input -v $OUTPUT:/media/output -v $EN_TRAINING:/media/en -v $ES_TRAINING:/media/es -v $NL_TRAINING:/media/nl "
 VARS=" -e TIRA_INPUT=/media/input -e TIRA_OUTPUT=/media/output "
 IMAGE=profiler16_un
 CMD=""

@@ -13,7 +13,6 @@ TRUTH_FILE_COLUMNS = ['id', 'gender', 'age_group',
 
 def parse_xml(filename, parser='html.parser', clean_text=True):
     """parses xml files, that contains the author and its documents"""
-    logger.info(filename)
     base = os.path.basename(filename)
     idx = str(base[:-4])
     posts = []
@@ -138,7 +137,6 @@ def load_xml_dataset(xml_dir):
     if os.path.isfile(truth_file):
         logger.info('Detected truth file: {}'.format(truth_file))
         y = read_truth_file(truth_file)
-        logger.info(y)
         # sort y with respect to X
         y_sort_index = {doc['id']: i for i, doc in enumerate(X)}
         y.sort(key=lambda labels: y_sort_index[labels['id']])
