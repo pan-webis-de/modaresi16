@@ -4,10 +4,9 @@ import logging
 from profiler16_un.datasets.pan_utils import load_xml_dataset, save_output_xmls
 from profiler16_un.profilers.en_gender_profiler import EnglishGenderProfiler
 
-base = '/media/training-datasets/author-profiling'
 en_corpus = '/media/en'
-es_corpus = base + '/pan16-author-profiling-training-dataset-english-2016-04-25'
-nl_corpus = base + '/pain16-author-profiling-training-dataset-english-2016-04-25'
+es_corpus = '/media/es'
+nl_corpus = '/media/nl'
 
 
 def main(tira_input=None):
