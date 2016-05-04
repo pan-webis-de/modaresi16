@@ -13,6 +13,7 @@ TRUTH_FILE_COLUMNS = ['id', 'gender', 'age_group',
 
 def parse_xml(filename, parser='html.parser', clean_text=True):
     """parses xml files, that contains the author and its documents"""
+    logger.info(filename)
     base = os.path.basename(filename)
     idx = str(base[:-4])
     posts = []
