@@ -12,6 +12,7 @@ nl_corpus = base + '/pain16-author-profiling-training-dataset-english-2016-04-25
 
 def main(tira_input=None):
     X_test, Y_test = load_xml_dataset(tira_input)
+    X_test_txt = [x['text'] for x in X_test]
     lang = X_test[0]['attr.lang'].lower()
 
     if 'en' == lang:
@@ -23,17 +24,17 @@ def main(tira_input=None):
     if 'nl' == lang:
         X_train, Y_train = load_xml_dataset(nl_corpus)
 
-    X_train = [x['text'] for x in X_train]
+    X_train_txt = [x['text'] for x in X_train]
     Y_train_gender = [y['gender'] for y in Y_train]
     Y_train_age = [y['age_group'] for y in Y_train]
 
     p = EnglishGenderProfiler(method='logistic_regression')
-    p.train(X_train, Y_train_gender)
-    Y_pred_gender = p.predict(X_test)
+    p.train(X_train_txt, Y_train_gender)
+    Y_pred_gender = p.predict(X_test_txt)
 
     p = EnglishGenderProfiler(method='logistic_regression')
-    p.train(X_train, Y_train_age)
-    Y_pred_age = p.predict(X_train)
+    p.train(X_train_txt, Y_train_age)
+    Y_pred_age = p.predict(X_test_txt)
 
     Y_pred = [{'gender': y_pred_gender, 'age_group': y_pred_age} for (y_pred_gender, y_pred_age) in zip(Y_pred_gender, Y_pred_age)]
     save_output_xmls(args.tira_output, X_test, Y_pred)
