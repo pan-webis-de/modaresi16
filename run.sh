@@ -22,7 +22,6 @@ NL_TRAINING=/media/training-datasets/author-profiling/pan16-author-profiling-tra
 VOLUMES=" -v $INPUT:/media/input -v $OUTPUT:/media/output -v $EN_TRAINING:/media/en -v $ES_TRAINING:/media/es -v $NL_TRAINING:/media/nl "
 VARS=" -e TIRA_INPUT=/media/input -e TIRA_OUTPUT=/media/output "
 IMAGE=profiler16_un
-CMD=""
 name=profiler16_un
 registry=hub.docker.com
 echo "[BEGIN DOCKER COMMAND]"
