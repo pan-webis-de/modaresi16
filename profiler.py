@@ -25,5 +25,6 @@ if __name__ == '__main__':
     texts = [x['text'] for x in X]
     y = [yy['gender'] for yy in y]
     p.train(texts, y)
-    y_pred = p.predict(texts)
+    y_pred_gender = p.predict(texts)
+    y_pred = [{'gender': y, 'age_group': '20-30'} for y in y_pred_gender]
     save_output_xmls(args.tira_output, X, y_pred)

@@ -12,7 +12,8 @@ RUN conda install -y \
   scikit-learn \
   nltk \
   h5py \
-  matplotlib
+  matplotlib \
+  lxml
 
 RUN python -c "import nltk; nltk.download('stopwords'); nltk.download('punkt'); nltk.download('wordnet')" 
 RUN pip install hunspell
