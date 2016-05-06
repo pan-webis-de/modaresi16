@@ -29,7 +29,7 @@ def main(tira_input=None):
         Y_pred_age = p_age.predict(X_test_txt)
 
     if 'es' == lang:
-        X_train, Y_train = load_xml_dataset(en_corpus)
+        X_train, Y_train = load_xml_dataset(es_corpus)
         X_train_txt = [x['text'] for x in X_train]
         Y_train_gender = [y['gender'] for y in Y_train]
         Y_train_age = [y['age_group'] for y in Y_train]
@@ -41,7 +41,7 @@ def main(tira_input=None):
         Y_pred_age = p_age.predict(X_test_txt)
 
     if 'nl' == lang:
-        X_train, Y_train = load_xml_dataset(en_corpus)
+        X_train, Y_train = load_xml_dataset(nl_corpus)
         X_train_txt = [x['text'] for x in X_train]
         Y_train_gender = [y['gender'] for y in Y_train]
         p_gender = EnglishGenderProfiler(lang='nl', method='logistic_regression', feature_names=fns_gender)
