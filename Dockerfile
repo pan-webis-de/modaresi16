@@ -45,4 +45,4 @@ ADD https://cgit.freedesktop.org/libreoffice/dictionaries/plain/en/en_US.dic /ro
 ADD https://cgit.freedesktop.org/libreoffice/dictionaries/plain/es/es_ANY.dic /root/hunspell/es_ANY.dic
 ADD https://cgit.freedesktop.org/libreoffice/dictionaries/plain/es/es_ANY.aff /root/hunspell/es_ANY.aff
 
-RUN py.test --pep8
+# RUN py.test --pep8
