@@ -15,7 +15,7 @@ echo "************************"
 echo input    = "${INPUT}"
 echo output   = "${OUTPUT}"
  
-make build
+# make build
 EN_TRAINING=/media/training-datasets/author-profiling/pan16-author-profiling-training-dataset-english-2016-04-25
 ES_TRAINING=/media/training-datasets/author-profiling/pan16-author-profiling-training-dataset-spanish-2016-04-25
 NL_TRAINING=/media/training-datasets/author-profiling/pan16-author-profiling-training-dataset-dutch-2016-04-25
