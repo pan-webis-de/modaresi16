@@ -11,9 +11,10 @@ nl_corpus = '/media/nl'
 
 def main(tira_input=None):
     X_test, Y_test = load_xml_dataset(tira_input)
+    logging.info('logging')
     X_test_txt = [x['text'] for x in X_test]
     lang = X_test[0]['attr.lang'].lower()
-
+    lang = 'en'
     fns_gender = ['unigram', 'bigram', 'spelling', 'char']
     fns_age = ['unigram', 'bigram', 'spelling', 'punctuation', 'char']
     if 'en' == lang:
