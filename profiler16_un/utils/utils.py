@@ -1,7 +1,7 @@
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-import xgboost as xgb
 from nltk.corpus import stopwords
+import xgboost as xgb
 
 
 def get_classifier(method='logistic_regression'):
