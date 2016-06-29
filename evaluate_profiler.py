@@ -35,7 +35,9 @@ def configure(conf):
 
     @conf.profiler('en_gender_profiler', lang='en', method='logistic_regression')
     def build_en_gender_profiler(**args):
-        return EnglishGenderProfiler(**args)
+        fns_gender = ['unigram', 'bigram', 'spelling', 'char']
+        fns_age = ['unigram', 'bigram', 'spelling', 'punctuation', 'char']
+        return EnglishGenderProfiler(lang='en', method='logistic_regression', feature_names=fns_gender)
 
     @conf.dataset('pan2014/gender/english/blog', label='gender', types=['blog'], language='english')
     @conf.dataset('pan2014/age/english/blog', label='age_group', types=['blog'], language='english')
