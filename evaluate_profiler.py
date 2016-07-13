@@ -37,34 +37,33 @@ def configure(conf):
         fns_age = ['unigram', 'bigram', 'spelling', 'punctuation', 'char']
         return EnglishGenderProfiler(lang='en', method='logistic_regression', feature_names=fns_gender)
 
-    @conf.dataset('pan2014/gender/english/blog', label='gender', type='blogs', language='english')
-    @conf.dataset('pan2014/age/english/blog', label='age_group', type='blogs', language='english')
-    @conf.dataset('pan2014/gender/english/socialmedia', label='gender', type='socialmedia', language='english')
-    @conf.dataset('pan2014/age/english/socialmedia', label='age_group', type='socialmedia', language='english')
-    @conf.dataset('pan2014/gender/english/review', label='gender', type='review', language='english')
-    @conf.dataset('pan2014/age/english/review', label='age_group', type='review', language='english')
-    @conf.dataset('pan2014/gender/spanish/blogs', label='gender', type='blogs', language='spanish')
-    @conf.dataset('pan2014/age/spanish/blogs', label='age_group', type='blogs', language='spanish')
-    @conf.dataset('pan2014/gender/spanish/socialmedia', label='gender', type='socialmedia', language='spanish')
-    @conf.dataset('pan2014/age/spanish/socialmedia', label='age_group', type='socialmedia', language='spanish')
-    def build_dataset_pan14(label=None, type=None, language=None):
+    @conf.dataset('pan2014/gender/english/blog', label='gender', type='blogs', language='english', year='2014')
+    @conf.dataset('pan2014/age/english/blog', label='age_group', type='blogs', language='english', year='2014')
+    @conf.dataset('pan2014/gender/english/socialmedia', label='gender', type='socialmedia', language='english', year='2014')
+    @conf.dataset('pan2014/age/english/socialmedia', label='age_group', type='socialmedia', language='english', year='2014')
+    @conf.dataset('pan2014/gender/english/review', label='gender', type='review', language='english', year='2014')
+    @conf.dataset('pan2014/age/english/review', label='age_group', type='review', language='english', year='2014')
+    @conf.dataset('pan2014/gender/spanish/blogs', label='gender', type='blogs', language='spanish', year='2014')
+    @conf.dataset('pan2014/age/spanish/blogs', label='age_group', type='blogs', language='spanish', year='2014')
+    @conf.dataset('pan2014/gender/spanish/socialmedia', label='gender', type='socialmedia', language='spanish', year='2014')
+    @conf.dataset('pan2014/age/spanish/socialmedia', label='age_group', type='socialmedia', language='spanish', year='2014')
+    def build_dataset_pan14(label=None, type=None, language=None, year=None):
         X, y = load(label=label, type=type, language=language)
         X = [x['text'] for x in X]
         y = [yy[label]for yy in y]
         return X, y
 
 
-    @conf.dataset('pan2016/gender/english/twitter', label='gender', types=['twitter'], language='english')
-    @conf.dataset('pan2016/gender/spanish/twitter', label='gender', types=['twitter'], language='spanish')
-    @conf.dataset('pan2016/gender/dutch/twitter', label='gender', types=['twitter'], language='dutch')
-    @conf.dataset('pan2016/age/english/twitter', label='age_group', types=['twitter'], language='english')
-    @conf.dataset('pan2016/age/spanish/twitter', label='age_group', types=['twitter'], language='spanish')
-    def build_dataset_pan16(label=None, type=None, language=None):
-        dataset_iterator = profiler16_un.datasets.pan2016.load(
-            label=label, type=type, language=language)
-        pred_profile = lambda profiler, X: profiler.predict(X)
-        true_profile = lambda Y: Y
-        return dataset_iterator, pred_profile, true_profile
+    @conf.dataset('pan2016/gender/english/twitter', label='gender', type='twitter', language='english', year='2016')
+    @conf.dataset('pan2016/gender/spanish/twitter', label='gender', type='twitter', language='spanish', year='2016')
+    @conf.dataset('pan2016/gender/dutch/twitter', label='gender', type='twitter', language='dutch', year='2016')
+    @conf.dataset('pan2016/age/english/twitter', label='age_group', type='twitter', language='english', year='2016')
+    @conf.dataset('pan2016/age/spanish/twitter', label='age_group', type='twitter', language='spanish', year='2016')
+    def build_dataset_pan16(label=None, type=None, language=None, year=None):
+        X, y = load(label=label, type=type, language=language)
+        X = [x['text'] for x in X]
+        y = [yy[label]for yy in y]
+        return X, y
 
 
 def pretty_list(items):
