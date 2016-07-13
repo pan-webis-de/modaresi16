@@ -37,14 +37,14 @@ def configure(conf):
         fns_age = ['unigram', 'bigram', 'spelling', 'punctuation', 'char']
         return EnglishGenderProfiler(lang='en', method='logistic_regression', feature_names=fns_gender)
 
-    @conf.dataset('pan2014/gender/english/blog', label='gender', types=['blog'], language='english')
-    @conf.dataset('pan2014/age/english/blog', label='age_group', types=['blog'], language='english')
-    @conf.dataset('pan2014/gender/english/socialmedia', label='gender', types=['socialmedia'], language='english')
-    @conf.dataset('pan2014/age/english/socialmedia', label='age_group', types=['socialmedia'], language='english')
-    @conf.dataset('pan2014/gender/english/review', label='gender', types=['review'], language='english')
-    @conf.dataset('pan2014/age/english/review', label='age_group', types=['review'], language='english')
-    def build_dataset_pan14(label=None, types=None, language=None):
-        dataset_iterator = load(label=label, types=types, language=language)
+    @conf.dataset('pan2014/gender/english/blog', label='gender', type='blogs', language='english')
+    @conf.dataset('pan2014/age/english/blog', label='age_group', type='blogs', language='english')
+    @conf.dataset('pan2014/gender/english/socialmedia', label='gender', type='socialmedia', language='english')
+    @conf.dataset('pan2014/age/english/socialmedia', label='age_group', type='socialmedia', language='english')
+    @conf.dataset('pan2014/gender/english/review', label='gender', type='review', language='english')
+    @conf.dataset('pan2014/age/english/review', label='age_group', type='review', language='english')
+    def build_dataset_pan14(label=None, type=None, language=None):
+        dataset_iterator = load(label=label, type=type, language=language)
         pred_profile = lambda profiler, X: profiler.predict(X)
         true_profile = lambda Y: Y
         return dataset_iterator, pred_profile, true_profile
@@ -54,7 +54,7 @@ def configure(conf):
     @conf.dataset('pan2015/gender/spanish/twitter', label='gender', language='spanish')
     @conf.dataset('pan2015/age/spanish/twitter', label='age_group', language='spanish')
     @conf.dataset('pan2015/gender/dutch/twitter', label='gender', language='dutch')
-    def build_dataset_pan14(label=None, types=None, language=None):
+    def build_dataset_pan14(label=None, type=None, language=None):
         dataset_iterator = profiler16_un.datasets.pan2015.load(
             label=label, language=language)
         pred_profile = lambda profiler, X: profiler.predict(X)
@@ -66,9 +66,9 @@ def configure(conf):
     @conf.dataset('pan2016/gender/dutch/twitter', label='gender', types=['twitter'], language='dutch')
     @conf.dataset('pan2016/age/english/twitter', label='age_group', types=['twitter'], language='english')
     @conf.dataset('pan2016/age/spanish/twitter', label='age_group', types=['twitter'], language='spanish')
-    def build_dataset_pan16(label=None, types=None, language=None):
+    def build_dataset_pan16(label=None, type=None, language=None):
         dataset_iterator = profiler16_un.datasets.pan2016.load(
-            label=label, types=types, language=language)
+            label=label, type=type, language=language)
         pred_profile = lambda profiler, X: profiler.predict(X)
         true_profile = lambda Y: Y
         return dataset_iterator, pred_profile, true_profile
