@@ -49,17 +49,6 @@ def configure(conf):
         y = [yy[label]for yy in y]
         return X, y
 
-    @conf.dataset('pan2015/gender/english/twitter', label='gender', language='english')
-    @conf.dataset('pan2015/age/english/twitter', label='age_group', language='english')
-    @conf.dataset('pan2015/gender/spanish/twitter', label='gender', language='spanish')
-    @conf.dataset('pan2015/age/spanish/twitter', label='age_group', language='spanish')
-    @conf.dataset('pan2015/gender/dutch/twitter', label='gender', language='dutch')
-    def build_dataset_pan14(label=None, type=None, language=None):
-        dataset_iterator = profiler16_un.datasets.pan2015.load(
-            label=label, language=language)
-        pred_profile = lambda profiler, X: profiler.predict(X)
-        true_profile = lambda Y: Y
-        return dataset_iterator, pred_profile, true_profile
 
     @conf.dataset('pan2016/gender/english/twitter', label='gender', types=['twitter'], language='english')
     @conf.dataset('pan2016/gender/spanish/twitter', label='gender', types=['twitter'], language='spanish')
