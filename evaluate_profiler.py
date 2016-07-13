@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 import logging
 import argparse
-import profiler16_un.datasets.pan2014
-import profiler16_un.datasets.pan2016
-import profiler16_un.datasets.pan2015
 from profiler16_un.profilers.pos_ngram_profiler import POSNGramProfiler
 from profiler16_un.profilers.word_slice_profiler import WordSliceProfiler
 from profiler16_un.profilers.embeddings_profiler import EmbeddingsProfiler
@@ -11,6 +8,7 @@ from profiler16_un.profilers.pos_tag_profiler import POSTagProfiler
 from profiler16_un.profilers.spelling_error_profiler import SpellingErrorProfiler
 from profiler16_un.profilers.en_gender_profiler import EnglishGenderProfiler
 from profiler16_un.benchmarks.sklearn_benchmark import SklearnBenchmark
+from profiler16_un.datasets.pan import load
 from profiler16_un.configuration import Configuration
 
 
@@ -46,9 +44,7 @@ def configure(conf):
     @conf.dataset('pan2014/gender/english/review', label='gender', types=['review'], language='english')
     @conf.dataset('pan2014/age/english/review', label='age_group', types=['review'], language='english')
     def build_dataset_pan14(label=None, types=None, language=None):
-        dataset_iterator = profiler16_un.datasets.pan.load(label=label,
-                                                           types=types,
-                                                           language=language)
+        dataset_iterator = load(label=label, types=types, language=language)
         pred_profile = lambda profiler, X: profiler.predict(X)
         true_profile = lambda Y: Y
         return dataset_iterator, pred_profile, true_profile
