@@ -49,7 +49,6 @@ def main(tira_input=None):
         Y_pred_gender = p_gender.predict(X_test_txt)
         Y_pred_age = ['xx-xx' for y in Y_pred_gender]
 
-
     Y_pred = [{'gender': y_pred_gender, 'age_group': y_pred_age} for (y_pred_gender, y_pred_age) in zip(Y_pred_gender, Y_pred_age)]
     save_output_xmls(args.tira_output, X_test, Y_pred)
 

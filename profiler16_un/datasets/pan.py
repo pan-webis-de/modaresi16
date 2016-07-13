@@ -18,13 +18,13 @@ nl16_twitter_path = os.path.join(base_2016_path, 'pan16-author-profiling-trainin
 
 
 mapping = {'english14': {'socialmedia': en14_socialmedia_path,
-                         'twitter':en14_twitter_path,
-                         'blogs':en14_blogs_path,
-                         'reviews':en14_reviews_path},
-           'spanish14': {'blogs':es14_blogs_path,
-                         'socialmedia':es14_socialmedia_path,
-                         'twitter':es14_twitter_path},
-           'english16': {'twitter': en16_twitter_path },
+                         'twitter': en14_twitter_path,
+                         'blogs': en14_blogs_path,
+                         'reviews': en14_reviews_path},
+           'spanish14': {'blogs': es14_blogs_path,
+                         'socialmedia': es14_socialmedia_path,
+                         'twitter': es14_twitter_path},
+           'english16': {'twitter': en16_twitter_path},
            'spanish16': {'twitter': es16_twitter_path},
            'spanish16': {'twitter': nl16_twitter_path}
            }

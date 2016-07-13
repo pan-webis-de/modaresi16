@@ -33,10 +33,8 @@ class SklearnBenchmark():
                               shuffle=True, random_state=123)
         fold = 1
         for train_index, test_index in skf:
-            X_train_fold, y_train_fold = [X_train[i]
-                                for i in train_index], [y_train[i] for i in train_index]
-            X_test_fold, y_test_fold = [X_test[i]
-                              for i in test_index], [y_test[i] for i in test_index]
+            X_train_fold, y_train_fold = [X_train[i] for i in train_index], [y_train[i] for i in train_index]
+            X_test_fold, y_test_fold = [X_test[i] for i in test_index], [y_test[i] for i in test_index]
             logger.info('Training on {} instances!'.format(len(train_index)))
             profiler.train(X_train_fold, y_train_fold)
             logger.info('Testing on fold {} with {} instances'.format(

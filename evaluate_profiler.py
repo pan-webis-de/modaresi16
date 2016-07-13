@@ -2,7 +2,6 @@
 import logging
 import argparse
 from profiler16_un.profilers.pos_ngram_profiler import POSNGramProfiler
-from profiler16_un.profilers.word_slice_profiler import WordSliceProfiler
 from profiler16_un.profilers.embeddings_profiler import EmbeddingsProfiler
 from profiler16_un.profilers.pos_tag_profiler import POSTagProfiler
 from profiler16_un.profilers.spelling_error_profiler import SpellingErrorProfiler
@@ -52,7 +51,6 @@ def configure(conf):
         X = [x['text'] for x in X]
         y = [yy[label]for yy in y]
         return X, y
-
 
     @conf.dataset('pan2016/gender/english/twitter', label='gender', type='twitter', language='english', year='2016')
     @conf.dataset('pan2016/gender/spanish/twitter', label='gender', type='twitter', language='spanish', year='2016')
