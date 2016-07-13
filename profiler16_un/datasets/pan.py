@@ -22,4 +22,3 @@ mapping = {'english': {'socialmedia': en_socialmedia_path,
 
 def load(label='gender', type='socialmedia', language='english'):
     X, y = load_xml_dataset(mapping[language][type])
-    print(X[0])
