@@ -43,6 +43,10 @@ def configure(conf):
     @conf.dataset('pan2014/age/english/socialmedia', label='age_group', type='socialmedia', language='english')
     @conf.dataset('pan2014/gender/english/review', label='gender', type='review', language='english')
     @conf.dataset('pan2014/age/english/review', label='age_group', type='review', language='english')
+    @conf.dataset('pan2014/gender/spanish/blogs', label='gender', type='blogs', language='spanish')
+    @conf.dataset('pan2014/age/spanish/blogs', label='age_group', type='blogs', language='spanish')
+    @conf.dataset('pan2014/gender/spanish/socialmedia', label='gender', type='socialmedia', language='spanish')
+    @conf.dataset('pan2014/age/spanish/socialmedia', label='age_group', type='socialmedia', language='spanish')
     def build_dataset_pan14(label=None, type=None, language=None):
         X, y = load(label=label, type=type, language=language)
         X = [x['text'] for x in X]
