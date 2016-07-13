@@ -32,6 +32,3 @@ __all__        37    37       74
 Accuracy: 0.702702702703
 **************************************************
 ```
-
-Connecting to the VM:
-ssh modaresi16b@webis60.medien.uni-weimar.de -p 44420
