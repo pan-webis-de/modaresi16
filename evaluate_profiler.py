@@ -44,10 +44,10 @@ def configure(conf):
     @conf.dataset('pan2014/gender/english/review', label='gender', type='review', language='english')
     @conf.dataset('pan2014/age/english/review', label='age_group', type='review', language='english')
     def build_dataset_pan14(label=None, type=None, language=None):
-        dataset_iterator = load(label=label, type=type, language=language)
-        pred_profile = lambda profiler, X: profiler.predict(X)
-        true_profile = lambda Y: Y
-        return dataset_iterator, pred_profile, true_profile
+        X, y = load(label=label, type=type, language=language)
+        X = [x['text'] for x in X]
+        y = [yy[label]for yy in y]
+        return X, y
 
     @conf.dataset('pan2015/gender/english/twitter', label='gender', language='english')
     @conf.dataset('pan2015/age/english/twitter', label='age_group', language='english')
@@ -101,15 +101,14 @@ if __name__ == '__main__':
     logging.basicConfig(level=getattr(logging, args.log_level), format=LOGFMT)
 
     configure(conf)
-    training_dataset_iterator, train_pred_profile, train_true_profile = conf.get_dataset(
+    X_train, y_train = conf.get_dataset(
         args.training_corpus)
     if args.test_corpus:
-        test_dataset_iterator, test_pred_profile, test_true_profile = conf.get_dataset(
-            args.test_corpus)
+        X_test, y_test = conf.get_dataset(args.test_corpus)
     else:
-        test_dataset_iterator = None
+        X_test, y_test = None
     profiler_instance = conf.get_profiler(args.profiler_name)
     benchmark = SklearnBenchmark()
-    benchmark.run(training_dataset_iterator=training_dataset_iterator,
-                  test_dataset_iterator=test_dataset_iterator,
+    benchmark.run(X_train=X_train, y_train=y_train,
+                  X_test=X_test, y_test=y_test,
                   profiler=profiler_instance)
