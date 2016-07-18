@@ -17,13 +17,6 @@ def avg_spelling_error(lang=None):
     return ('avg_spelling_error', pipeline)
 
 
-def avg_embeddings_count(lang=None):
-    pipeline = Pipeline([('feature', EmbeddingsCounter(language=lang)),
-                         ('tfidf', TfidfTransformer(sublinear_tf=False)),
-                         ('scale', Normalizer())])
-    return ('avg_embeddings_count', pipeline)
-
-
 def pos_distribution(lang=None):
     pipeline = Pipeline([('feature', POSFeatures(language=lang)),
                          ('tfidf', TfidfTransformer(sublinear_tf=False)),
