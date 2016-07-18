@@ -9,14 +9,8 @@ stop:
 
 run: stop
 	docker run -it --rm=true -v $(shell pwd):/var/www \
-	-v $(DATASETS):/mnt/datasets \
-	-e DATASETS=/mnt/datasets \
-	-v $(HOME)/.datasets:/root/.datasets \
 	--name=$(name) $(registry)/$(name) bash -l
 
 start: stop
 	docker run -d -v $(shell pwd):/var/www \
-	-v $(DATASETS):/mnt/datasets \
-	-e DATASETS=/mnt/datasets \
-	-v $(HOME)/.datasets:/root/.datasets \
 	--name=$(name) $(registry)/$(name)
