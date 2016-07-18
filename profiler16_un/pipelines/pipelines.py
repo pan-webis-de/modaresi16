@@ -1,12 +1,11 @@
+from profiler16_un.profilers.spelling_error_profiler import SpellingError
+from profiler16_un.features.punctuation_features import PunctuationFeatures
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.preprocessing import Normalizer
-from sklearn.pipeline import Pipeline
-from ..utils.utils import get_stopwords
 from ..preprocessors.text_cleaner import TextCleaner
-from profiler16_un.profilers.spelling_error_profiler import SpellingError
-from profiler16_un.profilers.pos_tag_profiler import POSFeatures
-from profiler16_un.features.punctuation_features import PunctuationFeatures
+from sklearn.preprocessing import Normalizer
+from ..utils.utils import get_stopwords
+from sklearn.pipeline import Pipeline
 
 
 def avg_spelling_error(lang=None):
