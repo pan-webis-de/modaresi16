@@ -4,7 +4,6 @@ RUN apt-get update && \
 	apt-get install -y build-essential libxml2-dev libxslt-dev python-matplotlib libsm6 libxrender1 libfontconfig1 libicu-dev python-dev libhunspell-dev && \
 	apt-get clean
 
-# install packages with conda
 RUN conda install -y \
   pip \
   numpy \
@@ -45,4 +44,4 @@ ADD https://cgit.freedesktop.org/libreoffice/dictionaries/plain/en/en_US.dic /ro
 ADD https://cgit.freedesktop.org/libreoffice/dictionaries/plain/es/es_ANY.dic /root/hunspell/es_ANY.dic
 ADD https://cgit.freedesktop.org/libreoffice/dictionaries/plain/es/es_ANY.aff /root/hunspell/es_ANY.aff
 
-# RUN py.test --pep8
+RUN py.test --pep8
