@@ -36,27 +36,27 @@ def configure(conf):
         fns_age = ['unigram', 'bigram', 'spelling', 'punctuation', 'char']
         return EnglishGenderProfiler(lang='en', method='logistic_regression', feature_names=fns_gender)
 
-    @conf.dataset('pan2014/gender/english/blog', label='gender', type='blogs', language='english', year='2014')
-    @conf.dataset('pan2014/age/english/blog', label='age_group', type='blogs', language='english', year='2014')
-    @conf.dataset('pan2014/gender/english/socialmedia', label='gender', type='socialmedia', language='english', year='2014')
-    @conf.dataset('pan2014/age/english/socialmedia', label='age_group', type='socialmedia', language='english', year='2014')
-    @conf.dataset('pan2014/gender/english/review', label='gender', type='review', language='english', year='2014')
-    @conf.dataset('pan2014/age/english/review', label='age_group', type='review', language='english', year='2014')
-    @conf.dataset('pan2014/gender/spanish/blogs', label='gender', type='blogs', language='spanish', year='2014')
-    @conf.dataset('pan2014/age/spanish/blogs', label='age_group', type='blogs', language='spanish', year='2014')
-    @conf.dataset('pan2014/gender/spanish/socialmedia', label='gender', type='socialmedia', language='spanish', year='2014')
-    @conf.dataset('pan2014/age/spanish/socialmedia', label='age_group', type='socialmedia', language='spanish', year='2014')
+    @conf.dataset('pan2014/english/blogs/gender', label='gender', type='blogs', language='english', year='2014')
+    @conf.dataset('pan2014/english/blogs/age', label='age_group', type='blogs', language='english', year='2014')
+    @conf.dataset('pan2014/english/socialmedia/gender', label='gender', type='socialmedia', language='english', year='2014')
+    @conf.dataset('pan2014/english/socialmedia/age', label='age_group', type='socialmedia', language='english', year='2014')
+    @conf.dataset('pan2014/english/review/gender', label='gender', type='review', language='english', year='2014')
+    @conf.dataset('pan2014/english/review/age', label='age_group', type='review', language='english', year='2014')
+    @conf.dataset('pan2014/spanish/blogs/gender', label='gender', type='blogs', language='spanish', year='2014')
+    @conf.dataset('pan2014/spanish/blogs/age', label='age_group', type='blogs', language='spanish', year='2014')
+    @conf.dataset('pan2014/spanish/socialmedia/gender', label='gender', type='socialmedia', language='spanish', year='2014')
+    @conf.dataset('pan2014/spanish/socialmedia/age', label='age_group', type='socialmedia', language='spanish', year='2014')
     def build_dataset_pan14(label=None, type=None, language=None, year=None):
         X, y = load(label=label, type=type, language=language)
         X = [x['text'] for x in X]
         y = [yy[label]for yy in y]
         return X, y
 
-    @conf.dataset('pan2016/gender/english/twitter', label='gender', type='twitter', language='english', year='2016')
-    @conf.dataset('pan2016/gender/spanish/twitter', label='gender', type='twitter', language='spanish', year='2016')
-    @conf.dataset('pan2016/gender/dutch/twitter', label='gender', type='twitter', language='dutch', year='2016')
-    @conf.dataset('pan2016/age/english/twitter', label='age_group', type='twitter', language='english', year='2016')
-    @conf.dataset('pan2016/age/spanish/twitter', label='age_group', type='twitter', language='spanish', year='2016')
+    @conf.dataset('pan2016/english/twitter/gender', label='gender', type='twitter', language='english', year='2016')
+    @conf.dataset('pan2016/spanish/twitter/gender', label='gender', type='twitter', language='spanish', year='2016')
+    @conf.dataset('pan2016/dutch/twitter/gender', label='gender', type='twitter', language='dutch', year='2016')
+    @conf.dataset('pan2016/english/twitter/age', label='age_group', type='twitter', language='english', year='2016')
+    @conf.dataset('pan2016/spanish/twitter/age', label='age_group', type='twitter', language='spanish', year='2016')
     def build_dataset_pan16(label=None, type=None, language=None, year=None):
         X, y = load(label=label, type=type, language=language)
         X = [x['text'] for x in X]
