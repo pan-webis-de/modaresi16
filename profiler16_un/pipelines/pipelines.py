@@ -5,7 +5,6 @@ from sklearn.pipeline import Pipeline
 from ..utils.utils import get_stopwords
 from ..preprocessors.text_cleaner import TextCleaner
 from profiler16_un.profilers.spelling_error_profiler import SpellingError
-from profiler16_un.profilers.embeddings_profiler import EmbeddingsCounter
 from profiler16_un.profilers.pos_tag_profiler import POSFeatures
 from profiler16_un.features.punctuation_features import PunctuationFeatures
 
@@ -15,13 +14,6 @@ def avg_spelling_error(lang=None):
                          ('tfidf', TfidfTransformer(sublinear_tf=False)),
                          ('scale', Normalizer())])
     return ('avg_spelling_error', pipeline)
-
-
-def pos_distribution(lang=None):
-    pipeline = Pipeline([('feature', POSFeatures(language=lang)),
-                         ('tfidf', TfidfTransformer(sublinear_tf=False)),
-                         ('scale', Normalizer())])
-    return ('pos_distribution', pipeline)
 
 
 def punctuation_features():
