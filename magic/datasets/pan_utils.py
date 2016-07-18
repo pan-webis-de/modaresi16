@@ -8,7 +8,8 @@ warnings.filterwarnings('error')
 logger = logging.getLogger(__name__)
 
 TRUTH_FILE_COLUMNS = ['id', 'gender', 'age_group',
-                      'extroverted', 'stable', 'agreeable', 'conscientious', 'open']
+                      'extroverted', 'stable', 'agreeable',
+                      'conscientious', 'open']
 
 
 def parse_xml(filename, parser='html.parser', clean_text=True):
@@ -50,7 +51,8 @@ def parse_xml_files(xml_dir):
     import multiprocessing
     logger.info('Reading xml files from: {}'.format(xml_dir))
 
-    filenames = sorted([os.path.join(xml_dir, f) for f in os.listdir(xml_dir) if f.endswith('.xml')])
+    filenames = sorted([os.path.join(xml_dir, f)
+                        for f in os.listdir(xml_dir) if f.endswith('.xml')])
     logger.info('Files: {}'.format(len(filenames)))
 
     cpu_count = multiprocessing.cpu_count()
@@ -97,7 +99,8 @@ def detect_language(xml_dir):
         if language in base:
             logger.info('Detected language: {}'.format(code))
             return code
-    raise ValueError('Could not detect language in xml base folder: {}'.format(base))
+    raise ValueError('Could not detect language in xml base folder: {}'.
+                     format(base))
 
 
 def detect_type(xml_dir):
@@ -121,17 +124,20 @@ def load_xml_dataset(xml_dir):
     X = parse_xml_files(xml_dir)
     if X[0].get('attr.type', None) is None:
         atype = detect_type(xml_dir)
-        logger.info('Adding missing author type information to all samples: {}'.format(atype))
+        logger.info('Adding missing author type information to all samples: {}'.
+                    format(atype))
         for doc in X:
             doc['attr.type'] = atype
     if X[0].get('attr.lang', None) is None:
         lang = detect_language(xml_dir)
-        logger.info('Adding missing author language information to all samples: {}'.format(lang))
+        logger.info('Adding missing author language information to all samples: {}'.
+                    format(lang))
         for doc in X:
             doc['attr.lang'] = lang
     for doc in X:
         text_len = len(concat_texts(doc['posts']))
-        logger.info(u'Instance id={idx}, type={atype}, lang={lang}, chars={chars}'.format(idx=doc['id'], atype=doc['attr.type'], lang=doc['attr.lang'], chars=text_len))
+        logger.info(u'Instance id={idx}, type={atype}, lang={lang}, chars={chars}'.
+                    format(idx=doc['id'], atype=doc['attr.type'], lang=doc['attr.lang'], chars=text_len))
     y = None
     truth_file = os.path.join(xml_dir, 'truth.txt')
     if os.path.isfile(truth_file):

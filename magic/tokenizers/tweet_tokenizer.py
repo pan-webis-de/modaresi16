@@ -24,8 +24,9 @@ other_words_str = r'(?:[\w_]+)'
 
 anything_else_str = r'(?:\S)'
 
-regex_str = [emoticons_str, html_tags_str, mentions_str, hash_tags_str,
-             urls_str, numbers_str, words_str, other_words_str, anything_else_str]
+regex_str = [emoticons_str, html_tags_str, mentions_str,
+             hash_tags_str, urls_str, numbers_str, words_str,
+             other_words_str, anything_else_str]
 
 
 class TweetTokenizer(object):

@@ -15,7 +15,9 @@ def tokenize(x):
 
 class PunctuationFeatures(BaseEstimator):
     def get_feature_names(self):
-        return np.array(['avg_comma_count', 'avg_dot_count', 'avg_exclamationmark_count', 'avg_questionmark_count'])
+        return np.array(['avg_comma_count', 'avg_dot_count',
+                         'avg_exclamationmark_count',
+                         'avg_questionmark_count'])
 
     def fit(self, documents, y=None):
         return self
@@ -31,11 +33,16 @@ class PunctuationFeatures(BaseEstimator):
 
     def transform(self, documents):
         tokens_list = [tokenize(doc) for doc in documents]
-        avg_comma = [self.avg_punction_count(tokens, ',') for tokens in tokens_list]
-        avg_dot = [self.avg_punction_count(tokens, '.') for tokens in tokens_list]
-        avg_exclamationmark = [self.avg_punction_count(tokens, '!') for tokens in tokens_list]
-        avg_questionmark = [self.avg_punction_count(tokens, '?') for tokens in tokens_list]
-        X = np.array([avg_comma, avg_dot, avg_exclamationmark, avg_questionmark]).T
+        avg_comma = [self.avg_punction_count(tokens, ',')
+                     for tokens in tokens_list]
+        avg_dot = [self.avg_punction_count(tokens, '.')
+                   for tokens in tokens_list]
+        avg_exclamationmark = [self.avg_punction_count(tokens, '!')
+                               for tokens in tokens_list]
+        avg_questionmark = [self.avg_punction_count(tokens, '?')
+                            for tokens in tokens_list]
+        X = np.array([avg_comma, avg_dot, avg_exclamationmark,
+                      avg_questionmark]).T
         if not hasattr(self, 'scalar'):
             self.scalar = preprocessing.StandardScaler().fit(X)
         return self.scalar.transform(X)

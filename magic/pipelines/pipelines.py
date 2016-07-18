@@ -48,7 +48,8 @@ def word_bigrams():
                                alphabetic=True,
                                strip_accents=True,
                                filter_rt=True)
-    pipeline = Pipeline([('vect', CountVectorizer(preprocessor=preprocessor, ngram_range=(2, 2))),
+    pipeline = Pipeline([('vect', CountVectorizer(preprocessor=preprocessor,
+                                                  ngram_range=(2, 2))),
                          ('tfidf', TfidfTransformer(sublinear_tf=True)),
                          ('scale', Normalizer())])
     return ('word_bigrams', pipeline)
