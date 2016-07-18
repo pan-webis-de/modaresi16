@@ -15,8 +15,8 @@ getRanking("deneva16", 0.3718,0.2051,0.5128,0.3214,0.2679,0.7321,0.6180)
 
 
 # Output
-#modaresi16b 0.5247389
-#nissim16 0.5258333
-##bougiatiotis16 0.4518944
-#bilan16 0.4833944
-#deneva16 0.4013556
+# modaresi16b 0.5247389
+# nissim16 0.5258333
+# bougiatiotis16 0.4518944
+# bilan16 0.4833944
+# deneva16 0.4013556
