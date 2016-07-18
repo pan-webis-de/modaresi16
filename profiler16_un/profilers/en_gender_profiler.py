@@ -11,23 +11,23 @@ from sklearn.pipeline import Pipeline
 
 
 class EnglishGenderProfiler():
-    def __init__(self, lang=None, method=None, feature_names=None):
+    def __init__(self, lang=None, method=None, features=None):
         fs = []
-        if 'unigram' in feature_names:
+        if 'unigram' in features:
             fs.append(word_unigrams())
-        if 'bigram' in feature_names:
+        if 'bigram' in features:
             fs.append(word_bigrams())
-        if 'spelling' in feature_names:
+        if 'spelling' in features:
             fs.append(avg_spelling_error(lang=lang))
-        if 'embedding' in feature_names:
+        if 'embedding' in features:
             fs.append(avg_embeddings_count(lang=lang))
-        if 'punctuation' in feature_names:
+        if 'punctuation' in features:
             fs.append(punctuation_features())
-        if 'char' in feature_names:
+        if 'char' in features:
             fs.append(char_ngrams())
 
-        features = FeatureUnion(fs, n_jobs=1)
-        self.pipeline = Pipeline([('features', features),
+        fu = FeatureUnion(fs, n_jobs=1)
+        self.pipeline = Pipeline([('features', fu),
                                   ('scale', Normalizer()),
                                   ('classifier', get_classifier(method=method))])
 

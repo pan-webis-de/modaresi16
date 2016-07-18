@@ -1,40 +1,38 @@
 #!/usr/bin/env python
-import logging
-import argparse
-from profiler16_un.profilers.pos_ngram_profiler import POSNGramProfiler
-from profiler16_un.profilers.embeddings_profiler import EmbeddingsProfiler
-from profiler16_un.profilers.pos_tag_profiler import POSTagProfiler
-from profiler16_un.profilers.spelling_error_profiler import SpellingErrorProfiler
 from profiler16_un.profilers.en_gender_profiler import EnglishGenderProfiler
 from profiler16_un.benchmarks.sklearn_benchmark import SklearnBenchmark
-from profiler16_un.datasets.pan import load
 from profiler16_un.configuration import Configuration
+from profiler16_un.datasets.pan import load
+import argparse
+import logging
 
 
 def configure(conf):
-    @conf.profiler('pos_tag_profiler_en', language='en')
-    def build_pos_tag_profiler(**args):
-        return POSTagProfiler(**args)
 
-    @conf.profiler('spelling_error_profiler_en', language='en')
-    def build_spelling_error_profiler(**args):
-        return SpellingErrorProfiler(**args)
-
-    @conf.profiler('embeddings_profiler_en', language='en')
-    def build_embeddings_profiler(**args):
-        return EmbeddingsProfiler(**args)
-
-    @conf.profiler('pos_ngram_profiler_en', lang='en', min_n=3, max_n=3, method='logistic_regression')
-    @conf.profiler('pos_ngram_profiler_es', lang='es', min_n=3, max_n=3, method='logistic_regression')
-    @conf.profiler('pos_ngram_profiler_nl', lang='nl', min_n=3, max_n=3, method='logistic_regression')
-    def build_pos_ngram_profiler(**args):
-        return POSNGramProfiler(**args)
-
-    @conf.profiler('en_gender_profiler', lang='en', method='logistic_regression')
+    @conf.profiler('english-gender-profiler', lang='en', method='logistic_regression', dimension='gender')
     def build_en_gender_profiler(**args):
-        fns_gender = ['unigram', 'bigram', 'spelling', 'char']
-        fns_age = ['unigram', 'bigram', 'spelling', 'punctuation', 'char']
-        return EnglishGenderProfiler(lang='en', method='logistic_regression', feature_names=fns_gender)
+        features = ['unigram', 'bigram', 'spelling', 'char']
+        return EnglishGenderProfiler(lang='en', method='logistic_regression', features=features)
+
+    @conf.profiler('english-age-profiler', lang='en', method='logistic_regression', dimension='age')
+    def build_en_age_profiler(**args):
+        features = ['unigram', 'bigram', 'spelling', 'punctuation', 'char']
+        return EnglishGenderProfiler(lang='en', method='logistic_regression', features=features)
+
+    @conf.profiler('spanish-gender-profiler', lang='es', method='logistic_regression', dimension='gender')
+    def build_es_gender_profiler(**args):
+        features = ['unigram', 'bigram', 'spelling', 'char']
+        return EnglishGenderProfiler(lang='en', method='logistic_regression', features=features)
+
+    @conf.profiler('spanish-age-profiler', lang='es', method='logistic_regression', dimension='age')
+    def build_es_age_profiler(**args):
+        features = ['unigram', 'bigram', 'spelling', 'punctuation', 'char']
+        return EnglishGenderProfiler(lang='en', method='logistic_regression', features=features)
+
+    @conf.profiler('dutch-gender-profiler', lang='nl', method='logistic_regression', dimension='gender')
+    def build_nl_gender_profiler(**args):
+        features = ['unigram', 'bigram', 'spelling', 'char']
+        return EnglishGenderProfiler(lang='en', method='logistic_regression', features=features)
 
     @conf.dataset('pan2014/english/blogs/gender', label='gender', type='blogs', language='english', year='2014')
     @conf.dataset('pan2014/english/blogs/age', label='age_group', type='blogs', language='english', year='2014')
@@ -47,7 +45,7 @@ def configure(conf):
     @conf.dataset('pan2014/spanish/socialmedia/gender', label='gender', type='socialmedia', language='spanish', year='2014')
     @conf.dataset('pan2014/spanish/socialmedia/age', label='age_group', type='socialmedia', language='spanish', year='2014')
     def build_dataset_pan14(label=None, type=None, language=None, year=None):
-        X, y = load(label=label, type=type, language=language)
+        X, y = load(label=label, type=type, language=language, year=year)
         X = [x['text'] for x in X]
         y = [yy[label]for yy in y]
         return X, y
@@ -58,7 +56,7 @@ def configure(conf):
     @conf.dataset('pan2016/english/twitter/age', label='age_group', type='twitter', language='english', year='2016')
     @conf.dataset('pan2016/spanish/twitter/age', label='age_group', type='twitter', language='spanish', year='2016')
     def build_dataset_pan16(label=None, type=None, language=None, year=None):
-        X, y = load(label=label, type=type, language=language)
+        X, y = load(label=label, type=type, language=language, year=year)
         X = [x['text'] for x in X]
         y = [yy[label]for yy in y]
         return X, y
@@ -70,8 +68,7 @@ def pretty_list(items):
 
 if __name__ == '__main__':
     conf = Configuration()
-    argparser = argparse.ArgumentParser(
-        description='Author profiling evaluation')
+    argparser = argparse.ArgumentParser(description='Author Profiling Evaluation')
     argparser.add_argument('-l', '--log-level', dest='log_level', type=str, default='INFO',
                            help='Set log level (DEBUG, INFO, ERROR)')
 
