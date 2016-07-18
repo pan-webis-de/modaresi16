@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from profiler16_un.profilers.en_gender_profiler import EnglishGenderProfiler
+from profiler16_un.profilers.corss_genre_profiler import CrossGenrePerofiler
 from profiler16_un.benchmarks.sklearn_benchmark import SklearnBenchmark
 from profiler16_un.configuration import Configuration
 from profiler16_un.datasets.pan import load
@@ -12,27 +12,27 @@ def configure(conf):
     @conf.profiler('english-gender-profiler', lang='en', method='logistic_regression', dimension='gender')
     def build_en_gender_profiler(**args):
         features = ['unigram', 'bigram', 'spelling', 'char']
-        return EnglishGenderProfiler(lang='en', method='logistic_regression', features=features)
+        return CrossGenrePerofiler(lang='en', method='logistic_regression', features=features)
 
     @conf.profiler('english-age-profiler', lang='en', method='logistic_regression', dimension='age')
     def build_en_age_profiler(**args):
         features = ['unigram', 'bigram', 'spelling', 'punctuation', 'char']
-        return EnglishGenderProfiler(lang='en', method='logistic_regression', features=features)
+        return CrossGenrePerofiler(lang='en', method='logistic_regression', features=features)
 
     @conf.profiler('spanish-gender-profiler', lang='es', method='logistic_regression', dimension='gender')
     def build_es_gender_profiler(**args):
         features = ['unigram', 'bigram', 'spelling', 'char']
-        return EnglishGenderProfiler(lang='en', method='logistic_regression', features=features)
+        return CrossGenrePerofiler(lang='en', method='logistic_regression', features=features)
 
     @conf.profiler('spanish-age-profiler', lang='es', method='logistic_regression', dimension='age')
     def build_es_age_profiler(**args):
         features = ['unigram', 'bigram', 'spelling', 'punctuation', 'char']
-        return EnglishGenderProfiler(lang='en', method='logistic_regression', features=features)
+        return CrossGenrePerofiler(lang='en', method='logistic_regression', features=features)
 
     @conf.profiler('dutch-gender-profiler', lang='nl', method='logistic_regression', dimension='gender')
     def build_nl_gender_profiler(**args):
         features = ['unigram', 'bigram', 'spelling', 'char']
-        return EnglishGenderProfiler(lang='en', method='logistic_regression', features=features)
+        return CrossGenrePerofiler(lang='en', method='logistic_regression', features=features)
 
     @conf.dataset('pan2014/english/blogs/gender', label='gender', type='blogs', language='english', year='2014')
     @conf.dataset('pan2014/english/blogs/age', label='age_group', type='blogs', language='english', year='2014')

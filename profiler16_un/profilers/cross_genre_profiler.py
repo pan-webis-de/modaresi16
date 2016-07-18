@@ -10,7 +10,7 @@ from ..utils.utils import get_classifier
 from sklearn.pipeline import Pipeline
 
 
-class EnglishGenderProfiler():
+class CrossGenrePerofiler():
     def __init__(self, lang=None, method=None, features=None):
         fs = []
         if 'unigram' in features:
