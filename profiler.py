@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 import argparse
 import logging
-from profiler16_un.datasets.pan_utils import load_xml_dataset, save_output_xmls
-from profiler16_un.profilers.cross_genre_profiler import CrossGenrePerofiler
+from magic.datasets.pan_utils import load_xml_dataset, save_output_xmls
+from magic.profilers.cross_genre_profiler import CrossGenrePerofiler
 
 en_corpus = '/media/en'
 es_corpus = '/media/es'

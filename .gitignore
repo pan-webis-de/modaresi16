@@ -64,6 +64,6 @@ target/
 
 #PyCharm
 .idea/
-profiler16_un/.idea/
+magic/.idea/
 
-profiler16_un/corpora
+magic/corpora

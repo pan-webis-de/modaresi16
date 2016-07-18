@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-from profiler16_un.profilers.cross_genre_profiler import CrossGenrePerofiler
-from profiler16_un.benchmarks.sklearn_benchmark import SklearnBenchmark
-from profiler16_un.configuration import Configuration
-from profiler16_un.datasets.pan import load
+from magic.profilers.cross_genre_profiler import CrossGenrePerofiler
+from magic.benchmarks.sklearn_benchmark import SklearnBenchmark
+from magic.configuration import Configuration
+from magic.datasets.pan import load
 import argparse
 import logging
 

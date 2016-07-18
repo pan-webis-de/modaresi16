@@ -1,4 +1,4 @@
-name = profiler16_un
+name = magic
 registry = hub.docker.com
 
 build:

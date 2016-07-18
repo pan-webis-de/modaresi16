@@ -1,5 +1,5 @@
 import unittest
-from profiler16_un.tokenizers.tweet_tokenizer import TweetTokenizer
+from magic.tokenizers.tweet_tokenizer import TweetTokenizer
 
 
 class TestTweetTokenizer(unittest.TestCase):

@@ -1,5 +1,5 @@
 import unittest
-from profiler16_un.taggers.polyglot_pos_tagger import PolyglotPOSTagger
+from magic.taggers.polyglot_pos_tagger import PolyglotPOSTagger
 
 
 class TestPolyglotPOSTagger(unittest.TestCase):

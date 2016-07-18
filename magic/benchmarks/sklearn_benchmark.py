@@ -1,9 +1,7 @@
-import logging
 from sklearn.cross_validation import StratifiedKFold
 from pandas_confusion import ConfusionMatrix
 from sklearn.metrics import accuracy_score
-import pandas as pd
-from sklearn.cross_validation import StratifiedKFold
+import logging
 
 
 logger = logging.getLogger(__name__)

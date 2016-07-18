@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from profiler16_un.preprocessors.text_cleaner import TextCleaner
+from magic.preprocessors.text_cleaner import TextCleaner
 import unittest
 
 

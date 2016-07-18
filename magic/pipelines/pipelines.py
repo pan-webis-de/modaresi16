@@ -1,5 +1,5 @@
-from profiler16_un.profilers.spelling_error_profiler import SpellingError
-from profiler16_un.features.punctuation_features import PunctuationFeatures
+from magic.profilers.spelling_error_profiler import SpellingError
+from magic.features.punctuation_features import PunctuationFeatures
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from ..preprocessors.text_cleaner import TextCleaner
