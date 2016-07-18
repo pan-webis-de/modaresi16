@@ -2,30 +2,12 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.preprocessing import Normalizer
 from sklearn.pipeline import Pipeline
-from ..tokenizers.lemma_tokenizer import LemmaTokenizer
 from ..utils.utils import get_stopwords
 from ..preprocessors.text_cleaner import TextCleaner
 from profiler16_un.profilers.spelling_error_profiler import SpellingError
 from profiler16_un.profilers.embeddings_profiler import EmbeddingsCounter
 from profiler16_un.profilers.pos_tag_profiler import POSFeatures
 from profiler16_un.features.punctuation_features import PunctuationFeatures
-
-
-def punctuation_ngrams():
-    preprocessor = TextCleaner(filter_urls=True,
-                               filter_mentions=True,
-                               filter_hashtags=True,
-                               only_punctuation=True,
-                               lowercase=False)
-    vectorizer = CountVectorizer(min_df=1,
-                                 preprocessor=preprocessor,
-                                 tokenizer=LemmaTokenizer(),
-                                 analyzer='char',
-                                 ngram_range=(10, 10))
-    pipeline = Pipeline([('vect', vectorizer),
-                         ('tfidf', TfidfTransformer(sublinear_tf=True)),
-                         ('scale', Normalizer())])
-    return ('punctuation_ngrams', pipeline)
 
 
 def avg_spelling_error(lang=None):
