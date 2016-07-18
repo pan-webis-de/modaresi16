@@ -2,7 +2,6 @@ from ..pipelines.pipelines import avg_spelling_error
 from ..pipelines.pipelines import word_unigrams
 from ..pipelines.pipelines import word_bigrams
 from ..pipelines.pipelines import char_ngrams
-from ..pipelines.pipelines import avg_embeddings_count
 from ..pipelines.pipelines import punctuation_features
 from sklearn.preprocessing import Normalizer
 from sklearn.pipeline import FeatureUnion
@@ -19,8 +18,6 @@ class CrossGenrePerofiler():
             fs.append(word_bigrams())
         if 'spelling' in features:
             fs.append(avg_spelling_error(lang=lang))
-        if 'embedding' in features:
-            fs.append(avg_embeddings_count(lang=lang))
         if 'punctuation' in features:
             fs.append(punctuation_features())
         if 'char' in features:
