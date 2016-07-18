@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from profiler16_un.profilers.corss_genre_profiler import CrossGenrePerofiler
+from profiler16_un.profilers.cross_genre_profiler import CrossGenrePerofiler
 from profiler16_un.benchmarks.sklearn_benchmark import SklearnBenchmark
 from profiler16_un.configuration import Configuration
 from profiler16_un.datasets.pan import load
