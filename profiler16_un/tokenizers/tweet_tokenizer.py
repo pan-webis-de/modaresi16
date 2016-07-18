@@ -30,10 +30,9 @@ regex_str = [emoticons_str, html_tags_str, mentions_str, hash_tags_str,
 
 
 class TweetTokenizer(object):
-
     def __init__(self):
         self.tokens_re = re.compile(
             r'(' + '|'.join(regex_str) + ')', re.VERBOSE | re.IGNORECASE)
 
     def __call__(self, doc):
-return self.tokens_re.findall(doc)
+        return self.tokens_re.findall(doc)
