@@ -41,7 +41,7 @@ If you want to use another folder structure, you have to modify the file pan.py 
 ``` bash
 make run
 ```
-After running the contains use the following command to perform evaluations:
+After running the container use the following command to perform evaluations:
 ``` bash
 python evaluate.py \
 --train_corpus=pan2016/english/twitter/gender \
