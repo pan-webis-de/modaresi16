@@ -9,6 +9,7 @@ Author profiling deals with the study of various profile dimensions of an author
 
 ## Dependencies
 * [docker](https://www.docker.com/)
+
 ## How to setup the project:
 ``` bash
   cd magic
