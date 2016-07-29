@@ -1,7 +1,7 @@
 # Magic
 
 [![Build Status](https://travis-ci.org/pasmod/magic.svg?branch=master)](https://travis-ci.org/pasmod/magic)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/fchollet/keras/blob/master/LICENSE)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/pasmod/magic/blob/master/License.md)
 
 Author profiling deals with the study of various profile dimensions of an author such as age and gender. This is the implementation of our methodology proposed for the task of cross-genre author profiling at PAN 2016. We address gender and age prediction as a classification task and approach this problem by extracting stylistic and lexical features for training a logistic regression model.
 
