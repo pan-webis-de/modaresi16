@@ -1,0 +1,10 @@
+@INPROCEEDINGS{modbeckcon:2016,
+        AUTHOR             = {Pashutan Modaresi and Matthias Liebeck and Stefan Conrad},
+        BOOKTITLE          = {Working Notes Papers of the CLEF 2016 Evaluation Labs},
+        ISSN               = {1613-0073},
+        MONTH              = sep,
+        PUBLISHER          = {CLEF and CEUR-WS.org},
+        SERIES             = {CEUR Workshop Proceedings},
+        TITLE              = {{Exploring the Effects of Cross-Genre Machine Learning for Author Profiling in PAN 2016}},
+        YEAR               = {2016}
+}
